@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /**
  * Created by williammattern on 3/6/17.
- * @author John A. Squier
+ * @author John A. Squierr
  */
 public class CheckersBoard {
     private Cell[][] theBoard;
