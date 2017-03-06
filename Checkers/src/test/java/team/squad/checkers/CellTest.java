@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by williammattern on 3/6/17.
+ * @author John A. Squier
  */
 public class CellTest {
 
