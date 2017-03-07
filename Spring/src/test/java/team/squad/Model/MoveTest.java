@@ -6,7 +6,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by johnsquier on 3/7/17.
+ * @author William Mattern
+ * @author John A. Squier
+ *
+ * Date Created: 3/6/17.
  */
 public class MoveTest {
 

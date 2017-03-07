@@ -3,7 +3,7 @@ package team.squad.Model;
 import java.util.Stack;
 
 /**
- * @author William Matter
+ * @author William Mattern
  * @author John A. Squier
  *
  * Date Created: 3/6/17.
@@ -26,7 +26,7 @@ public class CheckersBoard {
     }
 
     /**
-     *
+     * Returns the cell at the given i and j, TODO add range checking on i and j
      * @param i the x-position of the cell (0 is the bottom row)
      * @param j the y-position of the cell (0 is the left column)
      * @return the cell at the given x,y coords.
@@ -35,6 +35,9 @@ public class CheckersBoard {
         return theBoard[i][j];
     }
 
+    /**
+     * Places 12 red and 12 black pieces on the board in the proper positions.
+     */
     private void placePiecesOnBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

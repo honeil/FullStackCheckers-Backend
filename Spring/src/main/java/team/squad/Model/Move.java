@@ -1,7 +1,7 @@
 package team.squad.Model;
 
 /**
- * @author William Matter
+ * @author William Mattern
  * @author John A. Squier
  *
  * Date Created: 3/7/17.
@@ -12,8 +12,6 @@ public class Move {
 
     private int xPositionInitial;
     private int yPositionInitial;
-    private int xPositionDesired;
-    private int yPositionDesired;
     private int xPositionFinal;
     private int yPositionFinal;
 
@@ -24,13 +22,6 @@ public class Move {
     }
     public void setyPositionInitial(int yPositionInitial) {
         this.yPositionInitial = yPositionInitial;
-    }
-
-    public void setxPositionDesired(int xPositionInitial) {
-        this.xPositionDesired = xPositionInitial;
-    }
-    public void setyPositionDesired(int yPositionInitial) {
-        this.yPositionDesired = yPositionInitial;
     }
 
     public int getxPositionInitial() {
@@ -52,6 +43,22 @@ public class Move {
     public Move generateMove() {
         // set the final x and y using some a.i. like algorithm
         // these are just dummy values
+
+        // things we need to do to complete a move
+
+        // player move
+        // check if there is a piece at the initial position
+        // check if a move from initial to the desired position is valid
+        //      do the cells "connect", is there a piece in that cell already?, can the piece move in that direction?
+        // if the move is valid, we return the final position of the piece and update our model.
+        // if the move is invalid we send some sort of error message / indication
+        // THIS DOES NOT CONSIDER JUMPS ATM
+
+        // computer move
+        // determine which piece to move
+        // then determine where to move that piece
+        // BOGO checkers, randomly pick a piece and then randomly move that piece to one of the available places
+
         xPositionFinal = 100;
         yPositionFinal = 100;
         return this;
