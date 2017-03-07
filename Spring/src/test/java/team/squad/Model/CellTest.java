@@ -1,4 +1,4 @@
-package team.squad;
+package team.squad.Model;
 
 import org.junit.Before;
 import org.junit.Test;
