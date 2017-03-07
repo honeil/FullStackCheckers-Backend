@@ -1,21 +1,27 @@
-package team.squad.checkers;
+package team.squad.Model;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by williammattern on 3/6/17.
+ * @author William Mattern
+ * @author John A. Squier
+ *
+ * Date Created: 3/6/17.
  */
 public class CellTest {
 
-    CheckersBoard checkersBoard;
+    private CheckersBoard checkersBoard;
+    private Cell testCell;
+    private Piece testPiece;
 
     @Before
     public void setUp() throws Exception {
         checkersBoard = new CheckersBoard();
+        testCell = new Cell(0, 0);
+        testPiece = new Piece(Color.BLACK);
     }
 
     @Test
@@ -105,12 +111,35 @@ public class CellTest {
     }
 
     @Test
-    public void getHasPiece() throws Exception {
-        assertTrue(checkersBoard.getCell(0,0).getHasPiece());
-        assertTrue(checkersBoard.getCell(1,7).getHasPiece());
-        assertTrue(checkersBoard.getCell(5,1).getHasPiece());
-        assertTrue(checkersBoard.getCell(6,6).getHasPiece());
+    public void doesNewlyConstructedCellHaveAPieceTest() {
+        boolean expected = false;
 
-        assertFalse(checkersBoard.getCell(0,1).getHasPiece());
+        boolean actual = testCell.getHasPiece();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void getPieceFromCellTest() {
+        testCell.setPiece(testPiece);
+        Piece expected = testPiece;
+
+        Piece actual = testCell.getPiece();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void removePieceFromCellAndCheckCellStateTest() {
+        testCell.setPiece(testPiece);
+        Piece expectedPiece = null;
+        boolean expected = false;
+
+        testCell.removePiece();
+        Piece actualPiece = testCell.getPiece();
+        boolean actual = testCell.getHasPiece();
+
+        assertEquals(expectedPiece, actualPiece);
+        assertEquals(expected, actual);
     }
 }
