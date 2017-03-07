@@ -8,16 +8,16 @@ package team.squad.Model;
  *
  * Class to store information about a move.
  */
-public class PlayerMove {
+public class Move {
 
-    protected int xPositionInitial;
-    protected int yPositionInitial;
-    protected int xPositionDesired;
-    protected int yPositionDesired;
-    protected int xPositionFinal;
-    protected int yPositionFinal;
+    private int xPositionInitial;
+    private int yPositionInitial;
+    private int xPositionDesired;
+    private int yPositionDesired;
+    private int xPositionFinal;
+    private int yPositionFinal;
 
-    public PlayerMove() { }
+    public Move() { }
 
     public void setxPositionInitial(int xPositionInitial) {
         this.xPositionInitial = xPositionInitial;
@@ -48,6 +48,14 @@ public class PlayerMove {
 
     public int getyPositionInitial() {
         return yPositionInitial;
+    }
+
+    public int getxPositionDesired() {
+        return xPositionDesired;
+    }
+
+    public int getyPositionDesired() {
+        return yPositionDesired;
     }
 
     public int getxPositionFinal() {

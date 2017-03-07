@@ -10,12 +10,12 @@ import org.junit.Before;
  */
 public class MoveTest {
 
-    PlayerMove playerMove;
+    Move move;
 
     @Before
     public void setUp() throws Exception {
-        playerMove = new PlayerMove();
-        // use setters to set up the playerMove
+        move = new Move();
+        // use setters to set up the move
     }
 
 }
