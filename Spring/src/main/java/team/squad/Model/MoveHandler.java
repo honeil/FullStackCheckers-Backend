@@ -30,7 +30,7 @@ public class MoveHandler {
     }
 
     // to get the initial board state from the "get starting board state get" call
-    // BoardState.generateBoardState(theBoard) and pass it the newly constructed Checkers Board.
+    // BoardState.getInitialBoardState()
     // this works because when constructed the checkers board is in the proper initial state.
 
 
