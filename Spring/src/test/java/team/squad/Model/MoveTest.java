@@ -1,9 +1,6 @@
 package team.squad.Model;
 
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @author William Mattern
@@ -13,12 +10,12 @@ import static org.junit.Assert.*;
  */
 public class MoveTest {
 
-    Move move;
+    PlayerMove playerMove;
 
     @Before
     public void setUp() throws Exception {
-        move = new Move();
-        // use setters to set up the move
+        playerMove = new PlayerMove();
+        // use setters to set up the playerMove
     }
 
 }

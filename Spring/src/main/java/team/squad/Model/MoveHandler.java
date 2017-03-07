@@ -11,16 +11,36 @@ package team.squad.Model;
  */
 public class MoveHandler {
 
-    Move theMove;
+    PlayerMove thePlayerMove;
 
-    public MoveHandler(Move move) {
-        this.theMove = move;
+    public MoveHandler(PlayerMove playerMove) {
+        this.thePlayerMove = playerMove;
     }
 
-    public Move checkGivenMoveAndDetermineNextTurn() {
-//        if ( moveResultsInAnotherPlayerMove() ) {
-//
-//        }
+    public PlayerMove checkGivenMoveAndDetermineNextTurn() {
+        if ( playerMoveIsValid() && moveResultsInAnotherPlayerMove() ) {
+            thePlayerMove.setxPositionFinal(thePlayerMove.xPositionDesired);
+            thePlayerMove.setyPositionFinal(thePlayerMove.yPositionDesired);
+            return thePlayerMove;
+        }
+        else if ( playerMoveIsValid() && moveResultsInComputerMove() ) {
+            return new ComputerAndPlayerMove(thePlayerMove);
+        }
+        else { // player move isn't valid
+            // what to return here?
+        }
         return null;
+    }
+
+    private boolean moveResultsInComputerMove() {
+        return true;
+    }
+
+    private boolean moveResultsInAnotherPlayerMove() {
+        return false;
+    }
+
+    private boolean playerMoveIsValid() {
+        return true;
     }
 }

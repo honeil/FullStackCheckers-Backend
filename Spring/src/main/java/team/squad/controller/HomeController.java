@@ -23,8 +23,8 @@ public class  HomeController {
     // see exampleMove.json
     @RequestMapping(value = "/movePiece", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody
-    Move updateBoardStateWithMove(@RequestBody Move move) {
-        MoveHandler handler = new MoveHandler(move);
+    PlayerMove updateBoardStateWithMove(@RequestBody PlayerMove playerMove) {
+        MoveHandler handler = new MoveHandler(playerMove);
         return handler.checkGivenMoveAndDetermineNextTurn();
     }
 
