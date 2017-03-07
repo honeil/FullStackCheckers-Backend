@@ -1,13 +1,17 @@
-package team.squad.checkers;
+package team.squad;
 
 import org.junit.Before;
 import org.junit.Test;
+import team.squad.Model.CheckersBoard;
+import team.squad.Model.Color;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by williammattern on 3/6/17.
+ * @author William Matter
  * @author John A. Squier
+ *
+ * Date Created: 3/6/17.
  */
 public class CheckersBoardTest {
 
@@ -18,7 +22,7 @@ public class CheckersBoardTest {
         checkersBoard = new CheckersBoard();
     }
 
-    @Test
+    @Test // gonna scrap this test
     public void doesCell00ContainARedPieceTest() {
         boolean expected = true;
 
@@ -29,7 +33,7 @@ public class CheckersBoardTest {
         assertEquals(expected, actualPieceIsRed);
     }
 
-    @Test
+    @Test // gonna scrap this test
     public void doesCell02ContainARedPieceTest() {
         boolean expected = true;
 

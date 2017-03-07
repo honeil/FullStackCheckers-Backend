@@ -1,11 +1,12 @@
-package team.squad.checkers;
+package team.squad.Model;
 
 /**
- * Created by williammattern on 3/6/17.
+ * @author William Matter
  * @author John A. Squier
  *
- * TODO determine if we need a no arg constructor
+ * Date Created: 3/6/17.
  *
+ * TODO determine if we need a no arg constructor
  */
 public class Cell {
 
