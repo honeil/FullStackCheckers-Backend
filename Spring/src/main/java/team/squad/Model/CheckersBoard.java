@@ -90,8 +90,4 @@ public class CheckersBoard {
             return null; // could later change to unchecked exception NoPlayerWonException()
         }
     }
-
-    public Map getBoardState() {
-        return BoardState.generateBoardState(theBoard);
-    }
 }
