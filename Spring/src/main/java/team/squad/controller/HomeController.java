@@ -28,9 +28,8 @@ public class  HomeController {
     @RequestMapping(value = "/movePiece", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody
     Map updateBoardStateWithMove(@RequestBody Move move) {
-        MoveHandler handler = new MoveHandler(move, theBoard);
-        handler.checkGivenMoveAndUpdateBoard();
-        return theBoard.getBoardState();
+        MoveHandler.generateNewBoardStateFromPlayerMove(move, theBoard);
+        return BoardState.generateBoardState(theBoard);
     }
 
 }

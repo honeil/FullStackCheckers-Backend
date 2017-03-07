@@ -1,5 +1,7 @@
 package team.squad.Model;
 
+import java.util.Map;
+
 /**
  * @author William Mattern
  * @author John A. Squier
@@ -11,13 +13,52 @@ package team.squad.Model;
  */
 public class MoveHandler {
 
-    Move theMove;
-    CheckersBoard theBoard;
+    private Move theMove;
+    private CheckersBoard theBoard;
 
-    public MoveHandler(Move move, CheckersBoard theBoard) {
-        this.theMove = move;
-        this.theBoard =  theBoard;
+    public MoveHandler() { }
+
+    // call this when the Front end posts a player move
+    public static Map generateNewBoardStateFromPlayerMove(Move move, CheckersBoard theBoard) {
+        // things to do in this method...
+        return null;
     }
+
+    // call this when the front end gets a computer move
+    public static Map generateNewBoardStateFromComputerMove(CheckersBoard theBoard) {
+        return null;
+    }
+
+    // to get the initial board state from the "get starting board state get" call
+    // BoardState.generateBoardState(theBoard) and pass it the newly constructed Checkers Board.
+    // this works because when constructed the checkers board is in the proper initial state.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // use this constructor when it's a player move
+//    public MoveHandler(Move move, CheckersBoard theBoard) {
+//        this.theMove = move;
+//        this.theBoard = theBoard;
+//    }
 
     public Move checkGivenMoveAndUpdateBoard() {
         if ( playerMoveIsValid() && moveResultsInAnotherPlayerMove() ) {

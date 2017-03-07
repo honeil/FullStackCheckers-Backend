@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class BoardState {
 
-    public static Map generateBoardState(Cell[][] theBoard) {
+    public static Map generateBoardState(CheckersBoard theBoard) {
         // fill in this map using the board
         Map<String, CellState> boardState = new HashMap<String, CellState>();
 
