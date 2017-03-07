@@ -1,10 +1,7 @@
 package team.squad.controller;
 
 import org.springframework.web.bind.annotation.*;
-import team.squad.Model.CheckersBoard;
-import team.squad.Model.Color;
-import team.squad.Model.Move;
-import team.squad.Model.Piece;
+import team.squad.Model.*;
 
 /**
  * Created by zipcoder on 3/6/17.
@@ -27,8 +24,8 @@ public class  HomeController {
     @RequestMapping(value = "/movePiece", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody
     Move updateBoardStateWithMove(@RequestBody Move move) {
-        // dummy return, update this
-        return move.generateMove();
+        MoveHandler handler = new MoveHandler(move);
+        return handler.checkGivenMoveAndDetermineNextTurn();
     }
 
 }

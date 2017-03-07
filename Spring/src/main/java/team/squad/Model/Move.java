@@ -6,12 +6,14 @@ package team.squad.Model;
  *
  * Date Created: 3/7/17.
  *
- * Class to store information about a move, this class represents the object that will be returned to the front end.
+ * Class to store information about a move.
  */
-public class Move {
+public abstract class Move {
 
     private int xPositionInitial;
     private int yPositionInitial;
+    private int xPositionDesired;
+    private int yPositionDesired;
     private int xPositionFinal;
     private int yPositionFinal;
 
@@ -22,6 +24,14 @@ public class Move {
     }
     public void setyPositionInitial(int yPositionInitial) {
         this.yPositionInitial = yPositionInitial;
+    }
+
+    public void setxPositionDesired(int xPositionDesired) {
+        this.xPositionDesired = xPositionDesired;
+    }
+
+    public void setyPositionDesired(int yPositionDesired) {
+        this.yPositionDesired = yPositionDesired;
     }
 
     public int getxPositionInitial() {
@@ -40,27 +50,25 @@ public class Move {
         return yPositionFinal;
     }
 
-    public Move generateMove() {
-        // set the final x and y using some a.i. like algorithm
-        // these are just dummy values
+    // set the final x and y using some a.i. like algorithm
+    // these are just dummy values
 
-        // things we need to do to complete a move
+    // things we need to do to complete a move
 
-        // player move
-        // check if there is a piece at the initial position
-        // check if a move from initial to the desired position is valid
-        //      do the cells "connect", is there a piece in that cell already?, can the piece move in that direction?
-        // if the move is valid, we return the final position of the piece and update our model.
-        // if the move is invalid we send some sort of error message / indication
-        // THIS DOES NOT CONSIDER JUMPS ATM
+    // player move
+    // check if there is a piece at the initial position
+    // check if a move from initial to the desired position is valid
+    //      do the cells "connect", is there a piece in that cell already?, can the piece move in that direction?
+    // if the move is valid, we return the final position of the piece and update our model.
+    // if the move is invalid we send some sort of error message / indication
+    // THIS DOES NOT CONSIDER JUMPS ATM
 
-        // computer move
-        // determine which piece to move
-        // then determine where to move that piece
-        // BOGO checkers, randomly pick a piece and then randomly move that piece to one of the available places
+    // computer move
+    // determine which piece to move
+    // then determine where to move that piece
+    // BOGO checkers, randomly pick a piece and then randomly move that piece to one of the available places
 
-        xPositionFinal = 100;
-        yPositionFinal = 100;
-        return this;
+    public boolean isMoveValid() {
+        return false;
     }
 }

@@ -36,6 +36,22 @@ public class CheckersBoard {
     }
 
     /**
+     * Creates 12 black pieces and 12 red pieces and places them in their appropriate stacks.
+     * Think of this like creating two stack of checkers off to the side of the board before they get
+     * placed on the board itself.
+     */
+    public void initializePieces(){
+        for (int i =0; i < 12; i++){
+            Piece thisPiece = new Piece(Color.BLACK);
+            blackPieces.push(thisPiece);
+        }
+        for (int i =0; i < 12; i++){
+            Piece thisPiece = new Piece(Color.RED);
+            redPieces.push(thisPiece);
+        }
+    }
+
+    /**
      * Places 12 red and 12 black pieces on the board in the proper positions.
      */
     private void placePiecesOnBoard() {
@@ -54,22 +70,6 @@ public class CheckersBoard {
                     }
                 }
             }
-        }
-    }
-    
-    /**
-     * Creates 12 black pieces and 12 red pieces and places them in their appropriate stacks.
-     * Think of this like creating two stack of checkers off to the side of the board before they get
-     * placed on the board itself.
-     */
-    public void initializePieces(){
-        for (int i =0; i < 12; i++){
-            Piece thisPiece = new Piece(Color.BLACK);
-            blackPieces.push(thisPiece);
-        }
-        for (int i =0; i < 12; i++){
-            Piece thisPiece = new Piece(Color.RED);
-            redPieces.push(thisPiece);
         }
     }
 
