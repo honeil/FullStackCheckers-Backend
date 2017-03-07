@@ -1,9 +1,10 @@
 package team.squad.Model;
 
+import java.util.Map;
 import java.util.Stack;
 
 /**
- * @author William Matter
+ * @author William Mattern
  * @author John A. Squier
  *
  * Date Created: 3/6/17.
@@ -18,6 +19,7 @@ public class CheckersBoard {
      * the pieces on the board.
      */
     public CheckersBoard() {
+        System.out.println("HEY IM A CHECKERS BOARD BEING CREATED!");//////////////////////////////////////////////////////////////////////
         this.theBoard = new Cell[8][8];
         this.blackPieces = new Stack<>();
         this.redPieces = new Stack<>();
@@ -26,7 +28,7 @@ public class CheckersBoard {
     }
 
     /**
-     *
+     * Returns the cell at the given i and j, TODO add range checking on i and j
      * @param i the x-position of the cell (0 is the bottom row)
      * @param j the y-position of the cell (0 is the left column)
      * @return the cell at the given x,y coords.
@@ -34,28 +36,6 @@ public class CheckersBoard {
     public Cell getCell(int i, int j){
         return theBoard[i][j];
     }
-
-    public void placePiecesOnBoard() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                theBoard[i][j] = new Cell(i, j); // also colors the cells
-
-                // fill the correct cells w pieces
-                if (i <= 2) {
-                    if (theBoard[i][j].getCellColor().equals(Color.BLACK)) {
-                        theBoard[i][j].setPiece(redPieces.pop());
-                    }
-                } else if (i >= 5) {
-                    if (theBoard[i][j].getCellColor().equals(Color.BLACK)) {
-                        if (theBoard[i][j].getCellColor().equals(Color.BLACK)) {
-                            theBoard[i][j].setPiece(blackPieces.pop());
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 
     /**
      * Creates 12 black pieces and 12 red pieces and places them in their appropriate stacks.
@@ -74,6 +54,28 @@ public class CheckersBoard {
     }
 
     /**
+     * Places 12 red and 12 black pieces on the board in the proper positions.
+     */
+    private void placePiecesOnBoard() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                theBoard[i][j] = new Cell(i, j); // also colors the cells
+
+                // fill the correct cells w pieces
+                if (i <= 2) {
+                    if ( theBoard[i][j].getCellColor().equals(Color.BLACK) ) {
+                        theBoard[i][j].setPiece(redPieces.pop());
+                    }
+                } else if (i >= 5) {
+                    if ( theBoard[i][j].getCellColor().equals(Color.BLACK) ) {
+                        theBoard[i][j].setPiece(blackPieces.pop());
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Used to determine the winner, if any.
      * @return the Color of the winner's pieces or null if there is currently no winner.
      */
@@ -87,5 +89,9 @@ public class CheckersBoard {
         else {
             return null; // could later change to unchecked exception NoPlayerWonException()
         }
+    }
+
+    public Map getBoardState() {
+        return BoardState.generateBoardState(theBoard);
     }
 }
