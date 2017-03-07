@@ -2,15 +2,11 @@ package team.squad.Model;
 
 import org.junit.Before;
 import org.junit.Test;
-import team.squad.Model.Cell;
-import team.squad.Model.CheckersBoard;
-import team.squad.Model.Color;
-import team.squad.Model.Piece;
 
 import static org.junit.Assert.*;
 
 /**
- * @author William Matter
+ * @author William Mattern
  * @author John A. Squier
  *
  * Date Created: 3/6/17.
