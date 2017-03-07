@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /**
  * Created by williammattern on 3/6/17.
- * @author John A. Squierr
+ * @author John A. Squier
 
  */
 public class CheckersBoard {
