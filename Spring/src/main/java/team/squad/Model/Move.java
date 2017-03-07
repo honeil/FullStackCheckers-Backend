@@ -27,10 +27,18 @@ public class Move {
     }
 
     public void setxPositionDesired(int xPositionInitial) {
-        this.xPositionInitial = xPositionInitial;
+        this.xPositionDesired = xPositionInitial;
     }
     public void setyPositionDesired(int yPositionInitial) {
-        this.yPositionInitial = yPositionInitial;
+        this.yPositionDesired = yPositionInitial;
+    }
+
+    public int getxPositionInitial() {
+        return xPositionInitial;
+    }
+
+    public int getyPositionInitial() {
+        return yPositionInitial;
     }
 
     public int getxPositionFinal() {
@@ -44,8 +52,8 @@ public class Move {
     public Move generateMove() {
         // set the final x and y using some a.i. like algorithm
         // these are just dummy values
-        xPositionFinal = 1;
-        yPositionFinal = 1;
+        xPositionFinal = 100;
+        yPositionFinal = 100;
         return this;
     }
 }

@@ -45,5 +45,26 @@ public class PieceTest {
         assertTrue(blackPiece.getYPosition() == 0);
     }
 
-    // need lame tests for getters and setters maybe
+    @Test
+    public void setPieceColorBlackToRedTest() {
+        Color expected = Color.RED;
+
+        blackPiece.setPieceColor(Color.RED);
+        Color acutal = blackPiece.getPieceColor();
+
+        assertEquals(expected, acutal);
+    }
+
+    @Test
+    public void setAndGetKingStatusTest() {
+        boolean expectedInitial = false;
+        boolean expectedFinal = true;
+
+        boolean actualInitial = blackPiece.getKing();
+        blackPiece.setKing(true);
+        boolean actualFinal = blackPiece.getKing();
+
+        assertEquals(expectedInitial, actualInitial);
+        assertEquals(expectedFinal, actualFinal);
+    }
 }

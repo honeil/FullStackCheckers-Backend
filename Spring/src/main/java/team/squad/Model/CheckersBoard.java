@@ -35,28 +35,25 @@ public class CheckersBoard {
         return theBoard[i][j];
     }
 
-    public void placePiecesOnBoard() {
+    private void placePiecesOnBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 theBoard[i][j] = new Cell(i, j); // also colors the cells
 
                 // fill the correct cells w pieces
                 if (i <= 2) {
-                    if (theBoard[i][j].getCellColor().equals(Color.BLACK)) {
+                    if ( theBoard[i][j].getCellColor().equals(Color.BLACK) ) {
                         theBoard[i][j].setPiece(redPieces.pop());
                     }
                 } else if (i >= 5) {
-                    if (theBoard[i][j].getCellColor().equals(Color.BLACK)) {
-                        if (theBoard[i][j].getCellColor().equals(Color.BLACK)) {
-                            theBoard[i][j].setPiece(blackPieces.pop());
-                        }
+                    if ( theBoard[i][j].getCellColor().equals(Color.BLACK) ) {
+                        theBoard[i][j].setPiece(blackPieces.pop());
                     }
                 }
             }
         }
     }
-
-
+    
     /**
      * Creates 12 black pieces and 12 red pieces and places them in their appropriate stacks.
      * Think of this like creating two stack of checkers off to the side of the board before they get
