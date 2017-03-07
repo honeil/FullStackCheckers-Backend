@@ -1,8 +1,10 @@
 package team.squad.Model;
 
 /**
- * Created by williammattern on 3/6/17.
+ * @author William Matter
  * @author John A. Squier
+ *
+ * Date Created: 3/6/17.
  */
 public class Piece {
 
@@ -48,3 +50,4 @@ public class Piece {
         isKing = king;
     }
 }
+

@@ -6,11 +6,13 @@ import team.squad.Model.Cell;
 import team.squad.Model.Color;
 import team.squad.Model.Piece;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
- * Created by williammattern on 3/6/17.
+ * @author William Matter
  * @author John A. Squier
+ *
+ * Date Created: 3/6/17.
  */
 public class PieceTest {
 
@@ -29,16 +31,16 @@ public class PieceTest {
 
     @Test
     public void isPositionSetWhenPieceEntersCell() {
-        testCell00.setChecker(blackPiece);
+        testCell00.setPiece(blackPiece);
         assertTrue(blackPiece.getXPosition() == 0);
         assertTrue(blackPiece.getYPosition() == 0);
     }
 
     @Test
     public void doesPieceUpdatePositionWhenMovedTest() {
-        testCell00.setChecker(blackPiece);
-        testCell00.removeChecker();
-        testCell20.setChecker(blackPiece);
+        testCell00.setPiece(blackPiece);
+        testCell00.removePiece();
+        testCell20.setPiece(blackPiece);
         assertTrue(blackPiece.getXPosition() == 2);
         assertTrue(blackPiece.getYPosition() == 0);
     }
