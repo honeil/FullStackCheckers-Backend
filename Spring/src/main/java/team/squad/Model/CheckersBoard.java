@@ -19,7 +19,6 @@ public class CheckersBoard {
      * the pieces on the board.
      */
     public CheckersBoard() {
-        System.out.println("HEY IM A CHECKERS BOARD BEING CREATED!");//////////////////////////////////////////////////////////////////////
         this.theBoard = new Cell[8][8];
         this.blackPieces = new Stack<>();
         this.redPieces = new Stack<>();

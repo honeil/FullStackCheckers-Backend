@@ -11,13 +11,34 @@ import java.util.Map;
  */
 public class BoardState {
 
+    /**
+     * Takes a CheckersBoard object and coverts the 2D array representation of the board into a Map that
+     *  represents the board's state.
+     * @param theBoard a CheckersBoard object with values in its 2D array.
+     * @return a map that represents to CheckersBoard by indicating the location of each piece.
+     */
+    // TODO this has way too many indentations and needs refactored
     public static Map generateBoardState(CheckersBoard theBoard) {
-        // fill in this map using the board
         Map<String, CellState> boardState = new HashMap<String, CellState>();
 
-        boardState.put("A1", CellState.BLACK_PIECE);
-        boardState.put("A2", CellState.EMPTY);
+        for ( int i = 0; i < 8; i++ ) {
+            for ( int j = 0; j < 8; j++ ) {
+                Cell current = theBoard.getCell(i, j);
 
+                if ( current.getHasPiece() ) {
+                    if ( current.getPiece().getKing() ) {
+                        boardState.put(convertIJIntoCellName(j, i),
+                                        current.getPiece().getPieceColor().equals(Color.BLACK) ?
+                                                CellState.BLACK_KING_PIECE : CellState.RED_KING_PIECE);
+                    }
+                    else {
+                        boardState.put(convertIJIntoCellName(j, i),
+                                        current.getPiece().getPieceColor().equals(Color.BLACK) ?
+                                                CellState.BLACK_PIECE : CellState.RED_PIECE);
+                    }
+                }
+            }
+        }
         return boardState;
     }
 
@@ -26,34 +47,41 @@ public class BoardState {
      * @return A map representing the starting positions of the 24 pieces in an 8 by 8 checkers game.
      */
     public static Map getInitialBoardState() {
+        generateBoardState(new CheckersBoard());
         Map<String, CellState> boardState = new HashMap<String, CellState>();
-
-        boardState.put("A1", CellState.RED_PIECE);
-        boardState.put("C1", CellState.RED_PIECE);
-        boardState.put("E1", CellState.RED_PIECE);
-        boardState.put("G1", CellState.RED_PIECE);
-        boardState.put("B2", CellState.RED_PIECE);
-        boardState.put("D2", CellState.RED_PIECE);
-        boardState.put("F2", CellState.RED_PIECE);
-        boardState.put("H2", CellState.RED_PIECE);
-        boardState.put("A3", CellState.RED_PIECE);
-        boardState.put("C3", CellState.RED_PIECE);
-        boardState.put("E3", CellState.RED_PIECE);
-        boardState.put("G3", CellState.RED_PIECE);
-
-        boardState.put("B6", CellState.BLACK_PIECE);
-        boardState.put("D6", CellState.BLACK_PIECE);
-        boardState.put("F6", CellState.BLACK_PIECE);
-        boardState.put("H6", CellState.BLACK_PIECE);
-        boardState.put("A7", CellState.BLACK_PIECE);
-        boardState.put("C7", CellState.BLACK_PIECE);
-        boardState.put("E7", CellState.BLACK_PIECE);
-        boardState.put("G7", CellState.BLACK_PIECE);
-        boardState.put("B8", CellState.BLACK_PIECE);
-        boardState.put("D8", CellState.BLACK_PIECE);
-        boardState.put("F8", CellState.BLACK_PIECE);
-        boardState.put("H8", CellState.BLACK_PIECE);
-
         return boardState;
+    }
+
+    private static String convertIJIntoCellName(int i, int j) {
+        String result = convertIToColumnLetter(i) + convertJToRowNumber(j);
+        return result;
+    }
+
+    private static String convertIToColumnLetter(int i) {
+        switch( i ) {
+            case 0: return "A";
+            case 1: return "B";
+            case 2: return "C";
+            case 3: return "D";
+            case 4: return "E";
+            case 5: return "F";
+            case 6: return "G";
+            case 7: return "H";
+            default: return "ERROR";
+        }
+    }
+
+    private static String convertJToRowNumber(int j) {
+        switch ( j ) {
+            case 0: return "1";
+            case 1: return "2";
+            case 2: return "3";
+            case 3: return "4";
+            case 4: return "5";
+            case 5: return "6";
+            case 6: return "7";
+            case 7: return "8";
+            default: return "ERROR";
+        }
     }
 }

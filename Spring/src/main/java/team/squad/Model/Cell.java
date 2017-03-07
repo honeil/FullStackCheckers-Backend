@@ -6,7 +6,6 @@ package team.squad.Model;
  *
  * Date Created: 3/6/17.
  *
- * TODO determine if we need a no arg constructor
  */
 public class Cell {
 
