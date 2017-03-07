@@ -7,7 +7,6 @@ import java.util.Stack;
 /**
  * Created by williammattern on 3/6/17.
  * @author John A. Squier
-
  */
 public class CheckersBoard {
     private Cell[][] theBoard;
@@ -16,7 +15,6 @@ public class CheckersBoard {
 
     public CheckersBoard() {
         this.theBoard = new Cell[8][8];
-
         this.blackPieces = new Stack<>();
         this.redPieces = new Stack<>();
         this.initializePieces();
@@ -43,10 +41,21 @@ public class CheckersBoard {
         }
     }
 
+    /**
+     *
+     * @param i the x-position of the cell (0 is the bottom row)
+     * @param j the y-position of the cell (0 is the left column)
+     * @return the cell at the given x,y coords.
+     */
     public Cell getCell(int i, int j){
         return theBoard[i][j];
     }
 
+    /**
+     * Creates 12 black pieces and 12 red pieces and places them in their appropriate stacks.
+     * Think of this like creating two stack of checkers off to the side of the board before they get
+     * placed on the board itself.
+     */
     public void initializePieces(){
         for (int i =0; i < 12; i++){
             Piece thisPiece = new Piece(Color.BLACK);
@@ -58,8 +67,9 @@ public class CheckersBoard {
         }
     }
 
-    /*
-        Returns the Color of the winner or null if the game isn't won
+    /**
+     * Used to determine the winner, if any.
+     * @return the Color of the winner's pieces or null if there is currently no winner.
      */
     public Color whoHasWon() {
         if ( redPieces.size() == 12 ) {
