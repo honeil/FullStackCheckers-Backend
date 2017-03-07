@@ -26,6 +26,7 @@ public class  HomeController {
 
     // see exampleMove.json
     @RequestMapping(value = "/movePiece", method = RequestMethod.POST, consumes = {"application/json"})
+    @CrossOrigin
     public @ResponseBody
     Map updateBoardStateWithMove(@RequestBody Move move) {
         MoveHandler.generateNewBoardStateFromPlayerMove(move, theBoard);
