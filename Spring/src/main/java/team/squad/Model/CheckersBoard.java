@@ -1,6 +1,5 @@
 package team.squad.Model;
 
-import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -8,6 +7,9 @@ import java.util.Stack;
  * @author John A. Squier
  *
  * Date Created: 3/6/17.
+ *
+ * NOTE THAT J is UP/DOWN/ROW and I is LEFT/RIGHT/COLUMN!!!
+ *
  */
 public class CheckersBoard {
     private Cell[][] theBoard;
@@ -19,7 +21,6 @@ public class CheckersBoard {
      * the pieces on the board.
      */
     public CheckersBoard() {
-        System.out.println("HEY IM A CHECKERS BOARD BEING CREATED!");//////////////////////////////////////////////////////////////////////
         this.theBoard = new Cell[8][8];
         this.blackPieces = new Stack<>();
         this.redPieces = new Stack<>();
@@ -35,6 +36,10 @@ public class CheckersBoard {
      */
     public Cell getCell(int i, int j){
         return theBoard[i][j];
+    }
+
+    public Cell[][] getTheBoard() {
+        return theBoard;
     }
 
     /**
@@ -62,15 +67,16 @@ public class CheckersBoard {
                 theBoard[i][j] = new Cell(i, j); // also colors the cells
 
                 // fill the correct cells w pieces
-                if (i <= 2) {
+                if (j <= 2) {
                     if ( theBoard[i][j].getCellColor().equals(Color.BLACK) ) {
                         theBoard[i][j].setPiece(redPieces.pop());
                     }
-                } else if (i >= 5) {
+                } else if (j >= 5) {
                     if ( theBoard[i][j].getCellColor().equals(Color.BLACK) ) {
                         theBoard[i][j].setPiece(blackPieces.pop());
                     }
                 }
+                //System.out.println("i=" + i + ", j=" + j + " = " +getCell(i,j).getCellName() + " is " + getCell(i,j).getCellColor() + " and hasPiece? " + getCell(i,j).getHasPiece());
             }
         }
     }

@@ -7,7 +7,6 @@ package team.squad.Model;
  * Date Created: 3/7/17.
  */
 public enum CellState {
-    EMPTY,
     RED_PIECE,
     RED_KING_PIECE,
     BLACK_PIECE,

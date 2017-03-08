@@ -6,13 +6,13 @@ package team.squad.Model;
  *
  * Date Created: 3/6/17.
  *
- * TODO determine if we need a no arg constructor
  */
 public class Cell {
 
     private int xPosition;
     private int yPosition;
     private Color cellColor;
+    private String cellName;
     private Piece piece;
     private Boolean hasPiece = false;
 
@@ -20,6 +20,11 @@ public class Cell {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.cellColor = determineCellColor();
+        this.cellName = determineCellName();
+    }
+
+    private String determineCellName() {
+        return convertIToColumnLetter(xPosition) + convertJToRowNumber(yPosition);
     }
 
     private Color determineCellColor() {
@@ -33,6 +38,10 @@ public class Cell {
 
     public Color getCellColor() {
         return cellColor;
+    }
+
+    public String getCellName() {
+        return cellName;
     }
 
     public Piece getPiece() {
@@ -57,5 +66,33 @@ public class Cell {
 
     private void setHasPiece(Boolean hasPiece) {
         this.hasPiece = hasPiece;
+    }
+
+    private String convertIToColumnLetter(int i) {
+        switch( i ) {
+            case 0: return "A";
+            case 1: return "B";
+            case 2: return "C";
+            case 3: return "D";
+            case 4: return "E";
+            case 5: return "F";
+            case 6: return "G";
+            case 7: return "H";
+            default: return "ERROR";
+        }
+    }
+
+    private String convertJToRowNumber(int j) {
+        switch ( j ) {
+            case 0: return "1";
+            case 1: return "2";
+            case 2: return "3";
+            case 3: return "4";
+            case 4: return "5";
+            case 5: return "6";
+            case 6: return "7";
+            case 7: return "8";
+            default: return "ERROR";
+        }
     }
 }
