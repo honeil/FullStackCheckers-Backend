@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author William Mattern
@@ -60,7 +60,7 @@ public class BoardStateTest {
     public void getInitialBoardStateTest() {
         // this test calls the wrong method
         Map actual = BoardState.generateBoardState(new CheckersBoard());
-
+        System.out.println(actual);
         assertTrue(expected.equals(actual));
     }
 }
