@@ -1,5 +1,6 @@
 package team.squad.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import team.squad.Model.Move;
 import team.squad.Model.MoveHandler;
@@ -25,10 +26,11 @@ public class Controller01
     }
 
     //@RequestMapping("/playerMove")//needs POST to pass player move as args
-    // keep @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = {"application/json"})
-    // keep public  java.util.Map generateNewBoardStateFromPlayerMove(@ResponseBody Move move){
-
-        // keep return new MoveHandler().generateNewBoardStateFromPlayerMove();
+    @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+   public  java.util.Map generateNewBoardStateFromPlayerMove(@RequestBody Move move){
+        MoveHandler moveHandler = new MoveHandler();
+        moveHandler.setTheMove(move);
+        return moveHandler.generateNewBoardStateFromPlayerMove();
         //return new MoveHandler().generateInitialBoardState();
 
     }
