@@ -1,5 +1,7 @@
 package team.squad.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,20 +11,21 @@ import java.util.Map;
  * Date Created: 3/7/17.
  *
  * This class takes information about a move and does all the necessary checking to determine if the move is valid,
- * and who should go next after the given move.
+ * and who should go next after the given move. This class also generates random computer moves (for now) when
+ * requested using the generateNewBoardStateFromComputerMove() method.
  *
  * TODO refactor some of the methods, those jaunts are a mess
  */
 public class MoveHandler {
 
-    Move theMove;
-    CheckersBoard theBoard = new CheckersBoard();
+    private Move theMove;
+    private CheckersBoard theBoard = new CheckersBoard();
 
     public MoveHandler() { }
 
     /**
      * Use this to set the move as given from the front end.
-     * @param theMove
+     * @param theMove Object representing the desired move.
      */
     public void setTheMove(Move theMove) {
         this.theMove = theMove;
@@ -32,34 +35,18 @@ public class MoveHandler {
      * Call this when you get a player move POST request.
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
      * then an unchanged board state is returned.
-     * @return
+     *
+     * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
+     * @return The updated board state as a map.
      */
     public Map generateNewBoardStateFromPlayerMove() {
-        if ( isPlayerMoveValid() ) {
+        if ( isMoveValidAdjacentMove() ) {
             doMove();
         }
         return BoardState.generateBoardState(theBoard);
     }
 
-    /**
-     * Call this when you get a computer move GET request.
-     * Right now this just returns the current board without changing the board with any AI.
-     * @return
-     */
-    public Map generateNewBoardStateFromComputerMove() {
-        return BoardState.generateBoardState(theBoard);
-    }
-
-    /**
-     * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
-     * @return
-     */
-    public Map generateInitialBoardState() {
-        return BoardState.getInitialBoardState();
-    }
-
-
-    public boolean isPlayerMoveValid() {
+    public boolean isMoveValidAdjacentMove() {
         if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() ) {
             if( movingForward() || pieceIsAKing()){
                 return true;
@@ -71,16 +58,24 @@ public class MoveHandler {
         }
     }
 
-    private void doMove() {
-        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
-        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
-        desiredCell.setPiece(initialCell.getPiece());
-        initialCell.removePiece();
+    boolean cellsInMoveAreAdjacent() {
+        if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1 || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
+            if(theMove.getyPositionDesired() == theMove.getyPositionInitial()-1 || theMove.getyPositionDesired() == theMove.getyPositionInitial()+1){
+                return true;
+            }
+        }
+        return false;
     }
 
-    boolean pieceIsAKing() {
-        Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
-        return thePiece.getKing();
+    boolean requestedCellIsEmpty() {
+        Cell toCheck = theBoard.getCell(theMove.getxPositionDesired(),
+                theMove.getyPositionDesired());
+        if ( toCheck.getHasPiece() ) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     boolean movingForward() {
@@ -104,25 +99,51 @@ public class MoveHandler {
         }
     }
 
-    boolean cellsInMoveAreAdjacent() {
-        if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1 || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
-            if(theMove.getyPositionDesired() == theMove.getyPositionInitial()-1 || theMove.getyPositionDesired() == theMove.getyPositionInitial()+1){
-                return true;
+    boolean pieceIsAKing() {
+        Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
+        return thePiece.getKing();
+    }
+
+    private void doMove() {
+        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
+        desiredCell.setPiece(initialCell.getPiece());
+        initialCell.removePiece();
+    }
+
+    /**
+     * Call this when you get a computer move GET request.
+     * @return The updated board state after the computer has made its BOGO move.
+     */
+    public Map generateNewBoardStateFromComputerMove() {
+        Cell cellToMovePieceFrom =  pickRandomCellWithBlackPieceInIt();
+        
+
+        return BoardState.generateBoardState(theBoard);
+    }
+
+    Cell pickRandomCellWithBlackPieceInIt() {
+        List<Cell> allTheCellsWithBlackPieces = new ArrayList<>();
+
+        for ( int i = 0; i < 7; i++ ) {
+            for ( int j = 0; j < 7; j++ ) {
+                Cell current = theBoard.getCell(i, j);
+                if ( current.getHasPiece() && current.getPiece().getPieceColor().equals(Color.BLACK) ) {
+                    allTheCellsWithBlackPieces.add(current);
+                }
             }
         }
-        return false;
+
+        int randomIndex = (int)(Math.random() * allTheCellsWithBlackPieces.size());
+        Cell randomlyPicked = allTheCellsWithBlackPieces.get(randomIndex);
+        return randomlyPicked;
     }
 
-    boolean requestedCellIsEmpty() {
-        Cell toCheck = theBoard.getCell(theMove.getxPositionDesired(),
-                                        theMove.getyPositionDesired());
-        if ( toCheck.getHasPiece() ) {
-            return false;
-        }
-        else {
-            return true;
-        }
+    /**
+     * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
+     * @return
+     */
+    public Map generateInitialBoardState() {
+        return BoardState.getInitialBoardState();
     }
-
-
 }

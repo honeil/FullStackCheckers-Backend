@@ -144,8 +144,18 @@ public class CellTest {
     }
 
     @Test
-    public void isCell01CalledB1Test() {
-        Cell b1 = new Cell(0, 1);
+    public void isCell01CalledA2Test() {
+        Cell a2 = new Cell(0, 1);
+        String expected = "A2";
+
+        String actual = a2.getCellName();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void isCell10CalledB1Test() {
+        Cell b1 = new Cell(1, 0);
         String expected = "B1";
 
         String actual = b1.getCellName();
