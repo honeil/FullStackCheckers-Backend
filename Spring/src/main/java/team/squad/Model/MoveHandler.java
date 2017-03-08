@@ -54,7 +54,7 @@ public class MoveHandler {
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
      * @return
      */
-    public Map generateIntialBoardState() {
+    public Map generateInitialBoardState() {
         return BoardState.getInitialBoardState();
     }
 
