@@ -58,19 +58,8 @@ public class BoardStateTest {
 
     @Test
     public void getInitialBoardStateTest() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // this test calls the wrong method
-        Map actual = BoardState.generateBoardState(new CheckersBoard());
-        System.out.println(actual);
-=======
         Map actual = BoardState.getInitialBoardState();
 
->>>>>>> origin/cleanupandtestboard
-=======
-        Map actual = BoardState.getInitialBoardState();
-
->>>>>>> fc8c077a24926f87e376d0eca74bf6cbba9a49b4
         assertTrue(expected.equals(actual));
     }
 }
