@@ -13,15 +13,23 @@ import java.util.Map;
  */
 public class MoveHandler {
 
-    private Move theMove;
-    private CheckersBoard theBoard;
-
     public MoveHandler() { }
 
     // call this when the Front end posts a player move
     public static Map generateNewBoardStateFromPlayerMove(Move move, CheckersBoard theBoard) {
-        // things to do in this method...
-        return null;
+        System.out.println("Im a player move, ehhhhhhhhh");
+        if ( isPlayerMoveValid(move, theBoard) ) {
+            System.out.println("player move was valid");
+            doMove(move,theBoard);
+        }
+        return BoardState.generateBoardState(theBoard);
+    }
+
+    private static void doMove(Move move, CheckersBoard theBoard) {
+        Cell initialCell = theBoard.getCell(move.getxPositionInitial(),move.getyPositionInitial());
+        Cell desiredCell = theBoard.getCell(move.getxPositionDesired(),move.getyPositionDesired());
+        desiredCell.setPiece(initialCell.getPiece());
+        initialCell.removePiece();
     }
 
     // call this when the front end gets a computer move
@@ -33,48 +41,6 @@ public class MoveHandler {
     // BoardState.getInitialBoardState()
     // this works because when constructed the checkers board is in the proper initial state.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // use this constructor when it's a player move
-//    public MoveHandler(Move move, CheckersBoard theBoard) {
-//        this.theMove = move;
-//        this.theBoard = theBoard;
-//    }
-
-    public Move checkGivenMoveAndUpdateBoard() {
-        if ( playerMoveIsValid() && moveResultsInAnotherPlayerMove() ) {
-            theMove.setxPositionFinal(theMove.getxPositionDesired());
-            theMove.setyPositionFinal(theMove.getyPositionDesired());
-            return theMove;
-        }
-        else if ( playerMoveIsValid() && moveResultsInComputerMove() ) {
-            // what to do when the computer goes next
-        }
-        else { // player move isn't valid
-            // what to return here?
-        }
-        return null;
-    }
-
     private boolean moveResultsInComputerMove() {
         return true;
     }
@@ -83,7 +49,60 @@ public class MoveHandler {
         return false;
     }
 
-    private boolean playerMoveIsValid() {
-        return true;
+    private static boolean isPlayerMoveValid(Move move, CheckersBoard theBoard) {
+        System.out.println("im all up in your methods checking if the move's valid");
+        System.out.println("cells are adjacent? " + cellsInMoveAreAdjacent(move, theBoard));
+        System.out.println("requested cell is empty? " + requestedCellIsEmpty(move, theBoard));
+        if ( cellsInMoveAreAdjacent(move, theBoard) && requestedCellIsEmpty(move, theBoard) ) {
+            if( movingForward(move, theBoard) || pieceIsAKing(move, theBoard)){
+                return true;
+            }
+            return false;
+        }
+        else {
+            return false;
+        }
     }
+
+    private static boolean pieceIsAKing(Move move, CheckersBoard theBoard) {
+        Piece thePiece = theBoard.getCell(move.getxPositionInitial(),move.getyPositionInitial()).getPiece();
+        return thePiece.getKing();
+    }
+
+    private static boolean movingForward(Move move, CheckersBoard theBoard) {
+        Piece thePiece = theBoard.getCell(move.getxPositionInitial(),move.getyPositionInitial()).getPiece();
+        switch(thePiece.getPieceColor()){
+            case RED: if(move.getyPositionInitial()<move.getyPositionDesired()){
+                return true;
+            }
+            case BLACK: if(move.getyPositionInitial()>move.getyPositionDesired()){
+                return true;
+            }
+            default: return false;
+        }
+    }
+
+    private static boolean cellsInMoveAreAdjacent(Move move, CheckersBoard theBoard) {
+        if(move.getxPositionDesired() == move.getxPositionInitial()-1 || move.getxPositionDesired() == move.getxPositionInitial()+1){
+            if(move.getyPositionDesired() == move.getyPositionInitial()-1 || move.getyPositionDesired() == move.getyPositionInitial()+1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean requestedCellIsEmpty(Move move, CheckersBoard theBoard) {
+        Cell toCheck = theBoard.getCell(move.getxPositionDesired(),
+                                        move.getyPositionDesired());
+        System.out.println("moving to x = " + move.getxPositionDesired() + " y = " + move.getyPositionDesired());
+        System.out.println("cell has a peice in it? " + toCheck.getHasPiece());
+        if ( toCheck.getHasPiece() ) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+
 }
