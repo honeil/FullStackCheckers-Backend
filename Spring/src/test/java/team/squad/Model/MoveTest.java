@@ -17,8 +17,8 @@ public class MoveTest {
     @Before
     public void setUp() throws Exception {
         move = new Move();
-        move.setInitialCell("A3");
-        move.setDesiredCell("B4");
+        move.setFirstCoordinate("A3");
+        move.setSecondCoordinate("B4");
     }
 
     @Test

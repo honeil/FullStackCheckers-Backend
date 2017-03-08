@@ -39,11 +39,14 @@ public class MoveHandler {
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
-    public Map generateNewBoardStateFromPlayerMove() {
+    public List<Map> generateNewBoardStateFromPlayerMove() {
         if ( isMoveValidAdjacentMove() ) {
             doMove();
+            return BoardState.generateBoardState(theBoard, false);
         }
-        return BoardState.generateBoardState(theBoard);
+        else {
+            return BoardState.generateBoardState(theBoard, true);
+        }
     }
 
     public boolean isMoveValidAdjacentMove() {
@@ -115,11 +118,11 @@ public class MoveHandler {
      * Call this when you get a computer move GET request.
      * @return The updated board state after the computer has made its BOGO move.
      */
-    public Map generateNewBoardStateFromComputerMove() {
+    public List<Map> generateNewBoardStateFromComputerMove() {
         Cell cellToMovePieceFrom =  pickRandomCellWithBlackPieceInIt();
         
 
-        return BoardState.generateBoardState(theBoard);
+        return BoardState.generateBoardState(theBoard, true);
     }
 
     Cell pickRandomCellWithBlackPieceInIt() {
@@ -143,7 +146,7 @@ public class MoveHandler {
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
      * @return
      */
-    public Map generateInitialBoardState() {
+    public List<Map> generateInitialBoardState() {
         return BoardState.getInitialBoardState();
     }
 }

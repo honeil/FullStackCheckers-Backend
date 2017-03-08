@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -26,20 +27,20 @@ public class MoveHandlerTest {
         theBoard = new CheckersBoard();
 
         validMove = new Move();
-        validMove.setInitialCell("A3");
-        validMove.setDesiredCell("B4");
+        validMove.setFirstCoordinate("A3");
+        validMove.setSecondCoordinate("B4");
 
         invalidMoveCellsNotAdjacent = new Move();
-        invalidMoveCellsNotAdjacent.setInitialCell("A1");
-        invalidMoveCellsNotAdjacent.setDesiredCell("H8");
+        invalidMoveCellsNotAdjacent.setFirstCoordinate("A1");
+        invalidMoveCellsNotAdjacent.setSecondCoordinate("H8");
 
         redBackwardsMove = new Move();
-        redBackwardsMove.setInitialCell("A3");
-        redBackwardsMove.setDesiredCell("B2");
+        redBackwardsMove.setFirstCoordinate("A3");
+        redBackwardsMove.setSecondCoordinate("B2");
 
         blackBackwardsMove = new Move();
-        blackBackwardsMove.setInitialCell("B6");
-        blackBackwardsMove.setDesiredCell("A7");
+        blackBackwardsMove.setFirstCoordinate("B6");
+        blackBackwardsMove.setSecondCoordinate("A7");
     }
 
     @Test
@@ -154,7 +155,7 @@ public class MoveHandlerTest {
 
     @Test
     public void doMoveTest() {
-        Map initialBoard = BoardState.getInitialBoardState();
+        List<Map> initialBoard = BoardState.getInitialBoardState();
         Map<String, CellState> expected = new HashMap<>();
         expected.put("A1", CellState.RED_PIECE);
         expected.put("C1", CellState.RED_PIECE);
@@ -182,7 +183,7 @@ public class MoveHandlerTest {
         expected.put("H8", CellState.BLACK_PIECE);
         moveHandler.setTheMove(validMove);
 
-        Map actual = moveHandler.generateNewBoardStateFromPlayerMove();
+        List<Map> actual = moveHandler.generateNewBoardStateFromPlayerMove();
 
         assertTrue(expected.equals(actual));
     }
