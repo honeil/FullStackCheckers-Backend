@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
@@ -51,14 +52,14 @@ public class BoardStateTest {
 
     @Test
     public void generateBoardStateFromInitialBoardTest() {
-        Map actual = BoardState.generateBoardState(new CheckersBoard());
+        List<Map> actual = BoardState.generateBoardState(new CheckersBoard(), true);
 
         assertTrue(expected.equals(actual));
     }
 
     @Test
     public void getInitialBoardStateTest() {
-        Map actual = BoardState.getInitialBoardState();
+        List<Map> actual = BoardState.getInitialBoardState();
 
         assertTrue(expected.equals(actual));
     }

@@ -1,6 +1,8 @@
 package team.squad.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,8 +20,12 @@ public abstract class BoardState {
      * @return a map that represents to CheckersBoard by indicating the location of each piece.
      */
     // TODO this has way too many indentations and needs refactored
-    public static Map generateBoardState(CheckersBoard theBoard) {
+    public static List<Map> generateBoardState(CheckersBoard theBoard, boolean isPlayerMove) {
         Map<String, CellState> boardState = new HashMap<String, CellState>();
+        Map<String, Boolean> whosTurnIsIt = new HashMap<String, Boolean>();
+        List<Map> response = new ArrayList<>();
+
+        whosTurnIsIt.put("isPlayerMove", isPlayerMove);
 
         for ( int i = 0; i < 8; i++ ) { // this is rows?
             for ( int j = 0; j < 8; j++ ) { // this is columns?
@@ -39,16 +45,19 @@ public abstract class BoardState {
                 }
             }
         }
-        return boardState;
+
+        response.add(whosTurnIsIt);
+        response.add(boardState);
+        return response;
     }
 
     /**
      * Generates a map that represents the cell positions of all the piece at the start of an 8 x 8 checkers game.
      * @return A map representing the starting positions of the 24 pieces in an 8 by 8 checkers game.
      */
-    public static Map getInitialBoardState() {
-        Map boardState = new HashMap<String, CellState>();
-        boardState = generateBoardState(new CheckersBoard());
-        return boardState;
+    public static List<Map> getInitialBoardState() {
+        List<Map> reponse = new ArrayList<>();
+        reponse = generateBoardState(new CheckersBoard(), true);
+        return reponse;
     }
 }

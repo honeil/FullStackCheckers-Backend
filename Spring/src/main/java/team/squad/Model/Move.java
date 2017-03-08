@@ -10,8 +10,8 @@ package team.squad.Model;
  */
 public class Move {
 
-    private String initialCell;
-    private String desiredCell;
+    private String firstCoordinate;
+    private String secondCoordinate;
     private int xPositionInitial;
     private int yPositionInitial;
     private int xPositionDesired;
@@ -22,16 +22,16 @@ public class Move {
     public Move() { }
 
 
-    public void setInitialCell(String intialCell) {
-        this.initialCell = intialCell;
+    public void setFirstCoordinate(String intialCell) {
+        this.firstCoordinate = intialCell;
         this.xPositionInitial = convertCellNameToXCoord(intialCell);
         this.yPositionInitial = convertCellNameToYCoord(intialCell);
     }
 
-    public void setDesiredCell(String desiredCell) {
-        this.desiredCell = desiredCell;
-        this.xPositionDesired = convertCellNameToXCoord(desiredCell);
-        this.yPositionDesired = convertCellNameToYCoord(desiredCell);
+    public void setSecondCoordinate(String secondCoordinate) {
+        this.secondCoordinate = secondCoordinate;
+        this.xPositionDesired = convertCellNameToXCoord(secondCoordinate);
+        this.yPositionDesired = convertCellNameToYCoord(secondCoordinate);
     }
 
     private int convertCellNameToXCoord(String theCell) {
@@ -62,11 +62,11 @@ public class Move {
         }
     }
 
-    public String getInitialCell() {
-        return initialCell;
+    public String getFirstCoordinate() {
+        return firstCoordinate;
     }
-    public String getDesiredCell() {
-        return desiredCell;
+    public String getSecondCoordinate() {
+        return secondCoordinate;
     }
     public int getxPositionInitial() {
         return xPositionInitial;
