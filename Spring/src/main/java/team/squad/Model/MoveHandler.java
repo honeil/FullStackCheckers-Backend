@@ -10,6 +10,8 @@ import java.util.Map;
  *
  * This class takes information about a move and does all the necessary checking to determine if the move is valid,
  * and who should go next after the given move.
+ *
+ * TODO refactor some of the methods, those jaunts are a mess
  */
 public class MoveHandler {
 
@@ -28,10 +30,11 @@ public class MoveHandler {
 
     /**
      * Call this when you get a player move POST request.
-     * @param theMove
+     * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
+     * then an unchanged board state is returned.
      * @return
      */
-    public Map generateNewBoardStateFromPlayerMove(Move theMove) {
+    public Map generateNewBoardStateFromPlayerMove() {
         if ( isPlayerMoveValid() ) {
             doMove();
         }
@@ -56,13 +59,6 @@ public class MoveHandler {
     }
 
 
-    private void doMove() {
-        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
-        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
-        desiredCell.setPiece(initialCell.getPiece());
-        initialCell.removePiece();
-    }
-    
     public boolean isPlayerMoveValid() {
         if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() ) {
             if( movingForward() || pieceIsAKing()){
@@ -73,6 +69,13 @@ public class MoveHandler {
         else {
             return false;
         }
+    }
+
+    private void doMove() {
+        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
+        desiredCell.setPiece(initialCell.getPiece());
+        initialCell.removePiece();
     }
 
     boolean pieceIsAKing() {

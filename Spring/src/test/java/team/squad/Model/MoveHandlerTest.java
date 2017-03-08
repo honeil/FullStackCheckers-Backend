@@ -2,6 +2,10 @@ package team.squad.Model;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 /**
@@ -146,5 +150,40 @@ public class MoveHandlerTest {
         boolean actual = moveHandler.isPlayerMoveValid();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void doMoveTest() {
+        Map initialBoard = BoardState.getInitialBoardState();
+        Map<String, CellState> expected = new HashMap<>();
+        expected.put("A1", CellState.RED_PIECE);
+        expected.put("C1", CellState.RED_PIECE);
+        expected.put("E1", CellState.RED_PIECE);
+        expected.put("G1", CellState.RED_PIECE);
+        expected.put("B2", CellState.RED_PIECE);
+        expected.put("D2", CellState.RED_PIECE);
+        expected.put("F2", CellState.RED_PIECE);
+        expected.put("H2", CellState.RED_PIECE);
+        expected.put("B4", CellState.RED_PIECE);
+        expected.put("C3", CellState.RED_PIECE);
+        expected.put("E3", CellState.RED_PIECE);
+        expected.put("G3", CellState.RED_PIECE);
+        expected.put("B6", CellState.BLACK_PIECE);
+        expected.put("D6", CellState.BLACK_PIECE);
+        expected.put("F6", CellState.BLACK_PIECE);
+        expected.put("H6", CellState.BLACK_PIECE);
+        expected.put("A7", CellState.BLACK_PIECE);
+        expected.put("C7", CellState.BLACK_PIECE);
+        expected.put("E7", CellState.BLACK_PIECE);
+        expected.put("G7", CellState.BLACK_PIECE);
+        expected.put("B8", CellState.BLACK_PIECE);
+        expected.put("D8", CellState.BLACK_PIECE);
+        expected.put("F8", CellState.BLACK_PIECE);
+        expected.put("H8", CellState.BLACK_PIECE);
+        moveHandler.setTheMove(validMove);
+
+        Map actual = moveHandler.generateNewBoardStateFromPlayerMove();
+
+        assertTrue(expected.equals(actual));
     }
 }
