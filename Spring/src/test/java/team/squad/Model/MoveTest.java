@@ -1,6 +1,8 @@
 package team.squad.Model;
 
 import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * @author William Mattern
@@ -15,7 +17,25 @@ public class MoveTest {
     @Before
     public void setUp() throws Exception {
         move = new Move();
-        // use setters to set up the move
+        move.setInitialCell("A3");
+        move.setDesiredCell("B4");
     }
 
+    @Test
+    public void areCellNamesConvertedToCoordsTest() {
+        int expectedXInitial = 0;
+        int expectedYInitial = 2;
+        int expectedXDesired = 1;
+        int expectedYDesired = 3;
+
+        int actualXInitial = move.getxPositionInitial();
+        int actualYInitial = move.getyPositionInitial();
+        int actualXDesired = move.getxPositionDesired();
+        int actualYDesired = move.getyPositionDesired();
+
+        assertEquals(expectedXInitial, actualXInitial);
+        assertEquals(expectedYInitial, actualYInitial);
+        assertEquals(expectedXDesired, actualXDesired);
+        assertEquals(expectedYDesired, actualYDesired);
+    }
 }

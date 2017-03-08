@@ -78,7 +78,7 @@ public class Cell {
             case 5: return "F";
             case 6: return "G";
             case 7: return "H";
-            default: return "ERROR";
+            default: return "ERROR"; // should never be hit
         }
     }
 
@@ -92,7 +92,7 @@ public class Cell {
             case 5: return "6";
             case 6: return "7";
             case 7: return "8";
-            default: return "ERROR";
+            default: return "ERROR"; // should never be hit
         }
     }
 }

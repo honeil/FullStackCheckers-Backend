@@ -142,4 +142,14 @@ public class CellTest {
         assertEquals(expectedPiece, actualPiece);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void isCell01CalledB1Test() {
+        Cell b1 = new Cell(0, 1);
+        String expected = "B1";
+
+        String actual = b1.getCellName();
+
+        assertEquals(expected, actual);
+    }
 }

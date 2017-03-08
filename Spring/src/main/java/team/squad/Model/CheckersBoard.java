@@ -29,13 +29,18 @@ public class CheckersBoard {
     }
 
     /**
-     * Returns the cell at the given i and j, TODO add range checking on i and j
-     * @param i the x-position of the cell (0 is the bottom row)
-     * @param j the y-position of the cell (0 is the left column)
+     * Returns the cell at the given i and j.
+     * @param i the x-position of the cell (0 is the left-most column)
+     * @param j the y-position of the cell (0 is the bottom row)
      * @return the cell at the given x,y coords.
      */
     public Cell getCell(int i, int j){
-        return theBoard[i][j];
+        if ( (i < 0 || i > 7) || (j < 0 || j > 7) ) {
+            throw new IndexOutOfBoundsException("Given index not in the range (0-7)");
+        }
+        else {
+            return theBoard[i][j];
+        }
     }
 
     public Cell[][] getTheBoard() {

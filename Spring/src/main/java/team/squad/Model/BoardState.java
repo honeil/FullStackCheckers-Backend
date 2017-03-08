@@ -47,8 +47,8 @@ public class BoardState {
      * @return A map representing the starting positions of the 24 pieces in an 8 by 8 checkers game.
      */
     public static Map getInitialBoardState() {
-        generateBoardState(new CheckersBoard());
-        Map<String, CellState> boardState = new HashMap<String, CellState>();
+        Map boardState = new HashMap<String, CellState>();
+        boardState = generateBoardState(new CheckersBoard());
         return boardState;
     }
 }
