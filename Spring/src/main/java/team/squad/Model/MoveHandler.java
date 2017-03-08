@@ -18,12 +18,12 @@ public class MoveHandler {
 
     public MoveHandler() { }
 
+    /**
+     * Use this to set the move as given from the front end.
+     * @param theMove
+     */
     public void setTheMove(Move theMove) {
         this.theMove = theMove;
-    }
-
-    public void setTheBoard(CheckersBoard theBoard) {
-        this.theBoard = theBoard;
     }
 
     /**
@@ -32,8 +32,7 @@ public class MoveHandler {
      * @return
      */
     public Map generateNewBoardStateFromPlayerMove(Move theMove) {
-
-        if ( isPlayerMoveValid(theMove, theBoard) ) {
+        if ( isPlayerMoveValid() ) {
             doMove();
         }
         return BoardState.generateBoardState(theBoard);
@@ -41,6 +40,7 @@ public class MoveHandler {
 
     /**
      * Call this when you get a computer move GET request.
+     * Right now this just returns the current board without changing the board with any AI.
      * @return
      */
     public Map generateNewBoardStateFromComputerMove() {
@@ -48,7 +48,7 @@ public class MoveHandler {
     }
 
     /**
-     * Call this when you want the intial board state, this always returns the state of the board at the very beginning.
+     * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
      * @return
      */
     public Map generateIntialBoardState() {
@@ -62,25 +62,10 @@ public class MoveHandler {
         desiredCell.setPiece(initialCell.getPiece());
         initialCell.removePiece();
     }
-
-    // to get the initial board state from the "get starting board state get" call
-    // BoardState.getInitialBoardState()
-    // this works because when constructed the checkers board is in the proper initial state.
-
-    private boolean moveResultsInComputerMove() {
-        return true;
-    }
-
-    private boolean moveResultsInAnotherPlayerMove() {
-        return false;
-    }
-
-    public static boolean isPlayerMoveValid(Move move, CheckersBoard theBoard) {
-        System.out.println("im all up in your methods checking if the move's valid");//////////////////////////////////////////////////////////////////////
-        System.out.println("cells are adjacent? " + cellsInMoveAreAdjacent(move, theBoard));//////////////////////////////////////////////////////////////////////
-        System.out.println("requested cell is empty? " + requestedCellIsEmpty(move, theBoard));//////////////////////////////////////////////////////////////////////
-        if ( cellsInMoveAreAdjacent(move, theBoard) && requestedCellIsEmpty(move, theBoard) ) {
-            if( movingForward(move, theBoard) || pieceIsAKing(move, theBoard)){
+    
+    public boolean isPlayerMoveValid() {
+        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() ) {
+            if( movingForward() || pieceIsAKing()){
                 return true;
             }
             return false;
@@ -90,38 +75,44 @@ public class MoveHandler {
         }
     }
 
-    private static boolean pieceIsAKing(Move move, CheckersBoard theBoard) {
-        Piece thePiece = theBoard.getCell(move.getxPositionInitial(),move.getyPositionInitial()).getPiece();
+    boolean pieceIsAKing() {
+        Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
         return thePiece.getKing();
     }
 
-    private static boolean movingForward(Move move, CheckersBoard theBoard) {
-        Piece thePiece = theBoard.getCell(move.getxPositionInitial(),move.getyPositionInitial()).getPiece();
+    boolean movingForward() {
+        Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
         switch(thePiece.getPieceColor()){
-            case RED: if(move.getyPositionInitial()<move.getyPositionDesired()){
-                return true;
-            }
-            case BLACK: if(move.getyPositionInitial()>move.getyPositionDesired()){
-                return true;
-            }
-            default: return false;
+            case RED:
+                if(theMove.getyPositionInitial() < theMove.getyPositionDesired()){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            case BLACK:
+                if(theMove.getyPositionInitial() > theMove.getyPositionDesired()){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            default: return false; // should never be hit
         }
     }
 
-    public static boolean cellsInMoveAreAdjacent(Move move, CheckersBoard theBoard) {
-        if(move.getxPositionDesired() == move.getxPositionInitial()-1 || move.getxPositionDesired() == move.getxPositionInitial()+1){
-            if(move.getyPositionDesired() == move.getyPositionInitial()-1 || move.getyPositionDesired() == move.getyPositionInitial()+1){
+    boolean cellsInMoveAreAdjacent() {
+        if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1 || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
+            if(theMove.getyPositionDesired() == theMove.getyPositionInitial()-1 || theMove.getyPositionDesired() == theMove.getyPositionInitial()+1){
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean requestedCellIsEmpty(Move move, CheckersBoard theBoard) {
-        Cell toCheck = theBoard.getCell(move.getxPositionDesired(),
-                                        move.getyPositionDesired());
-        System.out.println("moving to x = " + move.getxPositionDesired() + " y = " + move.getyPositionDesired());
-        System.out.println("cell has a peice in it? " + toCheck.getHasPiece());
+    boolean requestedCellIsEmpty() {
+        Cell toCheck = theBoard.getCell(theMove.getxPositionDesired(),
+                                        theMove.getyPositionDesired());
         if ( toCheck.getHasPiece() ) {
             return false;
         }

@@ -10,6 +10,8 @@ package team.squad.Model;
  */
 public class Move {
 
+    private String initialCell;
+    private String desiredCell;
     private int xPositionInitial;
     private int yPositionInitial;
     private int xPositionDesired;
@@ -19,49 +21,68 @@ public class Move {
 
     public Move() { }
 
-    public void setxPositionInitial(int xPositionInitial) {
-        this.xPositionInitial = xPositionInitial;
-    }
-    public void setyPositionInitial(int yPositionInitial) {
-        this.yPositionInitial = yPositionInitial;
+
+    public void setInitialCell(String intialCell) {
+        this.initialCell = intialCell;
+        this.xPositionInitial = convertCellNameToXCoord(intialCell);
+        this.yPositionInitial = convertCellNameToYCoord(intialCell);
     }
 
-    public void setxPositionDesired(int xPositionDesired) {
-        this.xPositionDesired = xPositionDesired;
+    public void setDesiredCell(String desiredCell) {
+        this.desiredCell = desiredCell;
+        this.xPositionDesired = convertCellNameToXCoord(desiredCell);
+        this.yPositionDesired = convertCellNameToYCoord(desiredCell);
     }
 
-    public void setyPositionDesired(int yPositionDesired) {
-        this.yPositionDesired = yPositionDesired;
+    private int convertCellNameToXCoord(String theCell) {
+        switch ( theCell.charAt(0) ) {
+            case 'A': return 0;
+            case 'B': return 1;
+            case 'C': return 2;
+            case 'D': return 3;
+            case 'E': return 4;
+            case 'F': return 5;
+            case 'G': return 6;
+            case 'H': return 7;
+            default: return -1;
+        }
     }
 
-    public void setxPositionFinal(int xPositionFinal) {
-        this.xPositionFinal = xPositionFinal;
+    private int convertCellNameToYCoord(String theCell) {
+        switch ( theCell.charAt(1) ) {
+            case '1': return 0;
+            case '2': return 1;
+            case '3': return 2;
+            case '4': return 3;
+            case '5': return 4;
+            case '6': return 5;
+            case '7': return 6;
+            case '8': return 7;
+            default: return -1;
+        }
     }
 
-    public void setyPositionFinal(int yPositionFinal) {
-        this.yPositionFinal = yPositionFinal;
+    public String getInitialCell() {
+        return initialCell;
     }
-
+    public String getDesiredCell() {
+        return desiredCell;
+    }
     public int getxPositionInitial() {
         return xPositionInitial;
     }
-
     public int getyPositionInitial() {
         return yPositionInitial;
     }
-
     public int getxPositionDesired() {
         return xPositionDesired;
     }
-
     public int getyPositionDesired() {
         return yPositionDesired;
     }
-
     public int getxPositionFinal() {
         return xPositionFinal;
     }
-
     public int getyPositionFinal() {
         return yPositionFinal;
     }
