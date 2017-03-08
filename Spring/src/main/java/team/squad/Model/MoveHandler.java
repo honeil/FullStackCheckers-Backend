@@ -13,28 +13,54 @@ import java.util.Map;
  */
 public class MoveHandler {
 
+    Move theMove;
+    CheckersBoard theBoard = new CheckersBoard();
+
     public MoveHandler() { }
 
-    // call this when the Front end posts a player move
-    public static Map generateNewBoardStateFromPlayerMove(Move move, CheckersBoard theBoard) {
-        System.out.println("Im a player move, ehhhhhhhhh");
-        if ( isPlayerMoveValid(move, theBoard) ) {
-            System.out.println("player move was valid");
-            doMove(move,theBoard);
+    public void setTheMove(Move theMove) {
+        this.theMove = theMove;
+    }
+
+    public void setTheBoard(CheckersBoard theBoard) {
+        this.theBoard = theBoard;
+    }
+
+    /**
+     * Call this when you get a player move POST request.
+     * @param theMove
+     * @return
+     */
+    public Map generateNewBoardStateFromPlayerMove(Move theMove) {
+
+        if ( isPlayerMoveValid(theMove, theBoard) ) {
+            doMove();
         }
         return BoardState.generateBoardState(theBoard);
     }
 
-    private static void doMove(Move move, CheckersBoard theBoard) {
-        Cell initialCell = theBoard.getCell(move.getxPositionInitial(),move.getyPositionInitial());
-        Cell desiredCell = theBoard.getCell(move.getxPositionDesired(),move.getyPositionDesired());
-        desiredCell.setPiece(initialCell.getPiece());
-        initialCell.removePiece();
+    /**
+     * Call this when you get a computer move GET request.
+     * @return
+     */
+    public Map generateNewBoardStateFromComputerMove() {
+        return BoardState.generateBoardState(theBoard);
     }
 
-    // call this when the front end gets a computer move
-    public static Map generateNewBoardStateFromComputerMove(CheckersBoard theBoard) {
-        return null;
+    /**
+     * Call this when you want the intial board state, this always returns the state of the board at the very beginning.
+     * @return
+     */
+    public Map generateIntialBoardState() {
+        return BoardState.getInitialBoardState();
+    }
+
+
+    private void doMove() {
+        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
+        desiredCell.setPiece(initialCell.getPiece());
+        initialCell.removePiece();
     }
 
     // to get the initial board state from the "get starting board state get" call
@@ -49,10 +75,10 @@ public class MoveHandler {
         return false;
     }
 
-    private static boolean isPlayerMoveValid(Move move, CheckersBoard theBoard) {
-        System.out.println("im all up in your methods checking if the move's valid");
-        System.out.println("cells are adjacent? " + cellsInMoveAreAdjacent(move, theBoard));
-        System.out.println("requested cell is empty? " + requestedCellIsEmpty(move, theBoard));
+    public static boolean isPlayerMoveValid(Move move, CheckersBoard theBoard) {
+        System.out.println("im all up in your methods checking if the move's valid");//////////////////////////////////////////////////////////////////////
+        System.out.println("cells are adjacent? " + cellsInMoveAreAdjacent(move, theBoard));//////////////////////////////////////////////////////////////////////
+        System.out.println("requested cell is empty? " + requestedCellIsEmpty(move, theBoard));//////////////////////////////////////////////////////////////////////
         if ( cellsInMoveAreAdjacent(move, theBoard) && requestedCellIsEmpty(move, theBoard) ) {
             if( movingForward(move, theBoard) || pieceIsAKing(move, theBoard)){
                 return true;
@@ -82,7 +108,7 @@ public class MoveHandler {
         }
     }
 
-    private static boolean cellsInMoveAreAdjacent(Move move, CheckersBoard theBoard) {
+    public static boolean cellsInMoveAreAdjacent(Move move, CheckersBoard theBoard) {
         if(move.getxPositionDesired() == move.getxPositionInitial()-1 || move.getxPositionDesired() == move.getxPositionInitial()+1){
             if(move.getyPositionDesired() == move.getyPositionInitial()-1 || move.getyPositionDesired() == move.getyPositionInitial()+1){
                 return true;

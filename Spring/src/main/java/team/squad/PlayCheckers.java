@@ -23,7 +23,7 @@ public class PlayCheckers {
 
         //Move move = appContext.getBean("moveService", Move.class);
         MoveHandler mover = appContext.getBean("moveHandler", MoveHandler.class);
-        System.out.println("\n\n\n movedata:" + mover.checkGivenMoveAndUpdateBoard());
+       // System.out.println("\n\n\n movedata:" + mover.checkGivenMoveAndUpdateBoard());
         Map<Integer, String> theMap = new HashMap<>();
         theMap.put(1,"A1");
         theMap.put(2, "G8");

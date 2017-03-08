@@ -29,7 +29,7 @@ public class  HomeController {
     @CrossOrigin
     public @ResponseBody
     Map updateBoardStateWithMove(@RequestBody Move move) {
-        MoveHandler.generateNewBoardStateFromPlayerMove(move, theBoard);
+     // my bad, commented just to push  MoveHandler.generateNewBoardStateFromPlayerMove(move);
         return BoardState.generateBoardState(theBoard);
     }
 
