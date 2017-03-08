@@ -15,6 +15,9 @@ import java.util.Map;
 @RestController
 public class Controller01
 {
+
+    MoveHandler moveHandler = new MoveHandler();
+
     @RequestMapping("/start")
     public List<Map> generateInitialBoardState()
     {
@@ -29,7 +32,6 @@ public class Controller01
 
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
    public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move){
-        MoveHandler moveHandler = new MoveHandler();
         moveHandler.setTheMove(move);
         return moveHandler.generateNewBoardStateFromPlayerMove();
 
