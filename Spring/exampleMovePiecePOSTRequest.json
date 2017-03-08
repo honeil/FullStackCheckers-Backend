@@ -1,6 +1,4 @@
 {
-  "xPositionInitial": 0,
-  "yPositionInitial": 0,
-  "xPositionDesired": 1,
-  "yPositionDesired": 1
+  "initialCell": "A3",
+  "desiredCell": "B4"
 }
