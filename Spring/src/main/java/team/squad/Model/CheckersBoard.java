@@ -43,10 +43,6 @@ public class CheckersBoard {
         }
     }
 
-    public Cell[][] getTheBoard() {
-        return theBoard;
-    }
-
     /**
      * Creates 12 black pieces and 12 red pieces and places them in their appropriate stacks.
      * Think of this like creating two stack of checkers off to the side of the board before they get
