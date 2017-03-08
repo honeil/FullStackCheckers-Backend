@@ -24,17 +24,14 @@ public class Controller01
     @RequestMapping("/pcMove")
     public List<Map> generateNewBoardStateFromComputerMove(){
         return new MoveHandler().generateNewBoardStateFromComputerMove();
-        //return new MoveHandler().generateInitialBoardState();
 
     }
 
-    //@RequestMapping("/playerMove")//needs POST to pass player move as args
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
    public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move){
         MoveHandler moveHandler = new MoveHandler();
         moveHandler.setTheMove(move);
         return moveHandler.generateNewBoardStateFromPlayerMove();
-        //return new MoveHandler().generateInitialBoardState();
 
     }
 }
