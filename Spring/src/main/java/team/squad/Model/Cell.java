@@ -36,6 +36,14 @@ public class Cell {
         }
     }
 
+    public int getxPosition() {
+        return this.xPosition;
+    }
+
+    public int getyPosition() {
+        return this.yPosition;
+    }
+
     public Color getCellColor() {
         return cellColor;
     }

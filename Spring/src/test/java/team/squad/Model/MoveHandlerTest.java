@@ -3,6 +3,7 @@ package team.squad.Model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,32 +156,36 @@ public class MoveHandlerTest {
 
     @Test
     public void doMoveTest() {
-        List<Map> initialBoard = BoardState.getInitialBoardState();
-        Map<String, CellState> expected = new HashMap<>();
-        expected.put("A1", CellState.RED_PIECE);
-        expected.put("C1", CellState.RED_PIECE);
-        expected.put("E1", CellState.RED_PIECE);
-        expected.put("G1", CellState.RED_PIECE);
-        expected.put("B2", CellState.RED_PIECE);
-        expected.put("D2", CellState.RED_PIECE);
-        expected.put("F2", CellState.RED_PIECE);
-        expected.put("H2", CellState.RED_PIECE);
-        expected.put("B4", CellState.RED_PIECE);
-        expected.put("C3", CellState.RED_PIECE);
-        expected.put("E3", CellState.RED_PIECE);
-        expected.put("G3", CellState.RED_PIECE);
-        expected.put("B6", CellState.BLACK_PIECE);
-        expected.put("D6", CellState.BLACK_PIECE);
-        expected.put("F6", CellState.BLACK_PIECE);
-        expected.put("H6", CellState.BLACK_PIECE);
-        expected.put("A7", CellState.BLACK_PIECE);
-        expected.put("C7", CellState.BLACK_PIECE);
-        expected.put("E7", CellState.BLACK_PIECE);
-        expected.put("G7", CellState.BLACK_PIECE);
-        expected.put("B8", CellState.BLACK_PIECE);
-        expected.put("D8", CellState.BLACK_PIECE);
-        expected.put("F8", CellState.BLACK_PIECE);
-        expected.put("H8", CellState.BLACK_PIECE);
+        List<Map> expected = new ArrayList<>();
+        Map<String, Boolean> expectedTurnInfo = new HashMap<>();
+        expectedTurnInfo.put("isPlayerMove", false);
+        Map<String, CellState> expectedCellInfo = new HashMap<>();
+        expectedCellInfo.put("A1", CellState.RED_PIECE);
+        expectedCellInfo.put("C1", CellState.RED_PIECE);
+        expectedCellInfo.put("E1", CellState.RED_PIECE);
+        expectedCellInfo.put("G1", CellState.RED_PIECE);
+        expectedCellInfo.put("B2", CellState.RED_PIECE);
+        expectedCellInfo.put("D2", CellState.RED_PIECE);
+        expectedCellInfo.put("F2", CellState.RED_PIECE);
+        expectedCellInfo.put("H2", CellState.RED_PIECE);
+        expectedCellInfo.put("B4", CellState.RED_PIECE);
+        expectedCellInfo.put("C3", CellState.RED_PIECE);
+        expectedCellInfo.put("E3", CellState.RED_PIECE);
+        expectedCellInfo.put("G3", CellState.RED_PIECE);
+        expectedCellInfo.put("B6", CellState.BLACK_PIECE);
+        expectedCellInfo.put("D6", CellState.BLACK_PIECE);
+        expectedCellInfo.put("F6", CellState.BLACK_PIECE);
+        expectedCellInfo.put("H6", CellState.BLACK_PIECE);
+        expectedCellInfo.put("A7", CellState.BLACK_PIECE);
+        expectedCellInfo.put("C7", CellState.BLACK_PIECE);
+        expectedCellInfo.put("E7", CellState.BLACK_PIECE);
+        expectedCellInfo.put("G7", CellState.BLACK_PIECE);
+        expectedCellInfo.put("B8", CellState.BLACK_PIECE);
+        expectedCellInfo.put("D8", CellState.BLACK_PIECE);
+        expectedCellInfo.put("F8", CellState.BLACK_PIECE);
+        expectedCellInfo.put("H8", CellState.BLACK_PIECE);
+        expected.add(expectedTurnInfo);
+        expected.add(expectedCellInfo);
         moveHandler.setTheMove(validMove);
 
         List<Map> actual = moveHandler.generateNewBoardStateFromPlayerMove();
@@ -199,5 +204,36 @@ public class MoveHandlerTest {
 
         assertEquals(expected, actual);
         assertEquals(expectedColor, actualColor);
+    }
+
+    @Test
+    public void givenCellDoesHaveAnAvailableMoveTest() {
+        Cell toMoveFrom = theBoard.getCell(1, 5);
+        Cell expected1 = theBoard.getCell(0, 4);
+        Cell expected2 = theBoard.getCell(2, 4);
+
+        Cell actual = moveHandler.generateMoveIfAvailable(toMoveFrom);
+
+        assertTrue(expected1.getCellName().equals(actual.getCellName())
+                            || expected2.getCellName().equals(actual.getCellName()));
+    }
+
+    @Test
+    public void givenCellH6IsCellG5SelectedAsAnAvailableMoveTest() {
+        Cell toMoveFrom = theBoard.getCell(7, 5);
+        Cell expected = theBoard.getCell(6, 4);
+
+        Cell actual = moveHandler.generateMoveIfAvailable(toMoveFrom);
+
+        assertEquals(expected.getCellName(), actual.getCellName());
+    }
+
+    @Test
+    public void generateRandomComputerMoveTest() {
+        List<Map> intialBoardState = BoardState.getInitialBoardState();
+
+        List<Map> boardStateAfterMove = moveHandler.generateNewBoardStateFromComputerMove();
+
+        assertNotEquals(intialBoardState, boardStateAfterMove);
     }
 }
