@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * Date Created: 3/7/17.
  */
-public class BoardState {
+public abstract class BoardState {
 
     /**
      * Takes a CheckersBoard object and coverts the 2D array representation of the board into a Map that

@@ -59,6 +59,7 @@ public class BoardStateTest {
     @Test
     public void getInitialBoardStateTest() {
         Map actual = BoardState.getInitialBoardState();
+
         assertTrue(expected.equals(actual));
     }
 }

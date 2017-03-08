@@ -127,7 +127,7 @@ public class MoveHandlerTest {
         moveHandler.setTheMove(validMove);
         boolean expected = true;
 
-        boolean actual = moveHandler.isPlayerMoveValid();
+        boolean actual = moveHandler.isMoveValidAdjacentMove();
 
         assertEquals(expected, actual);
     }
@@ -137,7 +137,7 @@ public class MoveHandlerTest {
         moveHandler.setTheMove(invalidMoveCellsNotAdjacent);
         boolean expected = false;
 
-        boolean actual = moveHandler.isPlayerMoveValid();
+        boolean actual = moveHandler.isMoveValidAdjacentMove();
 
         assertEquals(expected, actual);
     }
@@ -147,7 +147,7 @@ public class MoveHandlerTest {
         moveHandler.setTheMove(redBackwardsMove);
         boolean expected = false;
 
-        boolean actual = moveHandler.isPlayerMoveValid();
+        boolean actual = moveHandler.isMoveValidAdjacentMove();
 
         assertEquals(expected, actual);
     }
@@ -185,5 +185,18 @@ public class MoveHandlerTest {
         Map actual = moveHandler.generateNewBoardStateFromPlayerMove();
 
         assertTrue(expected.equals(actual));
+    }
+
+    @Test
+    public void doesRandomlyPickedCellHaveABlackPieceInIt() {
+        boolean expected = true;
+        Color expectedColor = Color.BLACK;
+
+        Cell theCell = moveHandler.pickRandomCellWithBlackPieceInIt();
+        boolean actual = theCell.getHasPiece();
+        Color actualColor = theCell.getPiece().getPieceColor();
+
+        assertEquals(expected, actual);
+        assertEquals(expectedColor, actualColor);
     }
 }
