@@ -55,7 +55,7 @@ public class MoveHandler {
     }
 
     public boolean isMoveValidAdjacentMove() {
-        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && pieceRequestedIsRed() ) {
+        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && requestCellHasPieceInIt() ) {
             if( movingForward() || pieceIsAKing()){
                 return true;
             }
@@ -86,9 +86,9 @@ public class MoveHandler {
         }
     }
 
-    private boolean pieceRequestedIsRed() {
+    private boolean requestCellHasPieceInIt() {
         Cell toCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
-        if ( toCheck.getHasPiece() && toCheck.getPiece().getPieceColor().equals(Color.RED)) {
+        if ( toCheck.getHasPiece() ) {//&& toCheck.getPiece().getPieceColor().equals(Color.RED)) {
             return true;
         }
         else {
