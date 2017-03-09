@@ -55,7 +55,7 @@ public class MoveHandler {
     }
 
     public boolean isMoveValidAdjacentMove() {
-        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() ) {
+        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && pieceRequestedIsRed() ) {
             if( movingForward() || pieceIsAKing()){
                 return true;
             }
@@ -86,8 +86,21 @@ public class MoveHandler {
         }
     }
 
+    private boolean pieceRequestedIsRed() {
+        Cell toCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        if ( toCheck.getHasPiece() && toCheck.getPiece().getPieceColor().equals(Color.RED)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     boolean movingForward() {
         Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
+        if ( thePiece == null ) {
+            return false;
+        }
         switch(thePiece.getPieceColor()){
             case RED:
                 if(theMove.getyPositionInitial() < theMove.getyPositionDesired()){
@@ -207,9 +220,11 @@ public class MoveHandler {
 
     /**
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
+     * Can also be used to reset the game by calling this in the middle of the game.
      * @return
      */
     public List<Map> generateInitialBoardState() {
-        return BoardState.getInitialBoardState();
+        theBoard = new CheckersBoard();
+        return BoardState.generateBoardState(theBoard, true);
     }
 }
