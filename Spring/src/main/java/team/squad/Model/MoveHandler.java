@@ -1,5 +1,7 @@
 package team.squad.Model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import java.util.Map;
  *
  * TODO refactor some of the methods, those jaunts are a mess
  */
+@Component
 public class MoveHandler {
 
     private Move theMove;
