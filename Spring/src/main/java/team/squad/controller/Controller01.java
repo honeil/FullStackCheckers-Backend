@@ -1,5 +1,6 @@
 package team.squad.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import team.squad.Model.Move;
@@ -13,28 +14,28 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-public class Controller01
-{
+public class Controller01 {
 
-    MoveHandler moveHandler = new MoveHandler();
+    private MoveHandler moveHandler;
 
+    @Autowired
+    public Controller01(MoveHandler moveHandler) {
+        this.moveHandler = moveHandler;
+    }
+    
     @RequestMapping("/start")
-    public List<Map> generateInitialBoardState()
-    {
-        return new MoveHandler().generateInitialBoardState();
+    public List<Map> generateInitialBoardState() {
+        return moveHandler.generateInitialBoardState();
     }
 
     @RequestMapping("/pcMove")
-    public List<Map> generateNewBoardStateFromComputerMove(){
-        return new MoveHandler().generateNewBoardStateFromComputerMove();
-
+    public List<Map> generateNewBoardStateFromComputerMove() {
+        return moveHandler.generateNewBoardStateFromComputerMove();
     }
 
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-   public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move){
+        public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move) {
         moveHandler.setTheMove(move);
         return moveHandler.generateNewBoardStateFromPlayerMove();
-
     }
 }
-
