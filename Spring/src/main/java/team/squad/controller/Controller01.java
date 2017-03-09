@@ -22,7 +22,7 @@ public class Controller01 {
     public Controller01(MoveHandler moveHandler) {
         this.moveHandler = moveHandler;
     }
-
+    
     @RequestMapping("/start")
     public List<Map> generateInitialBoardState() {
         return moveHandler.generateInitialBoardState();
@@ -34,9 +34,8 @@ public class Controller01 {
     }
 
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move) {
+        public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move) {
         moveHandler.setTheMove(move);
         return moveHandler.generateNewBoardStateFromPlayerMove();
     }
 }
-

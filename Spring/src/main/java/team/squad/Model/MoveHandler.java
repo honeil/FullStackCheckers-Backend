@@ -39,6 +39,8 @@ public class MoveHandler {
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
      * then an unchanged board state is returned.
      *
+     * TODO make sure the player can only move red pieces
+     *
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
