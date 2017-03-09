@@ -36,8 +36,8 @@ public class MoveHandlerTest {
         invalidMoveCellsNotAdjacent.setSecondCoordinate("H8");
 
         redBackwardsMove = new Move();
-        redBackwardsMove.setFirstCoordinate("A3");
-        redBackwardsMove.setSecondCoordinate("B2");
+        redBackwardsMove.setFirstCoordinate("A3"); // change to B4 to A3, gets a null ptr exception
+        redBackwardsMove.setSecondCoordinate("B2"); // TODO find this bug, can pieces move backwards?
 
         blackBackwardsMove = new Move();
         blackBackwardsMove.setFirstCoordinate("B6");
