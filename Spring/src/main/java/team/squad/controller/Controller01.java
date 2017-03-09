@@ -14,8 +14,7 @@ import java.util.Map;
  */
 @CrossOrigin
 @RestController
-public class Controller01
-{
+public class Controller01 {
     private MoveHandler moveHandler;
 
     @Autowired
@@ -39,4 +38,3 @@ public class Controller01
         return moveHandler.generateNewBoardStateFromPlayerMove();
     }
 }
-
