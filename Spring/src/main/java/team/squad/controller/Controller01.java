@@ -27,7 +27,7 @@ public class Controller01 {
         return gameManager.generateInitialBoardState();
     }
 
-    @RequestMapping("/pcMove")
+    @RequestMapping("/npcMove")
     public List<Map> generateNewBoardStateFromComputerMove() {
         return gameManager.generateNewBoardStateFromComputerMove();
     }
