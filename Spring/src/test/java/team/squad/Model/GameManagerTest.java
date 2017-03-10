@@ -281,6 +281,7 @@ public class GameManagerTest {
         gameManager.setTheMove(redJumpMove);
 
         assertFalse(gameManager.thereIsAnOpponentPieceInTheMiddle());
+    }
 
     public void startAndFinishAreDiagonallyOneSquareApartTest1() {
         gameManager.setTheMove(validAttackDiagonal);
