@@ -19,7 +19,6 @@ public class Move {
 
     public Move() { }
 
-
     public void setFirstCoordinate(String intialCell) {
         this.firstCoordinate = intialCell;
         this.xPositionInitial = convertCellNameToXCoord(intialCell);

@@ -18,10 +18,10 @@ import static org.junit.Assert.*;
  */
 public class GameManagerTest {
 
-    GameManager gameManager;
-    Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove, redJumpMove, blackJumpMove,
+    private GameManager gameManager;
+    private Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove, redJumpMove, blackJumpMove,
          validAttackDiagonal, invalidAttackDiagonal;
-    CheckersBoard theBoard;
+    private CheckersBoard theBoard;
 
     @Before
     public void setup() {

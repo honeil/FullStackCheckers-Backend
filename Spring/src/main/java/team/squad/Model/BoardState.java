@@ -55,12 +55,11 @@ public abstract class BoardState {
 
     /**
      * Generates a map that represents the cell positions of all the pieces at the start of an 8 x 8 checkers game.
-     * @return A list of mapsrepresenting the starting positions of the 24 pieces in an 8 by 8 checkers game and that
+     * @return A list of maps representing the starting positions of the 24 pieces in an 8 by 8 checkers game and that
      * the players turn is first.
      */
     public static List<Map> getInitialBoardState() {
-        List<Map> reponse = new ArrayList<>();
-        reponse = generateBoardState(new CheckersBoard(), true);
-        return reponse;
+        List<Map> response = generateBoardState(new CheckersBoard(), true);
+        return response;
     }
 }
