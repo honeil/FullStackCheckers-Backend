@@ -45,13 +45,26 @@ public class GameManager {
      * @return The updated board state as a map.
      */
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if ( isMoveValidAdjacentMove() ) {
+        if ( isMoveValidAdjacentMove() || isMoveValidJumpMove() ) {
             doMove();
             return BoardState.generateBoardState(theBoard, false);
         }
         else {
             return BoardState.generateBoardState(theBoard, true);
         }
+    }
+
+    private boolean isMoveValidJumpMove() {
+        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() )
+        return false;
+    }
+
+    private boolean thereIsAnOpponentPieceInTheMiddle() {
+        return false;
+    }
+
+    private boolean startAndFinishAreDiagonallyOneSquareApart() {
+        return false;
     }
 
     boolean isMoveValidAdjacentMove() {
