@@ -15,6 +15,7 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 public class Controller01 {
+    
     private GameManager gameManager;
 
     @Autowired
