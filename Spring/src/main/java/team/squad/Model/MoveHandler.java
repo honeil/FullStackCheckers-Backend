@@ -225,6 +225,7 @@ public class MoveHandler {
      */
     public List<Map> generateInitialBoardState() {
         theBoard = new CheckersBoard();
+        System.out.println("generating new board");
         return BoardState.generateBoardState(theBoard, true);
     }
 }
