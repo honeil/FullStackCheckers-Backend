@@ -17,7 +17,7 @@ public class Cell {
     private Piece piece;
     private Boolean hasPiece = false;
 
-    public Cell(int xPosition, int yPosition){
+    Cell(int xPosition, int yPosition){
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.cellColor = determineCellColor();
@@ -37,39 +37,39 @@ public class Cell {
         }
     }
 
-    public int getxPosition() {
+    int getxPosition() {
         return this.xPosition;
     }
 
-    public int getyPosition() {
+    int getyPosition() {
         return this.yPosition;
     }
 
-    public Color getCellColor() {
+    Color getCellColor() {
         return cellColor;
     }
 
-    public String getCellName() {
+    String getCellName() {
         return cellName;
     }
 
-    public Piece getPiece() {
+    Piece getPiece() {
         return piece;
     }
 
-    public void setPiece(Piece piece) {
+    void setPiece(Piece piece) {
         this.piece = piece;
         this.setHasPiece(true);
         this.piece.setXPosition(this.xPosition);
         this.piece.setYPosition(this.yPosition);
     }
 
-    public void removePiece() {
+    void removePiece() {
         this.piece = null;
         this.setHasPiece(false);
     }
 
-    public Boolean getHasPiece() {
+    Boolean getHasPiece() {
         return hasPiece;
     }
 
