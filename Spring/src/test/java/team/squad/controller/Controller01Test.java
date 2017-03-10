@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import team.squad.Model.Move;
-import team.squad.Model.MoveHandler;
+import team.squad.Model.GameManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class Controller01Test {
 
     @Mock
-    private MoveHandler moveHandler;
+    private GameManager gameManager;
 
     @InjectMocks
     private Controller01 controller;
@@ -32,13 +32,13 @@ public class Controller01Test {
     @Test
     public void shouldCallMoveHandler() {
         controller.generateInitialBoardState();
-        verify(moveHandler).generateInitialBoardState();
+        verify(gameManager).generateInitialBoardState();
     }
 
     @Test
     public void shouldReturnMapFromMoveHandler() {
         List<Map> returnValue = new ArrayList<>();
-        when(moveHandler.generateInitialBoardState()).thenReturn(returnValue);
+        when(gameManager.generateInitialBoardState()).thenReturn(returnValue);
 
         assertThat(controller.generateInitialBoardState(), is(returnValue));
     }
@@ -49,8 +49,8 @@ public class Controller01Test {
 
         controller.generateNewBoardStateFromPlayerMove(move);
 
-        verify(moveHandler).setTheMove(move);
-        verify(moveHandler).generateNewBoardStateFromPlayerMove();
+        verify(gameManager).setTheMove(move);
+        verify(gameManager).generateNewBoardStateFromPlayerMove();
     }
 
 }

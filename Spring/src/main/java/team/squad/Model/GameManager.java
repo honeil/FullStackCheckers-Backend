@@ -19,12 +19,12 @@ import java.util.Map;
  * TODO refactor some of the methods, those jaunts are a mess
  */
 @Component
-public class MoveHandler {
+public class GameManager {
 
     private Move theMove;
     private CheckersBoard theBoard = new CheckersBoard();
 
-    public MoveHandler() { }
+    public GameManager() { }
 
     /**
      * Use this to set the move as given from the front end.

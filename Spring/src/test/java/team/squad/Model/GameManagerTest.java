@@ -16,15 +16,15 @@ import static org.junit.Assert.*;
  *
  * Date Created: 3/8/17.
  */
-public class MoveHandlerTest {
+public class GameManagerTest {
 
-    MoveHandler moveHandler;
+    GameManager gameManager;
     Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove;
     CheckersBoard theBoard;
 
     @Before
     public void setup() {
-        moveHandler = new MoveHandler();
+        gameManager = new GameManager();
         theBoard = new CheckersBoard();
 
         validMove = new Move();
@@ -46,110 +46,110 @@ public class MoveHandlerTest {
 
     @Test
     public void cellsInMoveAreAdjacentTest() {
-        moveHandler.setTheMove(validMove);
+        gameManager.setTheMove(validMove);
         boolean expected = true;
 
-        boolean actual = moveHandler.cellsInMoveAreAdjacent();
+        boolean actual = gameManager.cellsInMoveAreAdjacent();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void cellsInMoveAreNotAdjacentTest() {
-        moveHandler.setTheMove(invalidMoveCellsNotAdjacent);
+        gameManager.setTheMove(invalidMoveCellsNotAdjacent);
         boolean expected = false;
 
-        boolean actual = moveHandler.cellsInMoveAreAdjacent();
+        boolean actual = gameManager.cellsInMoveAreAdjacent();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void requestedCellIsEmptyTest() {
-        moveHandler.setTheMove(validMove);
+        gameManager.setTheMove(validMove);
         boolean expected = true;
 
-        boolean actual = moveHandler.requestedCellIsEmpty();
+        boolean actual = gameManager.requestedCellIsEmpty();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void requestedCelIsNotEmptyTest() {
-        moveHandler.setTheMove(invalidMoveCellsNotAdjacent);
+        gameManager.setTheMove(invalidMoveCellsNotAdjacent);
         boolean expected = false;
 
-        boolean actual = moveHandler.requestedCellIsEmpty();
+        boolean actual = gameManager.requestedCellIsEmpty();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void pieceIsMovingForwardTest() {
-        moveHandler.setTheMove(validMove);
+        gameManager.setTheMove(validMove);
         boolean expected = true;
 
-        boolean actual = moveHandler.movingForward();
+        boolean actual = gameManager.movingForward();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void redPieceIsNotMovingForwardTest() {
-        moveHandler.setTheMove(redBackwardsMove);
+        gameManager.setTheMove(redBackwardsMove);
         boolean expected = false;
 
-        boolean actual = moveHandler.movingForward();
+        boolean actual = gameManager.movingForward();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void blackPieceIsNotMovingForwardTest() {
-        moveHandler.setTheMove(blackBackwardsMove);
+        gameManager.setTheMove(blackBackwardsMove);
         boolean expected = false;
 
-        boolean actual = moveHandler.movingForward();
+        boolean actual = gameManager.movingForward();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void pieceIsNotAKingTest() {
-        moveHandler.setTheMove(validMove);
+        gameManager.setTheMove(validMove);
         boolean expected = false;
 
-        boolean actual = moveHandler.pieceIsAKing();
+        boolean actual = gameManager.pieceIsAKing();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void playerMoveIsValidTest() {
-        moveHandler.setTheMove(validMove);
+        gameManager.setTheMove(validMove);
         boolean expected = true;
 
-        boolean actual = moveHandler.isMoveValidAdjacentMove();
+        boolean actual = gameManager.isMoveValidAdjacentMove();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void playerMoveIsNotValidTest() {
-        moveHandler.setTheMove(invalidMoveCellsNotAdjacent);
+        gameManager.setTheMove(invalidMoveCellsNotAdjacent);
         boolean expected = false;
 
-        boolean actual = moveHandler.isMoveValidAdjacentMove();
+        boolean actual = gameManager.isMoveValidAdjacentMove();
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void playerMoveIsNotValidMoveIsBackwardsTest() {
-        moveHandler.setTheMove(redBackwardsMove);
+        gameManager.setTheMove(redBackwardsMove);
         boolean expected = false;
 
-        boolean actual = moveHandler.isMoveValidAdjacentMove();
+        boolean actual = gameManager.isMoveValidAdjacentMove();
 
         assertEquals(expected, actual);
     }
@@ -186,9 +186,9 @@ public class MoveHandlerTest {
         expectedCellInfo.put("H8", CellState.BLACK_PIECE);
         expected.add(expectedTurnInfo);
         expected.add(expectedCellInfo);
-        moveHandler.setTheMove(validMove);
+        gameManager.setTheMove(validMove);
 
-        List<Map> actual = moveHandler.generateNewBoardStateFromPlayerMove();
+        List<Map> actual = gameManager.generateNewBoardStateFromPlayerMove();
 
         assertTrue(expected.equals(actual));
     }
@@ -198,7 +198,7 @@ public class MoveHandlerTest {
         boolean expected = true;
         Color expectedColor = Color.BLACK;
 
-        Cell theCell = moveHandler.pickRandomCellWithBlackPieceInIt();
+        Cell theCell = gameManager.pickRandomCellWithBlackPieceInIt();
         boolean actual = theCell.getHasPiece();
         Color actualColor = theCell.getPiece().getPieceColor();
 
@@ -212,7 +212,7 @@ public class MoveHandlerTest {
         Cell expected1 = theBoard.getCell(0, 4);
         Cell expected2 = theBoard.getCell(2, 4);
 
-        Cell actual = moveHandler.generateMoveIfAvailable(toMoveFrom);
+        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
 
         assertTrue(expected1.getCellName().equals(actual.getCellName())
                             || expected2.getCellName().equals(actual.getCellName()));
@@ -223,7 +223,7 @@ public class MoveHandlerTest {
         Cell toMoveFrom = theBoard.getCell(7, 5);
         Cell expected = theBoard.getCell(6, 4);
 
-        Cell actual = moveHandler.generateMoveIfAvailable(toMoveFrom);
+        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
 
         assertEquals(expected.getCellName(), actual.getCellName());
     }
@@ -232,7 +232,7 @@ public class MoveHandlerTest {
     public void generateRandomComputerMoveTest() {
         List<Map> intialBoardState = BoardState.getInitialBoardState();
 
-        List<Map> boardStateAfterMove = moveHandler.generateNewBoardStateFromComputerMove();
+        List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
 
         assertNotEquals(intialBoardState, boardStateAfterMove);
     }
