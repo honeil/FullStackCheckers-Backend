@@ -1,4 +1,4 @@
-package team.squad.Model;
+package team.squad.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

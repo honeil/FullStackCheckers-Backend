@@ -2,14 +2,11 @@ package team.squad.Model;
 
 import org.junit.Before;
 import org.junit.Test;
-import team.squad.Model.Cell;
-import team.squad.Model.Color;
-import team.squad.Model.Piece;
 
 import static org.junit.Assert.*;
 
 /**
- * @author William Matter
+ * @author William Mattern
  * @author John A. Squier
  *
  * Date Created: 3/6/17.
@@ -45,5 +42,26 @@ public class PieceTest {
         assertTrue(blackPiece.getYPosition() == 0);
     }
 
-    // need lame tests for getters and setters maybe
+    @Test
+    public void setPieceColorBlackToRedTest() {
+        Color expected = Color.RED;
+
+        blackPiece.setPieceColor(Color.RED);
+        Color acutal = blackPiece.getPieceColor();
+
+        assertEquals(expected, acutal);
+    }
+
+    @Test
+    public void setAndGetKingStatusTest() {
+        boolean expectedInitial = false;
+        boolean expectedFinal = true;
+
+        boolean actualInitial = blackPiece.getKing();
+        blackPiece.setKing(true);
+        boolean actualFinal = blackPiece.getKing();
+
+        assertEquals(expectedInitial, actualInitial);
+        assertEquals(expectedFinal, actualFinal);
+    }
 }
