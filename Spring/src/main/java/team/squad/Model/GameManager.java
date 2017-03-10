@@ -1,5 +1,7 @@
 package team.squad.Model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +18,13 @@ import java.util.Map;
  *
  * TODO refactor some of the methods, those jaunts are a mess
  */
-public class MoveHandler {
+@Component
+public class GameManager {
 
     private Move theMove;
     private CheckersBoard theBoard = new CheckersBoard();
 
-    public MoveHandler() { }
+    public GameManager() { }
 
     /**
      * Use this to set the move as given from the front end.
@@ -36,6 +39,8 @@ public class MoveHandler {
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
      * then an unchanged board state is returned.
      *
+     * TODO make sure the player can only move red pieces
+     *
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
@@ -49,8 +54,8 @@ public class MoveHandler {
         }
     }
 
-    public boolean isMoveValidAdjacentMove() {
-        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() ) {
+    boolean isMoveValidAdjacentMove() {
+        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && requestCellHasPieceInIt() ) {
             if( movingForward() || pieceIsAKing()){
                 return true;
             }
@@ -81,8 +86,21 @@ public class MoveHandler {
         }
     }
 
+    private boolean requestCellHasPieceInIt() {
+        Cell toCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        if ( toCheck.getHasPiece() ) {//&& toCheck.getPiece().getPieceColor().equals(Color.RED)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     boolean movingForward() {
         Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
+        if ( thePiece == null ) {
+            return false;
+        }
         switch(thePiece.getPieceColor()){
             case RED:
                 if(theMove.getyPositionInitial() < theMove.getyPositionDesired()){
@@ -202,9 +220,12 @@ public class MoveHandler {
 
     /**
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
+     * Can also be used to reset the game by calling this in the middle of the game.
      * @return
      */
     public List<Map> generateInitialBoardState() {
-        return BoardState.getInitialBoardState();
+        theBoard = new CheckersBoard();
+        System.out.println("generating new board");
+        return BoardState.generateBoardState(theBoard, true);
     }
 }
