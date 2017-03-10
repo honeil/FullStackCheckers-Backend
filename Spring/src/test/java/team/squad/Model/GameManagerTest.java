@@ -19,7 +19,8 @@ import static org.junit.Assert.*;
 public class GameManagerTest {
 
     GameManager gameManager;
-    Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove, validAttackDiagonal, invalidAttackDiagonal;
+    Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove, redJumpMove, blackJumpMove,
+         validAttackDiagonal, invalidAttackDiagonal;
     CheckersBoard theBoard;
 
     @Before
@@ -42,6 +43,15 @@ public class GameManagerTest {
         blackBackwardsMove = new Move();
         blackBackwardsMove.setFirstCoordinate("B6");
         blackBackwardsMove.setSecondCoordinate("A7");
+
+
+        redJumpMove = new Move();
+        redJumpMove.setFirstCoordinate("A3");
+        redJumpMove.setSecondCoordinate("C5");
+
+        blackJumpMove = new Move();
+        blackJumpMove.setFirstCoordinate("H6");
+        blackJumpMove.setSecondCoordinate("F4");
 
         validAttackDiagonal = new Move();
         validAttackDiagonal.setFirstCoordinate("C3");
@@ -246,6 +256,32 @@ public class GameManagerTest {
     }
 
     @Test
+    public void thereIsAnOpponentPieceInTheMiddleOfARedJumpTest() {
+        gameManager.setTheMove(redJumpMove);
+        Cell inTheMiddle = theBoard.getCell(1, 3);
+        inTheMiddle.setPiece(new Piece(Color.BLACK));
+        gameManager.setTheBoard(theBoard);
+
+        System.out.println(gameManager.thereIsAnOpponentPieceInTheMiddle());
+        assertTrue(gameManager.thereIsAnOpponentPieceInTheMiddle());
+    }
+
+    @Test
+    public void thereIsAnOpponentPieceInTheMiddleOfABlackJumpTest() {
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.RED));
+        gameManager.setTheBoard(theBoard);
+
+        assertTrue(gameManager.thereIsAnOpponentPieceInTheMiddle());
+    }
+
+    @Test
+    public void thereIsNoOppnentPieceInTheMiddleTest() {
+        gameManager.setTheMove(redJumpMove);
+
+        assertFalse(gameManager.thereIsAnOpponentPieceInTheMiddle());
+
     public void startAndFinishAreDiagonallyOneSquareApartTest1() {
         gameManager.setTheMove(validAttackDiagonal);
         boolean expected = true;

@@ -35,6 +35,14 @@ public class GameManager {
     }
 
     /**
+     * Might be for testing only.
+     * @param theBoard
+     */
+    void setTheBoard(CheckersBoard theBoard) {
+        this.theBoard = theBoard;
+    }
+
+    /**
      * Call this when you get a player move POST request.
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
      * then an unchanged board state is returned.
@@ -55,12 +63,29 @@ public class GameManager {
     }
 
     private boolean isMoveValidJumpMove() {
-        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ){}
+        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ) {
+
+        }
         return false;
     }
 
-    private boolean thereIsAnOpponentPieceInTheMiddle() {
-        return false;
+    boolean thereIsAnOpponentPieceInTheMiddle() {
+        Cell start = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        Cell finish = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
+        int xOfMiddleCell = (int)((theMove.getxPositionInitial() + theMove.getxPositionDesired()) / 2.0);
+        int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
+
+        Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
+
+        if ( start.getPiece().getPieceColor().equals(Color.RED) ) {
+            return middleCell.getHasPiece() && middleCell.getPiece().getPieceColor().equals(Color.BLACK);
+        }
+        if ( start.getPiece().getPieceColor().equals(Color.BLACK) ) {
+            return middleCell.getHasPiece() && middleCell.getPiece().getPieceColor().equals(Color.RED);
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean startAndFinishAreDiagonallyOneSquareApart() {
