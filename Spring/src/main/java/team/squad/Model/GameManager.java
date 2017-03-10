@@ -55,7 +55,7 @@ public class GameManager {
     }
 
     private boolean isMoveValidJumpMove() {
-        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() )
+        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ){}
         return false;
     }
 
@@ -63,7 +63,10 @@ public class GameManager {
         return false;
     }
 
-    private boolean startAndFinishAreDiagonallyOneSquareApart() {
+    public boolean startAndFinishAreDiagonallyOneSquareApart() {
+        if (Math.abs(theMove.getxPositionDesired() - theMove.getxPositionInitial()) == 2 && Math.abs(theMove.getyPositionDesired() - theMove.getyPositionInitial()) ==2) {
+            return true;
+        }
         return false;
     }
 

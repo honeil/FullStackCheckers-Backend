@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class GameManagerTest {
 
     GameManager gameManager;
-    Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove;
+    Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove, validAttackDiagonal, invalidAttackDiagonal;
     CheckersBoard theBoard;
 
     @Before
@@ -42,6 +42,14 @@ public class GameManagerTest {
         blackBackwardsMove = new Move();
         blackBackwardsMove.setFirstCoordinate("B6");
         blackBackwardsMove.setSecondCoordinate("A7");
+
+        validAttackDiagonal = new Move();
+        validAttackDiagonal.setFirstCoordinate("C3");
+        validAttackDiagonal.setSecondCoordinate("E5");
+
+        invalidAttackDiagonal = new Move();
+        invalidAttackDiagonal.setFirstCoordinate("C3");
+        invalidAttackDiagonal.setSecondCoordinate("D5");
     }
 
     @Test
@@ -235,5 +243,21 @@ public class GameManagerTest {
         List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
 
         assertNotEquals(intialBoardState, boardStateAfterMove);
+    }
+
+    @Test
+    public void startAndFinishAreDiagonallyOneSquareApartTest1() {
+        gameManager.setTheMove(validAttackDiagonal);
+        boolean expected = true;
+        boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void startAndFinishAreDiagonallyOneSquareApartTest2() {
+        gameManager.setTheMove(invalidAttackDiagonal);
+        boolean expected = false;
+        boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
+        assertEquals(expected, actual);
     }
 }
