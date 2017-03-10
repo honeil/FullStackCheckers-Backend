@@ -14,8 +14,7 @@ import static org.junit.Assert.*;
 public class PieceTest {
 
     private Piece redPiece, blackPiece;
-    private Cell testCell00, testCell20;
-    private Cell testCell77;
+    private Cell testCell00, testCell20, testCell77;
 
     @Before
     public void setUp() throws Exception {
