@@ -88,7 +88,10 @@ public class GameManager {
         }
     }
 
-    private boolean startAndFinishAreDiagonallyOneSquareApart() {
+    public boolean startAndFinishAreDiagonallyOneSquareApart() {
+        if (Math.abs(theMove.getxPositionDesired() - theMove.getxPositionInitial()) == 2 && Math.abs(theMove.getyPositionDesired() - theMove.getyPositionInitial()) ==2) {
+            return true;
+        }
         return false;
     }
 
