@@ -20,8 +20,8 @@ public class CheckersSQLDB {
 
             log("--Add game ID to DB");
 
-            addGameToDB("11", "milton");
-            addGameToDB("12", "walgreens");
+            addGameToDB("13", "milton");
+            addGameToDB("14", "walgreens");
 
             log("Get game ID from DB");
             getGame("2");
