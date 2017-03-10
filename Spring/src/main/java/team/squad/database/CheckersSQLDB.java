@@ -1,4 +1,4 @@
-package checkersBE;
+package team.squad.database;
 
 import java.sql.*;
 
@@ -20,8 +20,8 @@ public class CheckersSQLDB {
 
             log("--Add game ID to DB");
 
-            addGameToDB("13", "milton");
-            addGameToDB("14", "walgreens");
+            addGameToDB("17", "chckers");
+            addGameToDB("18", "chess");
 
             log("Get game ID from DB");
             getGame("2");
