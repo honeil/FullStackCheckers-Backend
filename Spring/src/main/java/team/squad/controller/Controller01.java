@@ -21,20 +21,21 @@ public class Controller01 {
     public Controller01(GameManager gameManager) {
         this.gameManager = gameManager;
     }
-
+  
     @RequestMapping("/start")
     public List<Map> generateInitialBoardState() {
         return gameManager.generateInitialBoardState();
     }
 
-    @RequestMapping("/pcMove")
-    public List<Map> generateNewBoardStateFromComputerMove() {
-        return gameManager.generateNewBoardStateFromComputerMove();
+    @RequestMapping("/npcMove")
+    public List<Map> generateNewBoardStateFromComputerMove(){
+        return new MoveHandler().generateNewBoardStateFromComputerMove();
+
     }
 
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move) {
-        gameManager.setTheMove(move);
-        return gameManager.generateNewBoardStateFromPlayerMove();
+   public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move){
+        moveHandler.setTheMove(move);
+        return moveHandler.generateNewBoardStateFromPlayerMove();
     }
 }
