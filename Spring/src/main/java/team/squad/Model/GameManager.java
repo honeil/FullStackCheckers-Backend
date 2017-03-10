@@ -16,7 +16,7 @@ import java.util.Map;
  * and who should go next after the given move. This class also generates random computer moves (for now) when
  * requested using the generateNewBoardStateFromComputerMove() method.
  *
- * TODO refactor some of the methods, those jaunts are a mess
+ * TODO refactor some of the methods, those jawns are a mess
  */
 @Component
 public class GameManager {

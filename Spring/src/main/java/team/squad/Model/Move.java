@@ -16,8 +16,6 @@ public class Move {
     private int yPositionInitial;
     private int xPositionDesired;
     private int yPositionDesired;
-    private int xPositionFinal;
-    private int yPositionFinal;
 
     public Move() { }
 
@@ -80,11 +78,4 @@ public class Move {
     public int getyPositionDesired() {
         return yPositionDesired;
     }
-    public int getxPositionFinal() {
-        return xPositionFinal;
-    }
-    public int getyPositionFinal() {
-        return yPositionFinal;
-    }
-
 }
