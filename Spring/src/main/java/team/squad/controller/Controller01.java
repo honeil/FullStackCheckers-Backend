@@ -27,14 +27,14 @@ public class Controller01 {
         return gameManager.generateInitialBoardState();
     }
 
-    @RequestMapping("/pcMove")
-    public List<Map> generateNewBoardStateFromComputerMove() {
-        return gameManager.generateNewBoardStateFromComputerMove();
+    @RequestMapping("/npcMove")
+    public List<Map> generateNewBoardStateFromComputerMove(){
+        return new MoveHandler().generateNewBoardStateFromComputerMove();
     }
 
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move) {
-        gameManager.setTheMove(move);
-        return gameManager.generateNewBoardStateFromPlayerMove();
+    public List<Map> generateNewBoardStateFromPlayerMove(@RequestBody Move move){
+        moveHandler.setTheMove(move);
+        return moveHandler.generateNewBoardStateFromPlayerMove();
     }
 }
