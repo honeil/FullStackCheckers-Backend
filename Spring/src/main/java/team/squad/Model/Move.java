@@ -87,21 +87,4 @@ public class Move {
         return yPositionFinal;
     }
 
-    // set the final x and y using some a.i. like algorithm
-    // these are just dummy values
-
-    // things we need to do to complete a move
-
-    // player move
-    // check if there is a piece at the initial position
-    // check if a move from initial to the desired position is valid
-    //      do the cells "connect", is there a piece in that cell already?, can the piece move in that direction?
-    // if the move is valid, we return the final position of the piece and update our model.
-    // if the move is invalid we send some sort of error message / indication
-    // THIS DOES NOT CONSIDER JUMPS ATM
-
-    // computer move
-    // determine which piece to move
-    // then determine where to move that piece
-    // BOGO checkers, randomly pick a piece and then randomly move that piece to one of the available places
 }

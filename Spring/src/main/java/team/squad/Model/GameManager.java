@@ -55,7 +55,7 @@ public class GameManager {
     public List<Map> generateNewBoardStateFromPlayerMove() {
         if ( isMoveValidAdjacentMove() || isMoveValidJumpMove() ) {
             doMove();
-            return BoardState.generateBoardState(theBoard, false);
+            return BoardState.generateBoardState(theBoard, false); // player can go again if he jumps
         }
         else {
             return BoardState.generateBoardState(theBoard, true);
@@ -96,7 +96,7 @@ public class GameManager {
     }
 
     boolean isMoveValidAdjacentMove() {
-        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && requestCellHasPieceInIt() ) {
+        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && startCellHasPieceInIt() ) {
             if( movingForward() || pieceIsAKing()){
                 return true;
             }
@@ -108,8 +108,10 @@ public class GameManager {
     }
 
     boolean cellsInMoveAreAdjacent() {
-        if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1 || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
-            if(theMove.getyPositionDesired() == theMove.getyPositionInitial()-1 || theMove.getyPositionDesired() == theMove.getyPositionInitial()+1){
+        if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1
+                || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
+            if(theMove.getyPositionDesired() == theMove.getyPositionInitial()-1
+                    || theMove.getyPositionDesired() == theMove.getyPositionInitial()+1){
                 return true;
             }
         }
@@ -127,7 +129,7 @@ public class GameManager {
         }
     }
 
-    private boolean requestCellHasPieceInIt() {
+    private boolean startCellHasPieceInIt() {
         Cell toCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         if ( toCheck.getHasPiece() ) {//&& toCheck.getPiece().getPieceColor().equals(Color.RED)) {
             return true;
@@ -202,8 +204,9 @@ public class GameManager {
     Cell pickRandomCellWithBlackPieceInIt() {
         List<Cell> allTheCellsWithBlackPieces = new ArrayList<>();
 
-        for ( int i = 0; i < 7; i++ ) {
-            for ( int j = 0; j < 7; j++ ) {
+        // TODO look only at black cells, this checks all 64 cells.
+        for ( int i = 0; i < 8; i++ ) {
+            for ( int j = 0; j < 8; j++ ) {
                 Cell current = theBoard.getCell(i, j);
                 if ( current.getHasPiece() && current.getPiece().getPieceColor().equals(Color.BLACK) ) {
                     allTheCellsWithBlackPieces.add(current);
@@ -224,6 +227,7 @@ public class GameManager {
             return null;
         }
         else {
+          //  Cell downAndLeft = getDownAndLeftCell(cellToMovePieceFrom);
             int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
             int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
             Cell downAndLeft = null;
