@@ -4,6 +4,8 @@ package team.squad.Model;
  * @author William Mattern
  * @author John A. Squier
  *
+ * This class is used to represent a piece in a game.
+ *
  * Date Created: 3/6/17.
  */
 public class Piece {

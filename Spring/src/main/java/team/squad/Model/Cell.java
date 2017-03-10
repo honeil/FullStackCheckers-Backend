@@ -4,8 +4,9 @@ package team.squad.Model;
  * @author William Mattern
  * @author John A. Squier
  *
- * Date Created: 3/6/17.
+ * This class represents a cell (square) on a game board.
  *
+ * Date Created: 3/6/17.
  */
 public class Cell {
 

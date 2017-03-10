@@ -6,10 +6,9 @@ import java.util.Stack;
  * @author William Mattern
  * @author John A. Squier
  *
- * Date Created: 3/6/17.
- *
  * NOTE THAT J is UP/DOWN/ROW and I is LEFT/RIGHT/COLUMN!!!
  *
+ * Date Created: 3/6/17.
  */
 public class CheckersBoard {
     private Cell[][] theBoard;

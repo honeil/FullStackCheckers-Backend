@@ -10,11 +10,11 @@ import java.util.Map;
  * @author William Mattern
  * @author John A. Squier
  *
- * Date Created: 3/7/17.
- *
  * This class takes information about a move and does all the necessary checking to determine if the move is valid,
  * and who should go next after the given move. This class also generates random computer moves (for now) when
  * requested using the generateNewBoardStateFromComputerMove() method.
+ *
+ * Date Created: 3/7/17.
  *
  * TODO refactor some of the methods, those jawns are a mess
  */

@@ -9,9 +9,11 @@ import java.util.Map;
  * @author William Mattern
  * @author John A. Squier
  *
+ * This class is abstract because all its method's are static, so there is no need to ever instantiate it.
+ *
  * Date Created: 3/7/17.
  */
-public abstract class BoardState {
+abstract class BoardState {
 
     /**
      * Takes a CheckersBoard object and coverts the 2D array representation of the board into a Map that
@@ -22,7 +24,7 @@ public abstract class BoardState {
      * by indicating if it is the players turn or not.
      */
     // TODO this has way too many indentations and needs refactored
-    public static List<Map> generateBoardState(CheckersBoard theBoard, boolean isPlayerMove) {
+    static List<Map> generateBoardState(CheckersBoard theBoard, boolean isPlayerMove) {
         Map<String, CellState> boardState = new HashMap<String, CellState>();
         Map<String, Boolean> whosTurnIsIt = new HashMap<String, Boolean>();
         List<Map> response = new ArrayList<>();
@@ -47,7 +49,6 @@ public abstract class BoardState {
                 }
             }
         }
-
         response.add(whosTurnIsIt);
         response.add(boardState);
         return response;
@@ -58,7 +59,7 @@ public abstract class BoardState {
      * @return A list of maps representing the starting positions of the 24 pieces in an 8 by 8 checkers game and that
      * the players turn is first.
      */
-    public static List<Map> getInitialBoardState() {
+    static List<Map> getInitialBoardState() {
         List<Map> response = generateBoardState(new CheckersBoard(), true);
         return response;
     }
