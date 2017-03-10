@@ -54,7 +54,7 @@ public class GameManager {
         }
     }
 
-    public boolean isMoveValidAdjacentMove() {
+    boolean isMoveValidAdjacentMove() {
         if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && requestCellHasPieceInIt() ) {
             if( movingForward() || pieceIsAKing()){
                 return true;
