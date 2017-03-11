@@ -62,9 +62,9 @@ public class GameManager {
         }
     }
 
-    private boolean isMoveValidJumpMove() {
+    public boolean isMoveValidJumpMove() {
         if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ) {
-
+            return true;
         }
         return false;
     }

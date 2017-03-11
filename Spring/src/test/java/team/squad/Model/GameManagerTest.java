@@ -44,7 +44,6 @@ public class GameManagerTest {
         blackBackwardsMove.setFirstCoordinate("B6");
         blackBackwardsMove.setSecondCoordinate("A7");
 
-
         redJumpMove = new Move();
         redJumpMove.setFirstCoordinate("A3");
         redJumpMove.setSecondCoordinate("C5");
@@ -296,5 +295,23 @@ public class GameManagerTest {
         boolean expected = false;
         boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validJumpMoveTest(){
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.RED));
+        gameManager.setTheBoard(theBoard);
+        assertTrue(gameManager.isMoveValidJumpMove());
+    }
+
+    @Test
+    public void inValidJumpMoveTest(){
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.BLACK));
+        gameManager.setTheBoard(theBoard);
+        assertFalse(gameManager.isMoveValidJumpMove());
     }
 }
