@@ -314,4 +314,6 @@ public class GameManagerTest {
         gameManager.setTheBoard(theBoard);
         assertFalse(gameManager.isMoveValidJumpMove());
     }
+
+
 }
