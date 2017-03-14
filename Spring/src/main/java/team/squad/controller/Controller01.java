@@ -3,6 +3,7 @@ package team.squad.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import team.squad.Model.CheckersBoard;
 import team.squad.Model.Move;
 import team.squad.Model.GameManager;
 
@@ -22,6 +23,9 @@ public class Controller01 {
     public Controller01(GameManager gameManager) {
         this.gameManager = gameManager;
     }
+
+    @Autowired
+    public ComputerPlayer computerPlayer;
 
     @RequestMapping("/start")
     public List<Map> generateInitialBoardState() {
