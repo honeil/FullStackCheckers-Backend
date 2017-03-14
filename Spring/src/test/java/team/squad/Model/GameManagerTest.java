@@ -297,4 +297,22 @@ public class GameManagerTest {
         boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void validJumpMoveTest(){
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.RED));
+        gameManager.setTheBoard(theBoard);
+        assertTrue(gameManager.isMoveValidJumpMove());
+    }
+
+    @Test
+    public void inValidJumpMoveTest(){
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.BLACK));
+        gameManager.setTheBoard(theBoard);
+        assertFalse(gameManager.isMoveValidJumpMove());
+    }
 }
