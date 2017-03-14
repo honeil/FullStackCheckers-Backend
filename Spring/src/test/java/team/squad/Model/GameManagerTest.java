@@ -38,7 +38,7 @@ public class GameManagerTest {
 
         redBackwardsMove = new Move();
         redBackwardsMove.setFirstCoordinate("A3"); // change to B4 to A3, gets a null ptr exception
-        redBackwardsMove.setSecondCoordinate("B2"); // TODO find this bug, can pieces move backwards?
+        redBackwardsMove.setSecondCoordinate("B2");
 
         blackBackwardsMove = new Move();
         blackBackwardsMove.setFirstCoordinate("B6");
@@ -276,12 +276,13 @@ public class GameManagerTest {
     }
 
     @Test
-    public void thereIsNoOppnentPieceInTheMiddleTest() {
+    public void thereIsNoOpponentPieceInTheMiddleTest() {
         gameManager.setTheMove(redJumpMove);
 
         assertFalse(gameManager.thereIsAnOpponentPieceInTheMiddle());
     }
 
+    @Test
     public void startAndFinishAreDiagonallyOneSquareApartTest1() {
         gameManager.setTheMove(validAttackDiagonal);
         boolean expected = true;
