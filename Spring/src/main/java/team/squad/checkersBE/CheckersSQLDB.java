@@ -13,9 +13,11 @@ public class CheckersSQLDB
     static Connection checkersConn = null;
     static PreparedStatement checkersPrepareStat = null;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
-        try {
+        try
+        {
             log("Establish connection to DB");
             makeJDBCConnection();
 
@@ -33,39 +35,48 @@ public class CheckersSQLDB
             checkersConn.close();
 
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    private static void makeJDBCConnection () {
-        try {
+    private static void makeJDBCConnection()
+    {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
             log("JDBC Connected");
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e)
+        {
             log("JDBC Connection Error - check dependencies in Maven POM or import MYSQL Jar File to Resources");
             e.printStackTrace();
             return;
         }
-        try {
+        try
+        {
             checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/games", "root", "");
-            if (checkersConn != null) {
+            if (checkersConn != null)
+            {
                 log("Connection success!");
 
-            } else {
+            } else
+            {
                 log("Check username and password");
             }
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             log("SQL Connection failure");
             e.printStackTrace();
             return;
         }
     }
 
-    private static void addGameToDB(String gameID, String contents) {
+    private static void addGameToDB(String gameID, String contents)
+    {
 
-        try {
+        try
+        {
             String insertQueryStatement = "INSERT INTO games VALUES (?,?)";
 
             checkersPrepareStat = checkersConn.prepareStatement(insertQueryStatement);
@@ -73,24 +84,28 @@ public class CheckersSQLDB
             checkersPrepareStat.setString(2, gameID);
 
             checkersPrepareStat.executeUpdate();
-            log( gameID + "with contents of " + contents + " created.");
-        } catch (SQLException e) {
+            log(gameID + "with contents of " + contents + " created.");
+        } catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
 
-    private static String getGame(String gameID) {
+    private static String getGame(String gameID)
+    {
 
         String ID = "", contents = "";
 
-        try {
+        try
+        {
             String getQueryStatement = "SELECT * FROM games";
 
             checkersPrepareStat = checkersConn.prepareStatement(getQueryStatement);
 
             ResultSet rs = checkersPrepareStat.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+            {
                 ID = rs.getString("ID");
                 contents = rs.getString("Contents");
                 System.out.format("%s, %s\n", ID, contents);
@@ -98,31 +113,34 @@ public class CheckersSQLDB
 
             return ID + contents;
 
-        } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
             return "FAILURE";
         }
     }
 
-    //1. find correct game via ID. 2. save 'contents' value as new json
-    private static void saveGame(String gameID, String contents) {
+    private static void saveGame(String gameID, String contents)
+    {
 
-        try {
-           String insertQueryStatement = "UPDATE games SET contents = '"+contents+"' WHERE ID = '"+gameID+"';";
+        try
+        {
+            String insertQueryStatement = "UPDATE games SET contents = '" + contents + "' WHERE ID = '" + gameID + "';";
 
-          checkersPrepareStat = checkersConn.prepareStatement(insertQueryStatement);
-            //checkersPrepareStat = checkersConn.prepareStatement("UPDATE games SET contents = 'testData' WHERE ID = '13';");
+            checkersPrepareStat = checkersConn.prepareStatement(insertQueryStatement);
 
-           checkersPrepareStat.executeUpdate();
-           log("game " + gameID + " contents has been updated to " + contents);
+            checkersPrepareStat.executeUpdate();
+            log("game " + gameID + " contents has been updated to " + contents);
 
-       } catch (SQLException e) {
+        } catch (SQLException e)
+        {
             e.printStackTrace();
-       }
+        }
     }
 
-        private static void log (String string) {
-            System.out.println(string);
+    private static void log(String string)
+    {
+        System.out.println(string);
     }
 }
 
