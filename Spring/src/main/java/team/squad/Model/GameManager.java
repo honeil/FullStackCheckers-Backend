@@ -58,7 +58,7 @@ public class GameManager {
     }
 
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if ( isMoveValidAdjacentMove() ) {
+        if ( isMoveValidAdjacentMove() || isMoveValidJumpMove()) {
             doMove();
             return BoardState.generateBoardState(theBoard, false); // player can go again if he jumps
         }
