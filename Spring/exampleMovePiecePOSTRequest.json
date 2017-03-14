@@ -1,4 +1,4 @@
 {
-  "initialCell": "A3",
-  "desiredCell": "B4"
+  "firstCoordinate": "A3",
+  "secondCoordinate": "B4"
 }

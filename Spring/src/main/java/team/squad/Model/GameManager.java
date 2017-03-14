@@ -52,8 +52,13 @@ public class GameManager {
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
+
+    public CheckersBoard getTheBoard(){
+        return this.theBoard;
+    }
+
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if ( isMoveValidAdjacentMove() || isMoveValidJumpMove() ) {
+        if ( isMoveValidAdjacentMove() ) {
             doMove();
             return BoardState.generateBoardState(theBoard, false); // player can go again if he jumps
         }
@@ -62,9 +67,9 @@ public class GameManager {
         }
     }
 
-    private boolean isMoveValidJumpMove() {
+    public boolean isMoveValidJumpMove() {
         if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ) {
-
+            return true;
         }
         return false;
     }
@@ -175,6 +180,18 @@ public class GameManager {
         initialCell.removePiece();
     }
 
+    public void doJump() {
+        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
+        int xOfMiddleCell = (int)((theMove.getxPositionInitial() + theMove.getxPositionDesired()) / 2.0);
+        int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
+
+        Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
+        desiredCell.setPiece(initialCell.getPiece());
+        initialCell.removePiece();
+        middleCell.removePiece();
+    }
+
     /**
      * Call this when you get a computer move GET request.
      * @return The updated board state after the computer has made its BOGO move.
@@ -183,6 +200,17 @@ public class GameManager {
     public List<Map> generateNewBoardStateFromComputerMove() {
         Cell cellToMovePieceFrom;
         Cell cellToMovePieceTo = null;
+        List<Cell> allTheCellsWithBlackPieces = new ArrayList<>();
+
+        for ( int i = 0; i < 7; i++ ) {
+            for ( int j = 0; j < 7; j++ ) {
+                Cell current = theBoard.getCell(i, j);
+                if ( current.getHasPiece() && current.getPiece().getPieceColor().equals(Color.BLACK) ) {
+                    allTheCellsWithBlackPieces.add(current);
+                }
+            }
+        }
+
         do {
             cellToMovePieceFrom = pickRandomCellWithBlackPieceInIt();
             cellToMovePieceTo = generateMoveIfAvailable(cellToMovePieceFrom);
@@ -213,6 +241,7 @@ public class GameManager {
                 }
             }
         }
+
         int randomIndex = (int)(Math.random() * allTheCellsWithBlackPieces.size());
         Cell randomlyPicked = allTheCellsWithBlackPieces.get(randomIndex);
         return randomlyPicked;
@@ -220,7 +249,7 @@ public class GameManager {
 
     // TODO this is a mess, refactor also add logic for king pieces
     Cell generateMoveIfAvailable(Cell cellToMovePieceFrom) {
-        // computer is black pieces which are on top of the board
+            // computer is black pieces which are on top of the board
         if ( cellToMovePieceFrom.getPiece().getKing() ) {
             // check all four available locations
             System.out.println("gotta work out logic for king moves");//////////////////////////////////////////////////////////////////////
