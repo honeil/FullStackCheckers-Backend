@@ -212,69 +212,6 @@ public class GameManager {
         }
     }
 
-    Cell pickRandomCellWithBlackPieceInIt() {
-        List<Cell> allTheCellsWithBlackPieces = new ArrayList<>();
-
-        // TODO look only at black cells, this checks all 64 cells.
-        for ( int i = 0; i < 8; i++ ) {
-            for ( int j = 0; j < 8; j++ ) {
-                Cell current = theBoard.getCell(i, j);
-                if ( current.getHasPiece() && current.getPiece().getPieceColor().equals(Color.BLACK) ) {
-                    allTheCellsWithBlackPieces.add(current);
-                }
-            }
-        }
-
-        int randomIndex = (int)(Math.random() * allTheCellsWithBlackPieces.size());
-        Cell randomlyPicked = allTheCellsWithBlackPieces.get(randomIndex);
-        return randomlyPicked;
-    }
-
-    // TODO this is a mess, refactor also add logic for king pieces
-    Cell generateMoveIfAvailable(Cell cellToMovePieceFrom) {
-            // computer is black pieces which are on top of the board
-        if ( cellToMovePieceFrom.getPiece().getKing() ) {
-            // check all four available locations
-            System.out.println("gotta work out logic for king moves");//////////////////////////////////////////////////////////////////////
-            return null;
-        }
-        else {
-          //  Cell downAndLeft = getDownAndLeftCell(cellToMovePieceFrom);
-            int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
-            int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
-            Cell downAndLeft = null;
-            if ( cellToMovePieceFrom.getxPosition() > 0 ) {
-                downAndLeft = theBoard.getCell(xForDownAndLeft, yForDownAndLeft);
-            }
-
-            int xforDownAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
-            int yforDownAndRight = cellToMovePieceFrom.getyPosition() - 1; // down
-            Cell downAndRight = null;
-            if ( cellToMovePieceFrom.getxPosition() < 7 ) {
-                 downAndRight = theBoard.getCell(xforDownAndRight, yforDownAndRight);
-            }
-
-            if ( ((downAndLeft != null) && downAndLeft.getHasPiece().equals(false))
-                    && ((downAndRight != null) && downAndRight.getHasPiece().equals(false)) ) {
-                if ( (int)(Math.random() * 10) < 5 ) {
-                    return downAndLeft;
-                }
-                else {
-                    return downAndRight;
-                }
-            }
-            else if ( downAndLeft != null && downAndLeft.getHasPiece().equals(false) ) {
-                return downAndLeft;
-            }
-            else if ( downAndRight != null && downAndRight.getHasPiece().equals(false) ) {
-                return downAndRight;
-            }
-            else {
-                return null;
-            }
-        }
-    }
-
     /**
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
      * Can also be used to reset the game by calling this in the middle of the game.

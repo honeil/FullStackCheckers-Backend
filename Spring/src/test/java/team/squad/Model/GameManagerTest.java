@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
  * @author John A. Squier
  *
  * Date Created: 3/8/17.
+ *
+ * TODO move commented out tests to ComputerPlayerTests
  */
 public class GameManagerTest {
 
@@ -210,40 +212,40 @@ public class GameManagerTest {
         assertTrue(expected.equals(actual));
     }
 
-    @Test
-    public void doesRandomlyPickedCellHaveABlackPieceInIt() {
-        boolean expected = true;
-        Color expectedColor = Color.BLACK;
+//    @Test
+//    public void doesRandomlyPickedCellHaveABlackPieceInIt() {
+//        boolean expected = true;
+//        Color expectedColor = Color.BLACK;
+//
+//        Cell theCell = gameManager.pickRandomCellWithBlackPieceInIt();
+//        boolean actual = theCell.getHasPiece();
+//        Color actualColor = theCell.getPiece().getPieceColor();
+//
+//        assertEquals(expected, actual);
+//        assertEquals(expectedColor, actualColor);
+//    }
 
-        Cell theCell = gameManager.pickRandomCellWithBlackPieceInIt();
-        boolean actual = theCell.getHasPiece();
-        Color actualColor = theCell.getPiece().getPieceColor();
+//    @Test
+//    public void givenCellDoesHaveAnAvailableMoveTest() {
+//        Cell toMoveFrom = theBoard.getCell(1, 5);
+//        Cell expected1 = theBoard.getCell(0, 4);
+//        Cell expected2 = theBoard.getCell(2, 4);
+//
+//        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
+//
+//        assertTrue(expected1.getCellName().equals(actual.getCellName())
+//                            || expected2.getCellName().equals(actual.getCellName()));
+//    }
 
-        assertEquals(expected, actual);
-        assertEquals(expectedColor, actualColor);
-    }
-
-    @Test
-    public void givenCellDoesHaveAnAvailableMoveTest() {
-        Cell toMoveFrom = theBoard.getCell(1, 5);
-        Cell expected1 = theBoard.getCell(0, 4);
-        Cell expected2 = theBoard.getCell(2, 4);
-
-        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
-
-        assertTrue(expected1.getCellName().equals(actual.getCellName())
-                            || expected2.getCellName().equals(actual.getCellName()));
-    }
-
-    @Test
-    public void givenCellH6IsCellG5SelectedAsAnAvailableMoveTest() {
-        Cell toMoveFrom = theBoard.getCell(7, 5);
-        Cell expected = theBoard.getCell(6, 4);
-
-        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
-
-        assertEquals(expected.getCellName(), actual.getCellName());
-    }
+//    @Test
+//    public void givenCellH6IsCellG5SelectedAsAnAvailableMoveTest() {
+//        Cell toMoveFrom = theBoard.getCell(7, 5);
+//        Cell expected = theBoard.getCell(6, 4);
+//
+//        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
+//
+//        assertEquals(expected.getCellName(), actual.getCellName());
+//    }
 
 //    @Test
 //    public void generateRandomComputerMoveTest() {
