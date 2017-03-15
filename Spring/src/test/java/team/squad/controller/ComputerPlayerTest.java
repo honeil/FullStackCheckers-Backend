@@ -20,7 +20,7 @@ public class ComputerPlayerTest {
         testBoard = new CheckersBoard();
         testBoard.initializePieces();
         hal.theBoard = testBoard;
-        hal.trackAllBlackPieces();
+        hal.locateAllBlackPieces();
     }
 
     @Test
@@ -36,7 +36,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void trackAllBlackPiecesTest() throws Exception {
-        hal.trackAllBlackPieces();
+        hal.locateAllBlackPieces();
         int expectedSize = 12, actualSize = hal.blackTeamPositions.size();
         assertEquals(expectedSize,actualSize);
     }

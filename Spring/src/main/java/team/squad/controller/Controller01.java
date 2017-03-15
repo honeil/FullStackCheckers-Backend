@@ -34,7 +34,8 @@ public class Controller01 {
 
     @RequestMapping("/npcMove")
     public List<Map> generateNewBoardStateFromComputerMove() {
-        return gameManager.generateNewBoardStateFromComputerMove();
+        Move AI = computerPlayer.generateMove(gameManager.getTheBoard());
+        return gameManager.generateNewBoardStateFromComputerMove(AI);
     }
 
     @RequestMapping(value = "/playerMove", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
