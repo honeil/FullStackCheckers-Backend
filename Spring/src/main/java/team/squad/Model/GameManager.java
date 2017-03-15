@@ -260,10 +260,18 @@ public class GameManager {
         if(isMoveValidJumpMove()) {
             System.out.println("DOING COMPUTER JUMP");
             doJump();
+            if ( moveResultsInAKing() ) {
+                Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
+                toKing.setKing(true);
+            }
             return BoardState.generateBoardState(theBoard, true);
         } else {
             System.out.println("DOING NON JUMP COMPUTER");
             doMove();
+            if ( moveResultsInAKing() ) {
+                Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
+                toKing.setKing(true);
+            }
             return BoardState.generateBoardState(theBoard, true);
         }
     }
