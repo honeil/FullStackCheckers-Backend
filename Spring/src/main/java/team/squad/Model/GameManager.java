@@ -163,7 +163,7 @@ public class GameManager {
     }
 
     /**
-     * Ensures that the two cells given in theMOve are diagonally adjacent.
+     * Ensures that the two cells given in theMove are diagonally adjacent.
      * @return a boolean indicating whether the two cells are diagonally adjacent.
      */
     boolean cellsInMoveAreAdjacent() {
