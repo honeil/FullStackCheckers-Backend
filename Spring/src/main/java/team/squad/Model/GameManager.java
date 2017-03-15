@@ -52,19 +52,26 @@ public class GameManager {
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
+
+    public CheckersBoard getTheBoard(){
+        return this.theBoard;
+    }
+
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if ( isMoveValidAdjacentMove() || isMoveValidJumpMove() ) {
+        if (isMoveValidJumpMove()) {
+            doJump();
+            return BoardState.generateBoardState(theBoard, false); // player might go again if he jumps
+        } else if (isMoveValidAdjacentMove()) {
             doMove();
-            return BoardState.generateBoardState(theBoard, false); // player can go again if he jumps
-        }
-        else {
+            return BoardState.generateBoardState(theBoard, false);
+        } else {
             return BoardState.generateBoardState(theBoard, true);
         }
     }
 
-    private boolean isMoveValidJumpMove() {
+    public boolean isMoveValidJumpMove() {
         if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ) {
-
+            return true;
         }
         return false;
     }
@@ -175,30 +182,32 @@ public class GameManager {
         initialCell.removePiece();
     }
 
+    public void doJump() {
+        Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
+        Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
+        int xOfMiddleCell = (int)((theMove.getxPositionInitial() + theMove.getxPositionDesired()) / 2.0);
+        int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
+
+        Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
+        desiredCell.setPiece(initialCell.getPiece());
+        initialCell.removePiece();
+        middleCell.removePiece();
+    }
+
     /**
      * Call this when you get a computer move GET request.
      * @return The updated board state after the computer has made its BOGO move.
      * Jumps are not incorporated at this point
      */
-    public List<Map> generateNewBoardStateFromComputerMove() {
-        Cell cellToMovePieceFrom;
-        Cell cellToMovePieceTo = null;
-        do {
-            cellToMovePieceFrom = pickRandomCellWithBlackPieceInIt();
-            cellToMovePieceTo = generateMoveIfAvailable(cellToMovePieceFrom);
-        } while ( cellToMovePieceTo == null );
-
-        Move computerMove = new Move();
-        computerMove.setFirstCoordinate(cellToMovePieceFrom.getCellName());
-        computerMove.setSecondCoordinate(cellToMovePieceTo.getCellName());
-
-        System.out.println("piece start cell = " + computerMove.getFirstCoordinate());//////////////////////////////////////////////////////////////////////
-        System.out.println("piece end cell = " + computerMove.getSecondCoordinate());//////////////////////////////////////////////////////////////////////
-
+    public List<Map> generateNewBoardStateFromComputerMove(Move computerMove) {
         this.setTheMove(computerMove);
-        doMove();
-
-        return BoardState.generateBoardState(theBoard, true);
+        if(isMoveValidJumpMove()) {
+            doJump();
+            return BoardState.generateBoardState(theBoard, true);
+        } else {
+            doMove();
+            return BoardState.generateBoardState(theBoard, true);
+        }
     }
 
     Cell pickRandomCellWithBlackPieceInIt() {
@@ -213,6 +222,7 @@ public class GameManager {
                 }
             }
         }
+
         int randomIndex = (int)(Math.random() * allTheCellsWithBlackPieces.size());
         Cell randomlyPicked = allTheCellsWithBlackPieces.get(randomIndex);
         return randomlyPicked;
@@ -220,7 +230,7 @@ public class GameManager {
 
     // TODO this is a mess, refactor also add logic for king pieces
     Cell generateMoveIfAvailable(Cell cellToMovePieceFrom) {
-        // computer is black pieces which are on top of the board
+            // computer is black pieces which are on top of the board
         if ( cellToMovePieceFrom.getPiece().getKing() ) {
             // check all four available locations
             System.out.println("gotta work out logic for king moves");//////////////////////////////////////////////////////////////////////

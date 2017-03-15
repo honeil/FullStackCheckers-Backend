@@ -245,14 +245,14 @@ public class GameManagerTest {
         assertEquals(expected.getCellName(), actual.getCellName());
     }
 
-    @Test
-    public void generateRandomComputerMoveTest() {
-        List<Map> intialBoardState = BoardState.getInitialBoardState();
-
-        List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
-
-        assertNotEquals(intialBoardState, boardStateAfterMove);
-    }
+//    @Test
+//    public void generateRandomComputerMoveTest() {
+//        List<Map> intialBoardState = BoardState.getInitialBoardState();
+//
+//        List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
+//
+//        assertNotEquals(intialBoardState, boardStateAfterMove);
+//    }
 
     @Test
     public void thereIsAnOpponentPieceInTheMiddleOfARedJumpTest() {
@@ -296,5 +296,23 @@ public class GameManagerTest {
         boolean expected = false;
         boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void validJumpMoveTest(){
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.RED));
+        gameManager.setTheBoard(theBoard);
+        assertTrue(gameManager.isMoveValidJumpMove());
+    }
+
+    @Test
+    public void inValidJumpMoveTest(){
+        gameManager.setTheMove(blackJumpMove);
+        Cell inTheMiddle = theBoard.getCell(6, 4);
+        inTheMiddle.setPiece(new Piece(Color.BLACK));
+        gameManager.setTheBoard(theBoard);
+        assertFalse(gameManager.isMoveValidJumpMove());
     }
 }
