@@ -55,14 +55,14 @@ public class GameManager {
      * @return The updated board state as a map.
      */
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if (isMoveValidJumpMove()) {
+        if (isMoveValidJumpMove() && selectedPieceIsRed() ) {
             doJump();
             if ( moveResultsInAKing() ) {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
             return BoardState.generateBoardState(theBoard, true); // player jumps and goes again
-        } else if (isMoveValidAdjacentMove()) {
+        } else if (isMoveValidAdjacentMove() && selectedPieceIsRed() ) {
             doMove();
             if ( moveResultsInAKing() ) {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
@@ -96,7 +96,6 @@ public class GameManager {
     boolean isMoveValidJumpMove() {
         if ( startAndFinishAreDiagonallyOneSquareApart()
                 && thereIsAnOpponentPieceInTheMiddle()
-                && selectedPieceIsRed()
                 && movingForward() ) {
             return true;
         }
@@ -111,8 +110,7 @@ public class GameManager {
      */
     boolean isMoveValidAdjacentMove() {
         if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty()
-                && startCellHasPieceInIt() && selectedPieceIsRed()
-                && movingForward() ) {
+                && startCellHasPieceInIt() && movingForward() ) {
                 return true;
             }
             else {
@@ -235,15 +233,19 @@ public class GameManager {
     }
 
     private void doJump() {
+        System.out.println("DOING JUMP");
         Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
         int xOfMiddleCell = (int)((theMove.getxPositionInitial() + theMove.getxPositionDesired()) / 2.0);
         int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
 
         Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
+        System.out.println(middleCell.getCellName());
         desiredCell.setPiece(initialCell.getPiece());
         initialCell.removePiece();
+        System.out.println("REMOVING MIDDLE PIECE");
         middleCell.removePiece();
+        System.out.println("MIDDLE PIECE REMOVED?");
     }
 
     /**
@@ -256,9 +258,11 @@ public class GameManager {
         this.setTheMove(theMove);
 
         if(isMoveValidJumpMove()) {
+            System.out.println("DOING COMPUTER JUMP");
             doJump();
             return BoardState.generateBoardState(theBoard, true);
         } else {
+            System.out.println("DOING NON JUMP COMPUTER");
             doMove();
             return BoardState.generateBoardState(theBoard, true);
         }
