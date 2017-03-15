@@ -61,7 +61,7 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, true); // player jumps and goes again
+            return BoardState.generateBoardState(theBoard, false); // player doesn't get to go again
         } else if (isMoveValidAdjacentMove() && selectedPieceIsRed() ) {
             doMove();
             if ( moveResultsInAKing() ) {
@@ -240,12 +240,10 @@ public class GameManager {
         int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
 
         Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
-        System.out.println(middleCell.getCellName());
         desiredCell.setPiece(initialCell.getPiece());
         initialCell.removePiece();
-        System.out.println("REMOVING MIDDLE PIECE");
+        theBoard.addPieceToStack(middleCell.getPiece()); // add the jumped piece to its stack
         middleCell.removePiece();
-        System.out.println("MIDDLE PIECE REMOVED?");
     }
 
     /**

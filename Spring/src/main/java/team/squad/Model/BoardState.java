@@ -18,18 +18,21 @@ abstract class BoardState {
     /**
      * Takes a CheckersBoard object and coverts the 2D array representation of the board into a Map that
      *  represents the board's state. Then a map representing who's turn is next, the players or the computer's.
-     *  Those two maps are put together in a list of maps ready to send off through HTTP
+     *  Lastly a map indicating who has won (RED, BLACK, null).
+     *  Those three maps are put together in a list of maps ready to send off through HTTP
      * @param theBoard a CheckersBoard object with values in its 2D array.
      * @return a List of maps that represents the CheckersBoard by indicating the location of each piece and the turn
-     * by indicating if it is the players turn or not.
+     * by indicating if it is the players turn or not, and a whether or not anyone has won.
      */
     // TODO this has way too many indentations and needs refactored
     static List<Map> generateBoardState(CheckersBoard theBoard, boolean isPlayerMove) {
         Map<String, CellState> boardState = new HashMap<String, CellState>();
         Map<String, Boolean> whosTurnIsIt = new HashMap<String, Boolean>();
+        Map<String, Color> whatColorHasWon = new HashMap<String, Color>();
         List<Map> response = new ArrayList<>();
 
         whosTurnIsIt.put("isPlayerMove", isPlayerMove);
+        whatColorHasWon.put("whoHasWon", theBoard.whoHasWon());
 
         for ( int i = 0; i < 8; i++ ) { // this is rows?
             for ( int j = 0; j < 8; j++ ) { // this is columns?
@@ -51,6 +54,7 @@ abstract class BoardState {
         }
         response.add(whosTurnIsIt);
         response.add(boardState);
+        response.add(whatColorHasWon);
         return response;
     }
 
