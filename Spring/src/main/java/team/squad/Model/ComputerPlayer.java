@@ -1,4 +1,4 @@
-package team.squad.controller;
+package team.squad.Model;
 
 import org.springframework.context.annotation.Configuration;
 import team.squad.Model.*;

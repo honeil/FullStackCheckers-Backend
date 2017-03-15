@@ -7,6 +7,8 @@ package team.squad.Model;
  * This class represents a cell (square) on a game board.
  *
  * Date Created: 3/6/17.
+ *
+ * TODO when pieces are removed we need to put them back in their respective stack
  */
 public class Cell {
 

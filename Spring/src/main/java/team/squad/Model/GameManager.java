@@ -23,6 +23,7 @@ public class GameManager {
 
     private Move theMove;
     private CheckersBoard theBoard = new CheckersBoard();
+    private ComputerPlayer ai = new ComputerPlayer();
 
     public GameManager() { }
 
@@ -52,7 +53,6 @@ public class GameManager {
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
-
     public CheckersBoard getTheBoard(){
         return this.theBoard;
     }
@@ -199,8 +199,10 @@ public class GameManager {
      * @return The updated board state after the computer has made its BOGO move.
      * Jumps are not incorporated at this point
      */
-    public List<Map> generateNewBoardStateFromComputerMove(Move computerMove) {
-        this.setTheMove(computerMove);
+    public List<Map> generateNewBoardStateFromComputerMove() {
+        theMove = ai.generateMove(theBoard);
+        this.setTheMove(theMove);
+
         if(isMoveValidJumpMove()) {
             doJump();
             return BoardState.generateBoardState(theBoard, true);
