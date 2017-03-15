@@ -22,7 +22,7 @@ public class GameManagerTest {
 
     private GameManager gameManager;
     private Move validMove, invalidMoveCellsNotAdjacent, redBackwardsMove, blackBackwardsMove, redJumpMove, blackJumpMove,
-         validAttackDiagonal, invalidAttackDiagonal;
+         validAttackDiagonal, invalidAttackDiagonal, kingMove;
     private CheckersBoard theBoard;
 
     @Before
@@ -39,7 +39,7 @@ public class GameManagerTest {
         invalidMoveCellsNotAdjacent.setSecondCoordinate("H8");
 
         redBackwardsMove = new Move();
-        redBackwardsMove.setFirstCoordinate("A3"); // change to B4 to A3, gets a null ptr exception
+        redBackwardsMove.setFirstCoordinate("A3");
         redBackwardsMove.setSecondCoordinate("B2");
 
         blackBackwardsMove = new Move();
@@ -61,6 +61,10 @@ public class GameManagerTest {
         invalidAttackDiagonal = new Move();
         invalidAttackDiagonal.setFirstCoordinate("C3");
         invalidAttackDiagonal.setSecondCoordinate("D5");
+
+        kingMove = new Move();
+        kingMove.setFirstCoordinate("A7");
+        kingMove.setSecondCoordinate("B8");
     }
 
     @Test
@@ -288,7 +292,9 @@ public class GameManagerTest {
     public void startAndFinishAreDiagonallyOneSquareApartTest1() {
         gameManager.setTheMove(validAttackDiagonal);
         boolean expected = true;
+
         boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
+
         assertEquals(expected, actual);
     }
 
@@ -296,17 +302,10 @@ public class GameManagerTest {
     public void startAndFinishAreDiagonallyOneSquareApartTest2() {
         gameManager.setTheMove(invalidAttackDiagonal);
         boolean expected = false;
-        boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
-        assertEquals(expected, actual);
-    }
 
-    @Test
-    public void validJumpMoveTest(){
-        gameManager.setTheMove(blackJumpMove);
-        Cell inTheMiddle = theBoard.getCell(6, 4);
-        inTheMiddle.setPiece(new Piece(Color.RED));
-        gameManager.setTheBoard(theBoard);
-        assertTrue(gameManager.isMoveValidJumpMove());
+        boolean actual = gameManager.startAndFinishAreDiagonallyOneSquareApart();
+
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -315,6 +314,27 @@ public class GameManagerTest {
         Cell inTheMiddle = theBoard.getCell(6, 4);
         inTheMiddle.setPiece(new Piece(Color.BLACK));
         gameManager.setTheBoard(theBoard);
+
         assertFalse(gameManager.isMoveValidJumpMove());
+    }
+
+    @Test
+    public void moveResultsInAKingTest() {
+        gameManager.setTheMove(kingMove);
+        boolean expected = true;
+
+        boolean actual = gameManager.moveResultsInAKing();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void moveDoesNotResultInAKingTest() {
+        gameManager.setTheMove(validMove);
+        boolean expected = false;
+
+        boolean actual = gameManager.moveResultsInAKing();
+
+        assertEquals(expected, actual);
     }
 }
