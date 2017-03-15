@@ -13,6 +13,7 @@ public class CheckersSQLDB
     static Connection checkersConn = null;
     static PreparedStatement checkersPrepareStat = null;
 
+    //TODO move this test suite to test.java.team.squad and convert it to a proper test
     public static void main(String[] args)
     {
 
