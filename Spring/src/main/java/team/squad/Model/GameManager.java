@@ -132,6 +132,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if there is an opponent piece in the middle of a potential jump move
+     * @return a boolean indicating if there is an opponent piece in the middle of the two cells given in the move.
+     */
     boolean thereIsAnOpponentPieceInTheMiddle() {
         Cell start = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         Cell finish = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
@@ -151,6 +155,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Ensures that the initial and desired cell are diagonally one square apart
+     * @return a boolean indicating if the given cells in theMove are diagonally one space apart.
+     */
     boolean startAndFinishAreDiagonallyOneSquareApart() {
         if (Math.abs(theMove.getxPositionDesired() - theMove.getxPositionInitial()) == 2 && Math.abs(theMove.getyPositionDesired() - theMove.getyPositionInitial()) ==2) {
             return true;
@@ -158,6 +166,10 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Ensures that the two cells given in theMOve are diagonally adjacent.
+     * @return a boolean indicating whether the two cells are diagonally adjacent.
+     */
     boolean cellsInMoveAreAdjacent() {
         if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1
                 || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
@@ -169,6 +181,10 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Ensures the given desired cell in theMove is empty.
+     * @return a boolean indicating whether the desired cell is empty.
+     */
     boolean requestedCellIsEmpty() {
         Cell toCheck = theBoard.getCell(theMove.getxPositionDesired(),
                 theMove.getyPositionDesired());
@@ -180,6 +196,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Ensures that the initial cell in theMove contains a piece.
+     * @return a boolean indicating if the start cell contains a piece.
+     */
     private boolean startCellHasPieceInIt() {
         Cell toCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         if ( toCheck.getHasPiece() ) {//&& toCheck.getPiece().getPieceColor().equals(Color.RED)) {
@@ -190,6 +210,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if the given move is 'forward' depending on the color of the piece being moved, kings are always
+     * moving 'forward'.
+     * @return a boolean indicating whether or not the requested move is a 'forward' move.
+     */
     boolean movingForward() {
         Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
         if ( thePiece == null ) {
@@ -220,11 +245,18 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if the piece in the start cell is a king.
+     * @return a boolean indicating whether or not the piece in initial cell is a king piece.
+     */
     boolean pieceIsAKing() {
         Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
         return thePiece.getKing();
     }
 
+    /**
+     * Completes the given move, checks have already been made to ensure the move is valid before this method is called.
+     */
     private void doMove() {
         Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
@@ -232,6 +264,9 @@ public class GameManager {
         initialCell.removePiece();
     }
 
+    /**
+     * Completes the given jump move, checks have already been made to ensure the move is valid before this method is called.
+     */
     private void doJump() {
         System.out.println("DOING JUMP");
         Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
