@@ -11,8 +11,8 @@ import java.util.Map;
  * @author John A. Squier
  *
  * This class takes information about a move and does all the necessary checking to determine if the move is valid,
- * and who should go next after the given move. This class also generates random computer moves (for now) when
- * requested using the generateNewBoardStateFromComputerMove() method.
+ * and who should go next after the given move. This class also uses the ComputerMove class to generate
+ * random computer moves (for now) when requested using the generateNewBoardStateFromComputerMove() method.
  *
  * Date Created: 3/7/17.
  *
@@ -41,10 +41,6 @@ public class GameManager {
      */
     void setTheBoard(CheckersBoard theBoard) {
         this.theBoard = theBoard;
-    }
-
-    public CheckersBoard getTheBoard(){
-        return this.theBoard;
     }
 
     /**
@@ -312,7 +308,7 @@ public class GameManager {
     /**
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
      * Can also be used to reset the game by calling this in the middle of the game.
-     * @return
+     * @return a List of Maps that represents the required data for the front end.
      */
     public List<Map> generateInitialBoardState() {
         theBoard = new CheckersBoard();
