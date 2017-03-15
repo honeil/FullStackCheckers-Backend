@@ -245,14 +245,14 @@ public class GameManagerTest {
         assertEquals(expected.getCellName(), actual.getCellName());
     }
 
-    @Test
-    public void generateRandomComputerMoveTest() {
-        List<Map> intialBoardState = BoardState.getInitialBoardState();
-
-        List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
-
-        assertNotEquals(intialBoardState, boardStateAfterMove);
-    }
+//    @Test
+//    public void generateRandomComputerMoveTest() {
+//        List<Map> intialBoardState = BoardState.getInitialBoardState();
+//
+//        List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
+//
+//        assertNotEquals(intialBoardState, boardStateAfterMove);
+//    }
 
     @Test
     public void thereIsAnOpponentPieceInTheMiddleOfARedJumpTest() {

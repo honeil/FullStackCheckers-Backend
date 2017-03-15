@@ -199,36 +199,15 @@ public class GameManager {
      * @return The updated board state after the computer has made its BOGO move.
      * Jumps are not incorporated at this point
      */
-    public List<Map> generateNewBoardStateFromComputerMove() {
-        Cell cellToMovePieceFrom;
-        Cell cellToMovePieceTo = null;
-        List<Cell> allTheCellsWithBlackPieces = new ArrayList<>();
-
-        for ( int i = 0; i < 7; i++ ) {
-            for ( int j = 0; j < 7; j++ ) {
-                Cell current = theBoard.getCell(i, j);
-                if ( current.getHasPiece() && current.getPiece().getPieceColor().equals(Color.BLACK) ) {
-                    allTheCellsWithBlackPieces.add(current);
-                }
-            }
-        }
-
-        do {
-            cellToMovePieceFrom = pickRandomCellWithBlackPieceInIt();
-            cellToMovePieceTo = generateMoveIfAvailable(cellToMovePieceFrom);
-        } while ( cellToMovePieceTo == null );
-
-        Move computerMove = new Move();
-        computerMove.setFirstCoordinate(cellToMovePieceFrom.getCellName());
-        computerMove.setSecondCoordinate(cellToMovePieceTo.getCellName());
-
-        System.out.println("piece start cell = " + computerMove.getFirstCoordinate());//////////////////////////////////////////////////////////////////////
-        System.out.println("piece end cell = " + computerMove.getSecondCoordinate());//////////////////////////////////////////////////////////////////////
-
+    public List<Map> generateNewBoardStateFromComputerMove(Move computerMove) {
         this.setTheMove(computerMove);
-        doMove();
-
-        return BoardState.generateBoardState(theBoard, true);
+        if(isMoveValidJumpMove()) {
+            doJump();
+            return BoardState.generateBoardState(theBoard, true);
+        } else {
+            doMove();
+            return BoardState.generateBoardState(theBoard, true);
+        }
     }
 
     Cell pickRandomCellWithBlackPieceInIt() {
