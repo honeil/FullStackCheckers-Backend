@@ -43,6 +43,10 @@ public class GameManager {
         this.theBoard = theBoard;
     }
 
+    public CheckersBoard getTheBoard(){
+        return this.theBoard;
+    }
+
     /**
      * Call this when you get a player move POST request.
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
@@ -53,10 +57,6 @@ public class GameManager {
      * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
-    public CheckersBoard getTheBoard(){
-        return this.theBoard;
-    }
-
     public List<Map> generateNewBoardStateFromPlayerMove() {
         if (isMoveValidJumpMove()) {
             doJump();
@@ -70,10 +70,22 @@ public class GameManager {
     }
 
     public boolean isMoveValidJumpMove() {
-        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ) {
+        if ( startAndFinishAreDiagonallyOneSquareApart()
+                && thereIsAnOpponentPieceInTheMiddle()
+                && selectedPieceIsRed() ) {
             return true;
         }
         return false;
+    }
+
+    private boolean selectedPieceIsRed() {
+        Piece pieceToCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
+        if ( pieceToCheck.getPieceColor().equals(Color.RED) ) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     boolean thereIsAnOpponentPieceInTheMiddle() {
