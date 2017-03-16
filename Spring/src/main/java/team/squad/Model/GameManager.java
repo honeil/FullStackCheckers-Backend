@@ -59,14 +59,15 @@ public class GameManager {
      * @return The updated board state Map, as well as the isPlayerMove Map and the whoHasWon Map packed into a List.
      */
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if (isMoveValidJumpMove() && selectedPieceIsRed() ) {
+        System.out.println("DOES PLAYER NEED TO FORCE JUMP? " + !playerDoesNotNeedToForceJump() );
+        if ( isMoveValidJumpMove() && selectedPieceIsRed() ) {
             doJump();
             if ( moveResultsInAKing() ) {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
             return BoardStateGenerator.generateBoardState(theBoard, false); // player doesn't get to go again
-        } else if (isMoveValidAdjacentMove() && selectedPieceIsRed() ) {
+        } else if ( isMoveValidAdjacentMove() && selectedPieceIsRed() && playerDoesNotNeedToForceJump() ) {
             doMove();
             if ( moveResultsInAKing() ) {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
@@ -121,6 +122,36 @@ public class GameManager {
                 return false;
             }
         }
+
+    /**
+     * This method indicates if the player needs to force jump. If a jump is available and the player is trying to
+     * perform a regular move this method will return false.  If there is no jump available this method will return true.
+     * @return a boolean indicating if the player should not be forced to jump.
+     */
+    private boolean playerDoesNotNeedToForceJump() {
+        ai.setTheBoard(theBoard);
+        List<Cell> redTeamPositions = locateAllRedPieces();
+        List<Move> redAvailableJumps = ai.scanForJumps(redTeamPositions, Color.BLACK);
+        System.out.println(redAvailableJumps.size());
+        return redAvailableJumps.size() == 0; // if this is zero there are no jumps that need forced
+        // if the size is not zero then there are jumps available that need taken and this will return false.
+    }
+
+    /**
+     * Locates all the cells on the board that contain a red piece.
+     * @return a List of Cells that contain red pieces.
+     */
+    private List<Cell> locateAllRedPieces(){
+        List<Cell> toReturn =  new ArrayList<>();
+        for(Cell cell:ai.allCells()){
+            if(cell.getHasPiece()){
+                if(cell.getPiece().getPieceColor().equals(Color.RED)){
+                    toReturn.add(cell);
+                }
+            }
+        }
+        return toReturn;
+    }
 
     /**
      * Checks if the initial cell in the given move contains a red piece.
@@ -318,10 +349,6 @@ public class GameManager {
     public List<Map> generateInitialBoardState() {
         theBoard = new CheckersBoard();
         System.out.println("generating new board");
-        return BoardStateGenerator.generateBoardState(theBoard, true);
-    }
-    
-    public List<Map> getCurrentBoardStateForSave() {
         return BoardStateGenerator.generateBoardState(theBoard, true);
     }
 }

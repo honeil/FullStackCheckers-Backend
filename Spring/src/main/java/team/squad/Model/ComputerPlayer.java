@@ -16,11 +16,14 @@ public class ComputerPlayer {
     private List<Move> availableJumps;
     public List<Cell> blackTeamPositions;
 
+    public void setTheBoard(CheckersBoard theBoard) {
+        this.theBoard = theBoard;
+    }
 
     public Move generateMove(CheckersBoard theBoard){
         this.theBoard = theBoard;
         locateAllBlackPieces();
-        availableJumps = scanForJumps();
+        availableJumps = scanForJumps(blackTeamPositions, Color.RED);
         if(availableJumps.size()>0){
             return availableJumps.get(0);
         }
@@ -30,7 +33,7 @@ public class ComputerPlayer {
 
     public List<Cell> allCells(){
         List<Cell> cells = new ArrayList<>();
-        for(int i = 0; i < 8 ; i++){
+        for(int i = 0; i < 8; i++){
             for( int j = 0; j < 8; j++){
                 cells.add(theBoard.getCell(i,j));
             }
@@ -63,10 +66,10 @@ public class ComputerPlayer {
         return availableMoves;
     }
 
-    public List<Move> scanForJumps(){
+    public List<Move> scanForJumps(List<Cell> teamPositions, Color opponentColor){
         ArrayList<Move> availableJumps = new ArrayList<>();
-        for(Cell blackPieceCell:blackTeamPositions){
-            Cell availableCell = generateJumpIfAvailable(blackPieceCell);
+        for(Cell blackPieceCell:teamPositions){
+            Cell availableCell = generateJumpIfAvailable(blackPieceCell, opponentColor);
             if(availableCell != null){
                 Move availableMove = new Move();
                 availableMove.setFirstCoordinate(blackPieceCell.getCellName());
@@ -141,7 +144,7 @@ public class ComputerPlayer {
         }
     }
 
-    Cell generateJumpIfAvailable(Cell cellToMovePieceFrom) {
+    Cell generateJumpIfAvailable(Cell cellToMovePieceFrom, Color colorToJump) {
         int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
         int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
         int xForDownAndLeft2 =  cellToMovePieceFrom.getxPosition() - 2; // left
@@ -184,36 +187,49 @@ public class ComputerPlayer {
 
         if ( cellToMovePieceFrom.getPiece().getKing() ) {
             if ( upAndLeft2 != null && upAndLeft.getHasPiece().equals(true) && upAndLeft2.getHasPiece().equals(false) ) {
-                if ( upAndLeft.getPiece().getPieceColor().equals(Color.RED) ) {
+                if ( upAndLeft.getPiece().getPieceColor().equals(colorToJump) ) {
                     return upAndLeft2;
                 }
             }
             if ( upAndRight2 != null && upAndRight.getHasPiece().equals(true) && upAndRight2.getHasPiece().equals(false) ) {
-                if ( upAndRight.getPiece().getPieceColor().equals(Color.RED) ) {
+                if ( upAndRight.getPiece().getPieceColor().equals(colorToJump) ) {
                     return upAndRight2;
                 }
             }
             if ( downAndLeft2 != null && downAndLeft.getHasPiece().equals(true) && downAndLeft2.getHasPiece().equals(false) ) {
-                if(downAndLeft.getPiece().getPieceColor().equals(Color.RED)) {
+                if(downAndLeft.getPiece().getPieceColor().equals(colorToJump)) {
                     return downAndLeft2;
                 }
             }
             if ( downAndRight2 != null && downAndRight.getHasPiece().equals(true) && downAndRight2.getHasPiece().equals(false) ) {
-                if(downAndRight.getPiece().getPieceColor().equals(Color.RED)){
+                if(downAndRight.getPiece().getPieceColor().equals(colorToJump)){
                     return downAndRight2;
                 }
             }
             return null;
         }
-        else {
+        else if ( colorToJump.equals(Color.RED)) {
             if ( downAndLeft2 != null && downAndLeft.getHasPiece().equals(true) && downAndLeft2.getHasPiece().equals(false) ) {
-                if(downAndLeft.getPiece().getPieceColor().equals(Color.RED)) {
+                if(downAndLeft.getPiece().getPieceColor().equals(colorToJump)) {
                     return downAndLeft2;
                 }
             }
             if ( downAndRight2 != null && downAndRight.getHasPiece().equals(true) && downAndRight2.getHasPiece().equals(false) ) {
-                if(downAndRight.getPiece().getPieceColor().equals(Color.RED)){
+                if(downAndRight.getPiece().getPieceColor().equals(colorToJump)){
                     return downAndRight2;
+                }
+            }
+            return null;
+        }
+        else { // colorToJump == Color.BLACK
+            if ( upAndLeft2 != null && upAndLeft.getHasPiece().equals(true) && upAndLeft2.getHasPiece().equals(false) ) {
+                if ( upAndLeft.getPiece().getPieceColor().equals(colorToJump) ) {
+                    return upAndLeft2;
+                }
+            }
+            if ( upAndRight2 != null && upAndRight.getHasPiece().equals(true) && upAndRight2.getHasPiece().equals(false) ) {
+                if ( upAndRight.getPiece().getPieceColor().equals(colorToJump) ) {
+                    return upAndRight2;
                 }
             }
             return null;
