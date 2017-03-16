@@ -134,10 +134,8 @@ public class GameManager {
      */
     boolean thereIsAnOpponentPieceInTheMiddle() {
         Cell start = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
-        Cell finish = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
         int xOfMiddleCell = (int)((theMove.getxPositionInitial() + theMove.getxPositionDesired()) / 2.0);
         int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
-
         Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
 
         if ( start.getPiece().getPieceColor().equals(Color.RED) ) {
