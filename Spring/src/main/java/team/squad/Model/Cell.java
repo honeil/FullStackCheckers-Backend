@@ -8,7 +8,7 @@ package team.squad.Model;
  *
  * Date Created: 3/6/17.
  */
-public class Cell {
+class Cell {
 
     private int xPosition;
     private int yPosition;
