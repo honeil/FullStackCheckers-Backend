@@ -3,7 +3,7 @@ package team.squad.checkersBE;
 import java.sql.*;
 
 /**
- * Created by andresholland on 3/6/17.
+ * Created by Andres Holland on 3/6/17.
  * and John Antonio Collins on 3/16/17.
  */
 
@@ -13,7 +13,7 @@ public class CheckersSQLDB
 
     static Connection checkersConn = null;
     static PreparedStatement checkersPrepareStat = null;
-    
+
 
     public static void makeJDBCConnection()
     {
