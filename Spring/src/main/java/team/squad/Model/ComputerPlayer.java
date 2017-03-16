@@ -78,28 +78,48 @@ public class ComputerPlayer {
     }
 
     Cell generateMoveIfAvailable(Cell cellToMovePieceFrom) {
-
-        if ( cellToMovePieceFrom.getPiece().getKing() ) {
-            // check all four available locations
-            System.out.println("gotta work out logic for king moves");//////////////////////////////////////////////////////////////////////
-            return null;
+        int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
+        int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
+        Cell downAndLeft = null;
+        if ( cellToMovePieceFrom.getxPosition() > 0 && cellToMovePieceFrom.getyPosition() > 0) {
+            downAndLeft = theBoard.getCell(xForDownAndLeft, yForDownAndLeft);
         }
-        else {
-            //  Cell downAndLeft = getDownAndLeftCell(cellToMovePieceFrom);
-            int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
-            int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
-            Cell downAndLeft = null;
-            if ( cellToMovePieceFrom.getxPosition() > 0 && cellToMovePieceFrom.getyPosition() > 0) {
-                downAndLeft = theBoard.getCell(xForDownAndLeft, yForDownAndLeft);
-            }
 
-            int xforDownAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
-            int yforDownAndRight = cellToMovePieceFrom.getyPosition() - 1; // down
-            Cell downAndRight = null;
-            if ( cellToMovePieceFrom.getxPosition() < 7 && cellToMovePieceFrom.getyPosition() > 0) {
-                downAndRight = theBoard.getCell(xforDownAndRight, yforDownAndRight);
-            }
+        int xforDownAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
+        int yforDownAndRight = cellToMovePieceFrom.getyPosition() - 1; // down
+        Cell downAndRight = null;
+        if ( cellToMovePieceFrom.getxPosition() < 7 && cellToMovePieceFrom.getyPosition() > 0) {
+            downAndRight = theBoard.getCell(xforDownAndRight, yforDownAndRight);
+        }
 
+        int xForUpAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
+        int yForUpAndLeft =  cellToMovePieceFrom.getyPosition() + 1; // up
+        Cell upAndLeft = null;
+        if ( cellToMovePieceFrom.getxPosition() > 0 && cellToMovePieceFrom.getyPosition() < 7) {
+            upAndLeft = theBoard.getCell(xForUpAndLeft, yForUpAndLeft);
+        }
+
+        int xforUpAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
+        int yforUpAndRight = cellToMovePieceFrom.getyPosition() - 1; // up
+        Cell upAndRight = null;
+        if ( cellToMovePieceFrom.getxPosition() < 7 && cellToMovePieceFrom.getyPosition() < 7) {
+            upAndRight = theBoard.getCell(xforUpAndRight, yforUpAndRight);
+        }
+
+        if ( cellToMovePieceFrom.getPiece().getKing() ) {//piece is a king
+            if ( upAndRight != null && upAndRight.getHasPiece().equals(false) ) {
+                return upAndRight;
+            } else if ( upAndLeft != null && upAndLeft.getHasPiece().equals(false) ) {
+                return upAndLeft;
+            } else if ( downAndLeft != null && downAndLeft.getHasPiece().equals(false) ) {
+                return downAndLeft;
+            } else if ( downAndRight != null && downAndRight.getHasPiece().equals(false) ) {
+                return downAndRight;
+            }
+            else {
+                return null;
+            }
+        } else { //piece is not a king
             if ( ((downAndLeft != null) && downAndLeft.getHasPiece().equals(false))
                     && ((downAndRight != null) && downAndRight.getHasPiece().equals(false)) ) {
                 if ( (int)(Math.random() * 10) < 5 ) {
