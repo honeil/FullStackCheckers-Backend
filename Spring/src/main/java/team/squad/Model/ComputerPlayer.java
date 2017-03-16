@@ -142,40 +142,76 @@ public class ComputerPlayer {
     }
 
     Cell generateJumpIfAvailable(Cell cellToMovePieceFrom) {
-        // computer is black pieces which are on top of the board
-        if ( cellToMovePieceFrom.getPiece().getKing() ) {
-            // check all four available locations
-            System.out.println("gotta work out logic for king moves");//////////////////////////////////////////////////////////////////////
-            return null;
+        int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
+        int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
+        int xForDownAndLeft2 =  cellToMovePieceFrom.getxPosition() - 2; // left
+        int yForDownAndLeft2 =  cellToMovePieceFrom.getyPosition() - 2; // down
+        Cell downAndLeft = null, downAndLeft2 = null;
+        if ( cellToMovePieceFrom.getxPosition() > 1 && cellToMovePieceFrom.getyPosition() > 1) {
+            downAndLeft = theBoard.getCell(xForDownAndLeft, yForDownAndLeft);
+            downAndLeft2 = theBoard.getCell(xForDownAndLeft2,yForDownAndLeft2);
         }
-        else {
-            //  Cell downAndLeft = getDownAndLeftCell(cellToMovePieceFrom);
-            int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
-            int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
-            int xForDownAndLeft2 =  cellToMovePieceFrom.getxPosition() - 2; // left
-            int yForDownAndLeft2 =  cellToMovePieceFrom.getyPosition() - 2; // down
-            Cell downAndLeft = null, downAndLeft2 = null;
-            if ( cellToMovePieceFrom.getxPosition() > 1 && cellToMovePieceFrom.getyPosition() > 1) {
-                downAndLeft = theBoard.getCell(xForDownAndLeft, yForDownAndLeft);
-                downAndLeft2 = theBoard.getCell(xForDownAndLeft2,yForDownAndLeft2);
-            }
 
-            int xforDownAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
-            int yforDownAndRight = cellToMovePieceFrom.getyPosition() - 1; // down
-            int xforDownAndRight2 = cellToMovePieceFrom.getxPosition() + 2; // right
-            int yforDownAndRight2 = cellToMovePieceFrom.getyPosition() - 2; // down
-            Cell downAndRight = null, downAndRight2 = null;
-            if ( cellToMovePieceFrom.getxPosition() < 6 && cellToMovePieceFrom.getyPosition() > 1) {
-                downAndRight = theBoard.getCell(xforDownAndRight, yforDownAndRight);
-                downAndRight2 = theBoard.getCell(xforDownAndRight2, yforDownAndRight2);
-            }
+        int xforDownAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
+        int yforDownAndRight = cellToMovePieceFrom.getyPosition() - 1; // down
+        int xforDownAndRight2 = cellToMovePieceFrom.getxPosition() + 2; // right
+        int yforDownAndRight2 = cellToMovePieceFrom.getyPosition() - 2; // down
+        Cell downAndRight = null, downAndRight2 = null;
+        if ( cellToMovePieceFrom.getxPosition() < 6 && cellToMovePieceFrom.getyPosition() > 1) {
+            downAndRight = theBoard.getCell(xforDownAndRight, yforDownAndRight);
+            downAndRight2 = theBoard.getCell(xforDownAndRight2, yforDownAndRight2);
+        }
 
+        int xForUpAndLeft = cellToMovePieceFrom.getxPosition() - 1;
+        int yForUpAndLeft = cellToMovePieceFrom.getyPosition() + 1;
+        int xForUpAndLeft2 = cellToMovePieceFrom.getxPosition() - 2;
+        int yForUpAndLeft2 = cellToMovePieceFrom.getyPosition() + 2;
+        Cell upAndLeft = null, upAndLeft2 = null;
+        if ( cellToMovePieceFrom.getxPosition() > 1 && cellToMovePieceFrom.getyPosition() < 6 ) {
+            upAndLeft = theBoard.getCell(xForUpAndLeft, yForUpAndLeft);
+            upAndLeft2 = theBoard.getCell(xForUpAndLeft2, yForUpAndLeft2);
+        }
+
+        int xForUpAndRight = cellToMovePieceFrom.getxPosition() + 1;
+        int yForUpAndRight = cellToMovePieceFrom.getyPosition() + 1;
+        int xForUpAndRight2 = cellToMovePieceFrom.getxPosition() + 2;
+        int yForUpAndRight2 = cellToMovePieceFrom.getyPosition() + 2;
+        Cell upAndRight = null, upAndRight2 = null;
+        if ( cellToMovePieceFrom.getxPosition() < 6 && cellToMovePieceFrom.getyPosition() < 6 ) {
+            upAndRight = theBoard.getCell(xForUpAndRight, yForUpAndRight);
+            upAndRight2 = theBoard.getCell(xForUpAndRight2, yForUpAndRight2);
+        }
+
+        if ( cellToMovePieceFrom.getPiece().getKing() ) {
+            if ( upAndLeft2 != null && upAndLeft.getHasPiece().equals(true) && upAndLeft2.getHasPiece().equals(false) ) {
+                if ( upAndLeft.getPiece().getPieceColor().equals(Color.RED) ) {
+                    return upAndLeft2;
+                }
+            }
+            if ( upAndRight2 != null && upAndRight.getHasPiece().equals(true) && upAndRight2.getHasPiece().equals(false) ) {
+                if ( upAndRight.getPiece().getPieceColor().equals(Color.RED) ) {
+                    return upAndRight2;
+                }
+            }
             if ( downAndLeft2 != null && downAndLeft.getHasPiece().equals(true) && downAndLeft2.getHasPiece().equals(false) ) {
                 if(downAndLeft.getPiece().getPieceColor().equals(Color.RED)) {
                     return downAndLeft2;
                 }
             }
-            if ( downAndRight != null && downAndRight.getHasPiece().equals(true) && downAndRight2.getHasPiece().equals(false) ) {
+            if ( downAndRight2 != null && downAndRight.getHasPiece().equals(true) && downAndRight2.getHasPiece().equals(false) ) {
+                if(downAndRight.getPiece().getPieceColor().equals(Color.RED)){
+                    return downAndRight2;
+                }
+            }
+            return null;
+        }
+        else {
+            if ( downAndLeft2 != null && downAndLeft.getHasPiece().equals(true) && downAndLeft2.getHasPiece().equals(false) ) {
+                if(downAndLeft.getPiece().getPieceColor().equals(Color.RED)) {
+                    return downAndLeft2;
+                }
+            }
+            if ( downAndRight2 != null && downAndRight.getHasPiece().equals(true) && downAndRight2.getHasPiece().equals(false) ) {
                 if(downAndRight.getPiece().getPieceColor().equals(Color.RED)){
                     return downAndRight2;
                 }
