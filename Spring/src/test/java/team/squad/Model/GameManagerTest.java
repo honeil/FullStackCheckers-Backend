@@ -182,6 +182,8 @@ public class GameManagerTest {
         List<Map> expected = new ArrayList<>();
         Map<String, Boolean> expectedTurnInfo = new HashMap<>();
         expectedTurnInfo.put("isPlayerMove", false);
+        Map<String, Color> expectedWinnerInfo = new HashMap<>();
+        expectedWinnerInfo.put("whoHasWon", null);
         Map<String, CellState> expectedCellInfo = new HashMap<>();
         expectedCellInfo.put("A1", CellState.RED_PIECE);
         expectedCellInfo.put("C1", CellState.RED_PIECE);
@@ -209,56 +211,13 @@ public class GameManagerTest {
         expectedCellInfo.put("H8", CellState.BLACK_PIECE);
         expected.add(expectedTurnInfo);
         expected.add(expectedCellInfo);
+        expected.add(expectedWinnerInfo);
         gameManager.setTheMove(validMove);
 
         List<Map> actual = gameManager.generateNewBoardStateFromPlayerMove();
 
         assertTrue(expected.equals(actual));
     }
-
-//    @Test
-//    public void doesRandomlyPickedCellHaveABlackPieceInIt() {
-//        boolean expected = true;
-//        Color expectedColor = Color.BLACK;
-//
-//        Cell theCell = gameManager.pickRandomCellWithBlackPieceInIt();
-//        boolean actual = theCell.getHasPiece();
-//        Color actualColor = theCell.getPiece().getPieceColor();
-//
-//        assertEquals(expected, actual);
-//        assertEquals(expectedColor, actualColor);
-//    }
-
-//    @Test
-//    public void givenCellDoesHaveAnAvailableMoveTest() {
-//        Cell toMoveFrom = theBoard.getCell(1, 5);
-//        Cell expected1 = theBoard.getCell(0, 4);
-//        Cell expected2 = theBoard.getCell(2, 4);
-//
-//        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
-//
-//        assertTrue(expected1.getCellName().equals(actual.getCellName())
-//                            || expected2.getCellName().equals(actual.getCellName()));
-//    }
-
-//    @Test
-//    public void givenCellH6IsCellG5SelectedAsAnAvailableMoveTest() {
-//        Cell toMoveFrom = theBoard.getCell(7, 5);
-//        Cell expected = theBoard.getCell(6, 4);
-//
-//        Cell actual = gameManager.generateMoveIfAvailable(toMoveFrom);
-//
-//        assertEquals(expected.getCellName(), actual.getCellName());
-//    }
-
-//    @Test
-//    public void generateRandomComputerMoveTest() {
-//        List<Map> intialBoardState = BoardState.getInitialBoardState();
-//
-//        List<Map> boardStateAfterMove = gameManager.generateNewBoardStateFromComputerMove();
-//
-//        assertNotEquals(intialBoardState, boardStateAfterMove);
-//    }
 
     @Test
     public void thereIsAnOpponentPieceInTheMiddleOfARedJumpTest() {

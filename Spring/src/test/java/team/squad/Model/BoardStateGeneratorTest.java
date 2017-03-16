@@ -17,16 +17,20 @@ import static org.junit.Assert.assertTrue;
  * Date Created: 3/7/17.
  *
  */
-public class BoardStateTest {
+public class BoardStateGeneratorTest {
 
-    private Map<String, CellState> expectedCellInfo;
     private Map<String, Boolean> expectedTurnInfo;
+    private Map<String, CellState> expectedCellInfo;
+    private Map<String, Color> expectedWinnerInfo;
     private List<Map> responseToFrontEnd;
 
     @Before
     public void setup() {
         expectedTurnInfo = new HashMap<>();
         expectedTurnInfo.put("isPlayerMove", true);
+
+        expectedWinnerInfo = new HashMap<>();
+        expectedWinnerInfo.put("whoHasWon", null);
 
         expectedCellInfo = new HashMap<>();
         expectedCellInfo.put("A1", CellState.RED_PIECE);
@@ -58,18 +62,19 @@ public class BoardStateTest {
         responseToFrontEnd = new ArrayList<>();
         responseToFrontEnd.add(expectedTurnInfo);
         responseToFrontEnd.add(expectedCellInfo);
+        responseToFrontEnd.add(expectedWinnerInfo);
     }
 
     @Test
     public void generateBoardStateFromInitialBoardTest() {
-        List<Map> actual = BoardState.generateBoardState(new CheckersBoard(), true);
+        List<Map> actual = BoardStateGenerator.generateBoardState(new CheckersBoard(), true);
 
         assertTrue(responseToFrontEnd.equals(actual));
     }
 
     @Test
     public void getInitialBoardStateTest() {
-        List<Map> actual = BoardState.getInitialBoardState();
+        List<Map> actual = BoardStateGenerator.getInitialBoardState();
 
         assertTrue(responseToFrontEnd.equals(actual));
     }

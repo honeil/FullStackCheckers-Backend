@@ -11,8 +11,8 @@ import java.util.Map;
  * @author John A. Squier
  *
  * This class takes information about a move and does all the necessary checking to determine if the move is valid,
- * and who should go next after the given move. This class also generates random computer moves (for now) when
- * requested using the generateNewBoardStateFromComputerMove() method.
+ * and who should go next after the given move. This class also uses the ComputerMove class to generate
+ * random computer moves (for now) when requested using the generateNewBoardStateFromComputerMove() method.
  *
  * Date Created: 3/7/17.
  *
@@ -43,10 +43,6 @@ public class GameManager {
         this.theBoard = theBoard;
     }
 
-    public CheckersBoard getTheBoard(){
-        return this.theBoard;
-    }
-
     /**
      * Call this when you get a player move POST request.
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
@@ -61,16 +57,16 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, true); // player jumps and goes again
+            return BoardStateGenerator.generateBoardState(theBoard, false); // player doesn't get to go again
         } else if (isMoveValidAdjacentMove() && selectedPieceIsRed() ) {
             doMove();
             if ( moveResultsInAKing() ) {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, false); // player moves and it's the computer's turn
+            return BoardStateGenerator.generateBoardState(theBoard, false); // player moves and it's the computer's turn
         } else {
-            return BoardState.generateBoardState(theBoard, true); // player move is invalid
+            return BoardStateGenerator.generateBoardState(theBoard, true); // player move is invalid
         }
     }
 
@@ -132,6 +128,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if there is an opponent piece in the middle of a potential jump move
+     * @return a boolean indicating if there is an opponent piece in the middle of the two cells given in the move.
+     */
     boolean thereIsAnOpponentPieceInTheMiddle() {
         Cell start = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         Cell finish = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
@@ -151,6 +151,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Ensures that the initial and desired cell are diagonally one square apart
+     * @return a boolean indicating if the given cells in theMove are diagonally one space apart.
+     */
     boolean startAndFinishAreDiagonallyOneSquareApart() {
         if (Math.abs(theMove.getxPositionDesired() - theMove.getxPositionInitial()) == 2 && Math.abs(theMove.getyPositionDesired() - theMove.getyPositionInitial()) ==2) {
             return true;
@@ -158,6 +162,10 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Ensures that the two cells given in theMove are diagonally adjacent.
+     * @return a boolean indicating whether the two cells are diagonally adjacent.
+     */
     boolean cellsInMoveAreAdjacent() {
         if(theMove.getxPositionDesired() == theMove.getxPositionInitial()-1
                 || theMove.getxPositionDesired() == theMove.getxPositionInitial()+1){
@@ -169,6 +177,10 @@ public class GameManager {
         return false;
     }
 
+    /**
+     * Ensures the given desired cell in theMove is empty.
+     * @return a boolean indicating whether the desired cell is empty.
+     */
     boolean requestedCellIsEmpty() {
         Cell toCheck = theBoard.getCell(theMove.getxPositionDesired(),
                 theMove.getyPositionDesired());
@@ -180,6 +192,10 @@ public class GameManager {
         }
     }
 
+    /**
+     * Ensures that the initial cell in theMove contains a piece.
+     * @return a boolean indicating if the start cell contains a piece.
+     */
     private boolean startCellHasPieceInIt() {
         Cell toCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         if ( toCheck.getHasPiece() ) {//&& toCheck.getPiece().getPieceColor().equals(Color.RED)) {
@@ -190,6 +206,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if the given move is 'forward' depending on the color of the piece being moved, kings are always
+     * moving 'forward'.
+     * @return a boolean indicating whether or not the requested move is a 'forward' move.
+     */
     boolean movingForward() {
         Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
         if ( thePiece == null ) {
@@ -220,11 +241,18 @@ public class GameManager {
         }
     }
 
+    /**
+     * Checks if the piece in the start cell is a king.
+     * @return a boolean indicating whether or not the piece in initial cell is a king piece.
+     */
     boolean pieceIsAKing() {
         Piece thePiece = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
         return thePiece.getKing();
     }
 
+    /**
+     * Completes the given move, checks have already been made to ensure the move is valid before this method is called.
+     */
     private void doMove() {
         Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
@@ -232,6 +260,9 @@ public class GameManager {
         initialCell.removePiece();
     }
 
+    /**
+     * Completes the given jump move, checks have already been made to ensure the move is valid before this method is called.
+     */
     private void doJump() {
         System.out.println("DOING JUMP");
         Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
@@ -240,18 +271,15 @@ public class GameManager {
         int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
 
         Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
-        System.out.println(middleCell.getCellName());
         desiredCell.setPiece(initialCell.getPiece());
         initialCell.removePiece();
-        System.out.println("REMOVING MIDDLE PIECE");
+        theBoard.addPieceToStack(middleCell.getPiece()); // add the jumped piece to its stack
         middleCell.removePiece();
-        System.out.println("MIDDLE PIECE REMOVED?");
     }
 
     /**
      * Call this when you get a computer move GET request.
      * @return The updated board state after the computer has made its BOGO move.
-     * Jumps are not incorporated at this point
      */
     public List<Map> generateNewBoardStateFromComputerMove() {
         theMove = ai.generateMove(theBoard);
@@ -264,7 +292,7 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, true);
+            return BoardStateGenerator.generateBoardState(theBoard, true);
         } else {
             System.out.println("DOING NON JUMP COMPUTER");
             doMove();
@@ -272,18 +300,18 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, true);
+            return BoardStateGenerator.generateBoardState(theBoard, true);
         }
     }
 
     /**
      * Call this when you want the initial board state, this always returns the state of the board at the very beginning.
      * Can also be used to reset the game by calling this in the middle of the game.
-     * @return
+     * @return a List of Maps that represents the required data for the front end.
      */
     public List<Map> generateInitialBoardState() {
         theBoard = new CheckersBoard();
         System.out.println("generating new board");
-        return BoardState.generateBoardState(theBoard, true);
+        return BoardStateGenerator.generateBoardState(theBoard, true);
     }
 }

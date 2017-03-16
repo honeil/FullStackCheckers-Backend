@@ -13,45 +13,59 @@ import java.util.Map;
  *
  * Date Created: 3/7/17.
  */
-abstract class BoardState {
+abstract class BoardStateGenerator {
 
     /**
      * Takes a CheckersBoard object and coverts the 2D array representation of the board into a Map that
      *  represents the board's state. Then a map representing who's turn is next, the players or the computer's.
-     *  Those two maps are put together in a list of maps ready to send off through HTTP
+     *  Lastly a map indicating who has won (RED, BLACK, null).
+     *  Those three maps are put together in a list of maps ready to send off through HTTP
      * @param theBoard a CheckersBoard object with values in its 2D array.
      * @return a List of maps that represents the CheckersBoard by indicating the location of each piece and the turn
-     * by indicating if it is the players turn or not.
+     * by indicating if it is the players turn or not, and a whether or not anyone has won.
      */
-    // TODO this has way too many indentations and needs refactored
     static List<Map> generateBoardState(CheckersBoard theBoard, boolean isPlayerMove) {
         Map<String, CellState> boardState = new HashMap<String, CellState>();
         Map<String, Boolean> whosTurnIsIt = new HashMap<String, Boolean>();
+        Map<String, Color> whatColorHasWon = new HashMap<String, Color>();
         List<Map> response = new ArrayList<>();
 
         whosTurnIsIt.put("isPlayerMove", isPlayerMove);
+        whatColorHasWon.put("whoHasWon", theBoard.whoHasWon());
 
-        for ( int i = 0; i < 8; i++ ) { // this is rows?
-            for ( int j = 0; j < 8; j++ ) { // this is columns?
+        for ( int i = 0; i < 8; i++ ) {
+            for ( int j = 0; j < 8; j++ ) {
                 Cell current = theBoard.getCell(i, j);
-
                 if ( current.getHasPiece() ) {
-                    if ( current.getPiece().getKing() ) {
-                        boardState.put(current.getCellName(),
-                                        current.getPiece().getPieceColor().equals(Color.BLACK) ?
-                                                CellState.BLACK_KING_PIECE : CellState.RED_KING_PIECE);
-                    }
-                    else {
-                        boardState.put(current.getCellName(),
-                                        current.getPiece().getPieceColor().equals(Color.BLACK) ?
-                                                CellState.BLACK_PIECE : CellState.RED_PIECE);
-                    }
+                    addPieceToMap(current, boardState);
                 }
             }
         }
         response.add(whosTurnIsIt);
         response.add(boardState);
+        response.add(whatColorHasWon);
         return response;
+    }
+
+    private static void addPieceToMap(Cell current, Map<String, CellState> boardState) {
+        if ( current.getPiece().getKing() ) {
+            addKingPieceToMap(current, boardState);
+        }
+        else {
+            addRegularPieceToMap(current, boardState);
+        }
+    }
+
+    private static void addKingPieceToMap(Cell current, Map<String, CellState> boardState) {
+        boardState.put(current.getCellName(),
+                current.getPiece().getPieceColor().equals(Color.BLACK) ?
+                        CellState.BLACK_KING_PIECE : CellState.RED_KING_PIECE);
+    }
+
+    private static void addRegularPieceToMap(Cell current, Map<String, CellState> boardState) {
+        boardState.put(current.getCellName(),
+                current.getPiece().getPieceColor().equals(Color.BLACK) ?
+                        CellState.BLACK_PIECE : CellState.RED_PIECE);
     }
 
     /**

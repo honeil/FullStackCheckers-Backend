@@ -82,6 +82,19 @@ public class CheckersBoard {
     }
 
     /**
+     * Adds a given piece to the appropriate stack after it has been jumped and removed from the board
+     * @param toAddToStack the piece to add to a stack, piece may be red or black.
+     */
+    void addPieceToStack(Piece toAddToStack) {
+        if ( toAddToStack.getPieceColor().equals(Color.RED) ) {
+            redPieces.push(toAddToStack);
+        }
+        else {
+            blackPieces.push(toAddToStack);
+        }
+    }
+
+    /**
      * Used to determine the winner, if any.
      * @return the Color of the winner's pieces or null if there is currently no winner.
      */
