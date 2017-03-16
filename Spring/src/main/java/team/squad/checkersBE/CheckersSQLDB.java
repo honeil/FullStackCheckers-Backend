@@ -3,46 +3,19 @@ package team.squad.checkersBE;
 import java.sql.*;
 
 /**
- * Created by andresholland on 3/6/17.
+ * Created by Andres Holland on 3/6/17.
+ * and John Antonio Collins on 3/16/17.
  */
 
-
+////Note: works only with live database for now. TODO use mock objects instead of live database
 public class CheckersSQLDB
 {
 
     static Connection checkersConn = null;
     static PreparedStatement checkersPrepareStat = null;
 
-    //TODO move this test suite to test.java.team.squad and convert it to a proper test
-    public static void main(String[] args)
-    {
 
-        try
-        {
-            log("Establish connection to DB");
-            makeJDBCConnection();
-
-            log("--Add game ID to DB");
-
-            addGameToDB("13", "milton");
-            addGameToDB("14", "walgreens");
-
-            saveGame("13", "testDAta");
-
-            log("Get game ID from DB");
-            getGame("13");
-
-            checkersPrepareStat.close();
-            checkersConn.close();
-
-
-        } catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private static void makeJDBCConnection()
+    public static void makeJDBCConnection()
     {
         try
         {
@@ -56,8 +29,8 @@ public class CheckersSQLDB
         }
         try
         {
-            checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/games", "checkers", "1234");
-            //checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/games", "root", "");
+            checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/CheckersDB", "root", "");
+
             if (checkersConn != null)
             {
                 log("Connection success!");
@@ -74,7 +47,7 @@ public class CheckersSQLDB
         }
     }
 
-    private static void addGameToDB(String gameID, String contents)
+    public static void addGameToDB(String gameID, String contents)
     {
 
         try
@@ -82,25 +55,25 @@ public class CheckersSQLDB
             String insertQueryStatement = "INSERT INTO games VALUES (?,?)";
 
             checkersPrepareStat = checkersConn.prepareStatement(insertQueryStatement);
-            checkersPrepareStat.setString(1, contents);
-            checkersPrepareStat.setString(2, gameID);
+            checkersPrepareStat.setString(1, gameID);
+            checkersPrepareStat.setString(2, contents);
 
             checkersPrepareStat.executeUpdate();
-            log(gameID + "with contents of " + contents + " created.");
+            log(gameID + " with contents of " + contents + " created.");
         } catch (SQLException e)
         {
             e.printStackTrace();
         }
     }
 
-    private static String getGame(String gameID)
+    public static String getGame(String gameID)
     {
 
         String ID = "", contents = "";
 
         try
         {
-            String getQueryStatement = "SELECT * FROM games";
+            String getQueryStatement = "SELECT * FROM games;";
 
             checkersPrepareStat = checkersConn.prepareStatement(getQueryStatement);
 
@@ -113,7 +86,7 @@ public class CheckersSQLDB
                 System.out.format("%s, %s\n", ID, contents);
             }
 
-            return ID + contents;
+            return contents;
 
         } catch (SQLException e)
         {
@@ -122,7 +95,8 @@ public class CheckersSQLDB
         }
     }
 
-    private static void saveGame(String gameID, String contents)
+
+    public static void saveGame(String gameID, String contents)
     {
 
         try
@@ -140,7 +114,26 @@ public class CheckersSQLDB
         }
     }
 
-    private static void log(String string)
+    public static void deleteGame(String gameID){
+
+        try
+        {
+            String deleteQueryStatement = "DELETE FROM games where ID ="+gameID+";";
+
+
+            checkersPrepareStat = checkersConn.prepareStatement(deleteQueryStatement);
+
+            checkersPrepareStat.executeUpdate();
+            log("game " + gameID + " has been deleted");
+
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void log(String string)
     {
         System.out.println(string);
     }
