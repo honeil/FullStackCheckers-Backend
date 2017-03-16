@@ -56,7 +56,7 @@ public class ComputerPlayerTest {
     public void generateMoveIfAvailableTest() throws Exception {
 
     }
-    
+
 //    @Test
 //    public void doesRandomlyPickedCellHaveABlackPieceInIt() {
 //        boolean expected = true;

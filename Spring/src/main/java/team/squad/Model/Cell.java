@@ -78,30 +78,48 @@ public class Cell {
     }
 
     private String convertIToColumnLetter(int i) {
+        String result = "";
         switch( i ) {
-            case 0: return "A";
-            case 1: return "B";
-            case 2: return "C";
-            case 3: return "D";
-            case 4: return "E";
-            case 5: return "F";
-            case 6: return "G";
-            case 7: return "H";
-            default: return "ERROR"; // should never be hit
+            case 0: result = "A";
+                    break;
+            case 1: result = "B";
+                    break;
+            case 2: result = "C";
+                    break;
+            case 3: result = "D";
+                    break;
+            case 4: result = "E";
+                    break;
+            case 5: result = "F";
+                    break;
+            case 6: result = "G";
+                    break;
+            case 7: result = "H";
+                    break;
         }
+        return result;
     }
 
     private String convertJToRowNumber(int j) {
+        String result = "";
         switch ( j ) {
-            case 0: return "1";
-            case 1: return "2";
-            case 2: return "3";
-            case 3: return "4";
-            case 4: return "5";
-            case 5: return "6";
-            case 6: return "7";
-            case 7: return "8";
-            default: return "ERROR"; // should never be hit
+            case 0: result = "1";
+                    break;
+            case 1: result = "2";
+                    break;
+            case 2: result = "3";
+                    break;
+            case 3: result = "4";
+                    break;
+            case 4: result = "5";
+                    break;
+            case 5: result = "6";
+                    break;
+            case 6: result = "7";
+                    break;
+            case 7: result = "8";
+                    break;
         }
+        return result;
     }
 }
