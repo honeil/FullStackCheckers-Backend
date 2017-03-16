@@ -57,16 +57,16 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, false); // player doesn't get to go again
+            return BoardStateGenerator.generateBoardState(theBoard, false); // player doesn't get to go again
         } else if (isMoveValidAdjacentMove() && selectedPieceIsRed() ) {
             doMove();
             if ( moveResultsInAKing() ) {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, false); // player moves and it's the computer's turn
+            return BoardStateGenerator.generateBoardState(theBoard, false); // player moves and it's the computer's turn
         } else {
-            return BoardState.generateBoardState(theBoard, true); // player move is invalid
+            return BoardStateGenerator.generateBoardState(theBoard, true); // player move is invalid
         }
     }
 
@@ -292,7 +292,7 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, true);
+            return BoardStateGenerator.generateBoardState(theBoard, true);
         } else {
             System.out.println("DOING NON JUMP COMPUTER");
             doMove();
@@ -300,7 +300,7 @@ public class GameManager {
                 Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
                 toKing.setKing(true);
             }
-            return BoardState.generateBoardState(theBoard, true);
+            return BoardStateGenerator.generateBoardState(theBoard, true);
         }
     }
 
@@ -312,6 +312,6 @@ public class GameManager {
     public List<Map> generateInitialBoardState() {
         theBoard = new CheckersBoard();
         System.out.println("generating new board");
-        return BoardState.generateBoardState(theBoard, true);
+        return BoardStateGenerator.generateBoardState(theBoard, true);
     }
 }

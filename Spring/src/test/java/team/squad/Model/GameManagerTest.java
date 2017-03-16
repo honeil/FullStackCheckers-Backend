@@ -182,6 +182,8 @@ public class GameManagerTest {
         List<Map> expected = new ArrayList<>();
         Map<String, Boolean> expectedTurnInfo = new HashMap<>();
         expectedTurnInfo.put("isPlayerMove", false);
+        Map<String, Color> expectedWinnerInfo = new HashMap<>();
+        expectedWinnerInfo.put("whoHasWon", null);
         Map<String, CellState> expectedCellInfo = new HashMap<>();
         expectedCellInfo.put("A1", CellState.RED_PIECE);
         expectedCellInfo.put("C1", CellState.RED_PIECE);
@@ -209,6 +211,7 @@ public class GameManagerTest {
         expectedCellInfo.put("H8", CellState.BLACK_PIECE);
         expected.add(expectedTurnInfo);
         expected.add(expectedCellInfo);
+        expected.add(expectedWinnerInfo);
         gameManager.setTheMove(validMove);
 
         List<Map> actual = gameManager.generateNewBoardStateFromPlayerMove();
