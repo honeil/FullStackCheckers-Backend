@@ -31,7 +31,7 @@ public class DatabaseIntegrationTest {
 
 
         // attempt to pass played map to new GameManager
-        gm2.generateInitialBoardState(playedBoard.get(1));
+        gm2.generateInitialBoardState();
     }
 
 }

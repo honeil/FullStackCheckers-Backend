@@ -100,7 +100,7 @@ public class ComputerPlayer {
         }
 
         int xforUpAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
-        int yforUpAndRight = cellToMovePieceFrom.getyPosition() - 1; // up
+        int yforUpAndRight = cellToMovePieceFrom.getyPosition() + 1; // up
         Cell upAndRight = null;
         if ( cellToMovePieceFrom.getxPosition() < 7 && cellToMovePieceFrom.getyPosition() < 7) {
             upAndRight = theBoard.getCell(xforUpAndRight, yforUpAndRight);

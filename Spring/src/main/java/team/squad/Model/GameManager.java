@@ -2,7 +2,6 @@ package team.squad.Model;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +35,16 @@ public class GameManager {
     }
 
     /**
-     * Might be for testing only.
-     * @param theBoard
+     * Gets the current checkers board, used to grab the board for a db save.
+     * @return the current CheckersBoard.
+     */
+    public CheckersBoard getTheBoard() {
+        return theBoard;
+    }
+
+    /**
+     * Sets the current board to be the given board, used to load up a game from a save
+     * @param theBoard a checkers board.
      */
     void setTheBoard(CheckersBoard theBoard) {
         this.theBoard = theBoard;
@@ -48,7 +55,7 @@ public class GameManager {
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
      * then an unchanged board state is returned.
      *
-     * @return The updated board state as a map.
+     * @return The updated board state Map, as well as the isPlayerMove Map and the whoHasWon Map packed into a List.
      */
     public List<Map> generateNewBoardStateFromPlayerMove() {
         if (isMoveValidJumpMove() && selectedPieceIsRed() ) {
@@ -311,16 +318,5 @@ public class GameManager {
         theBoard = new CheckersBoard();
         System.out.println("generating new board");
         return BoardStateGenerator.generateBoardState(theBoard, true);
-    }
-
-    public boolean generateInitialBoardState(CheckersBoard board) {
-        try {
-            theBoard = board;
-            System.out.println(Arrays.toString(Arrays.asList(board).toArray()));
-            return true;
-        } catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
     }
 }
