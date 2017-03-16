@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  * Created by williammattern on 3/14/17.
  */
 public class ComputerPlayerTest {
-    ComputerPlayer hal;
+    ComputerPlayer hal; // TODO lol at this
     CheckersBoard testBoard;
 
     @Before
