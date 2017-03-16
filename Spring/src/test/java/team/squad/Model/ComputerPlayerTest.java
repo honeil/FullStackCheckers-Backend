@@ -1,8 +1,9 @@
-package team.squad.controller;
+package team.squad.Model;
 
 import org.junit.Before;
 import org.junit.Test;
 import team.squad.Model.CheckersBoard;
+import team.squad.Model.ComputerPlayer;
 import team.squad.Model.Move;
 
 import static org.junit.Assert.*;

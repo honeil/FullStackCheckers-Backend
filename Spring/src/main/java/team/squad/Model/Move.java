@@ -4,9 +4,9 @@ package team.squad.Model;
  * @author William Mattern
  * @author John A. Squier
  *
- * Date Created: 3/7/17.
- *
  * Class to store information about a move.
+ *
+ * Date Created: 3/7/17.
  */
 public class Move {
 
@@ -18,7 +18,6 @@ public class Move {
     private int yPositionDesired;
 
     public Move() { }
-
 
     public void setFirstCoordinate(String intialCell) {
         this.firstCoordinate = intialCell;

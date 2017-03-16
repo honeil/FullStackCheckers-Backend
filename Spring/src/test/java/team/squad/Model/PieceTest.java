@@ -13,9 +13,8 @@ import static org.junit.Assert.*;
  */
 public class PieceTest {
 
-    Piece redPiece, blackPiece;
-    Cell testCell00, testCell20;
-    Cell testCell77;
+    private Piece redPiece, blackPiece;
+    private Cell testCell00, testCell20, testCell77;
 
     @Before
     public void setUp() throws Exception {
@@ -47,9 +46,9 @@ public class PieceTest {
         Color expected = Color.RED;
 
         blackPiece.setPieceColor(Color.RED);
-        Color acutal = blackPiece.getPieceColor();
+        Color actual = blackPiece.getPieceColor();
 
-        assertEquals(expected, acutal);
+        assertEquals(expected, actual);
     }
 
     @Test

@@ -10,11 +10,11 @@ import java.util.Map;
  * @author William Mattern
  * @author John A. Squier
  *
- * Date Created: 3/7/17.
- *
  * This class takes information about a move and does all the necessary checking to determine if the move is valid,
  * and who should go next after the given move. This class also generates random computer moves (for now) when
  * requested using the generateNewBoardStateFromComputerMove() method.
+ *
+ * Date Created: 3/7/17.
  *
  * TODO refactor some of the methods, those jawns are a mess
  */
@@ -23,6 +23,7 @@ public class GameManager {
 
     private Move theMove;
     private CheckersBoard theBoard = new CheckersBoard();
+    private ComputerPlayer ai = new ComputerPlayer();
 
     public GameManager() { }
 
@@ -42,38 +43,93 @@ public class GameManager {
         this.theBoard = theBoard;
     }
 
+    public CheckersBoard getTheBoard(){
+        return this.theBoard;
+    }
+
     /**
      * Call this when you get a player move POST request.
      * Checks if the given player move is a valid move and if so alters the board state. If the move is not valid
      * then an unchanged board state is returned.
      *
-     * TODO make sure the player can only move red pieces
-     *
-     * Need to add logic for handling jumps, a move can be adjacent or possibly a jump move.
      * @return The updated board state as a map.
      */
-
-    public CheckersBoard getTheBoard(){
-        return this.theBoard;
-    }
-
     public List<Map> generateNewBoardStateFromPlayerMove() {
-        if (isMoveValidJumpMove()) {
+        if (isMoveValidJumpMove() && selectedPieceIsRed() ) {
             doJump();
-            return BoardState.generateBoardState(theBoard, false); // player might go again if he jumps
-        } else if (isMoveValidAdjacentMove()) {
+            if ( moveResultsInAKing() ) {
+                Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
+                toKing.setKing(true);
+            }
+            return BoardState.generateBoardState(theBoard, true); // player jumps and goes again
+        } else if (isMoveValidAdjacentMove() && selectedPieceIsRed() ) {
             doMove();
-            return BoardState.generateBoardState(theBoard, false);
+            if ( moveResultsInAKing() ) {
+                Piece toKing = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired()).getPiece();
+                toKing.setKing(true);
+            }
+            return BoardState.generateBoardState(theBoard, false); // player moves and it's the computer's turn
         } else {
-            return BoardState.generateBoardState(theBoard, true);
+            return BoardState.generateBoardState(theBoard, true); // player move is invalid
         }
     }
 
-    public boolean isMoveValidJumpMove() {
-        if ( startAndFinishAreDiagonallyOneSquareApart() && thereIsAnOpponentPieceInTheMiddle() ) {
+    /**
+     * Checks if the move (which we already know is valid because this method is only called after doJump() or doMove())
+     * results in the piece being moved becoming a king.
+     * @return a boolean indicating if the piece has become a king or not.
+     */
+    boolean moveResultsInAKing() {
+        if ( theMove.getyPositionDesired() == 7
+                || theMove.getyPositionDesired() == 0 ) {
             return true;
         }
-        return false;
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the given move is a valid jump based on a few conditions, piece must be red.
+     * @return a boolean indicating if the move is a valid jump or not.
+     */
+    boolean isMoveValidJumpMove() {
+        if ( startAndFinishAreDiagonallyOneSquareApart()
+                && thereIsAnOpponentPieceInTheMiddle()
+                && movingForward() ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the given move's initial and desired cells are diagonally adjacent to each other.
+     * @return a boolean indicating if the move's cells are diagonally adjacent.
+     */
+    boolean isMoveValidAdjacentMove() {
+        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty()
+                && startCellHasPieceInIt() && movingForward() ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+    /**
+     * Checks if the initial cell in the given move contains a red piece.
+     * @return a boolean indicating if the given cell contains a red piece.
+     */
+    private boolean selectedPieceIsRed() {
+        Piece pieceToCheck = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial()).getPiece();
+        if ( pieceToCheck.getPieceColor().equals(Color.RED) ) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     boolean thereIsAnOpponentPieceInTheMiddle() {
@@ -95,23 +151,11 @@ public class GameManager {
         }
     }
 
-    public boolean startAndFinishAreDiagonallyOneSquareApart() {
+    boolean startAndFinishAreDiagonallyOneSquareApart() {
         if (Math.abs(theMove.getxPositionDesired() - theMove.getxPositionInitial()) == 2 && Math.abs(theMove.getyPositionDesired() - theMove.getyPositionInitial()) ==2) {
             return true;
         }
         return false;
-    }
-
-    boolean isMoveValidAdjacentMove() {
-        if ( cellsInMoveAreAdjacent() && requestedCellIsEmpty() && startCellHasPieceInIt() ) {
-            if( movingForward() || pieceIsAKing()){
-                return true;
-            }
-            return false;
-        }
-        else {
-            return false;
-        }
     }
 
     boolean cellsInMoveAreAdjacent() {
@@ -153,14 +197,20 @@ public class GameManager {
         }
         switch(thePiece.getPieceColor()){
             case RED:
-                if(theMove.getyPositionInitial() < theMove.getyPositionDesired()){
+                if (thePiece.getKing()) {
+                    return true;
+                }
+                else if(theMove.getyPositionInitial() < theMove.getyPositionDesired()){
                     return true;
                 }
                 else {
                     return false;
                 }
             case BLACK:
-                if(theMove.getyPositionInitial() > theMove.getyPositionDesired()){
+                if (thePiece.getKing()) {
+                    return true;
+                }
+                else if(theMove.getyPositionInitial() > theMove.getyPositionDesired()){
                     return true;
                 }
                 else {
@@ -182,16 +232,20 @@ public class GameManager {
         initialCell.removePiece();
     }
 
-    public void doJump() {
+    private void doJump() {
+        System.out.println("DOING JUMP");
         Cell initialCell = theBoard.getCell(theMove.getxPositionInitial(), theMove.getyPositionInitial());
         Cell desiredCell = theBoard.getCell(theMove.getxPositionDesired(), theMove.getyPositionDesired());
         int xOfMiddleCell = (int)((theMove.getxPositionInitial() + theMove.getxPositionDesired()) / 2.0);
         int yOfMiddleCell = (int)((theMove.getyPositionInitial() + theMove.getyPositionDesired()) / 2.0);
 
         Cell middleCell = theBoard.getCell(xOfMiddleCell, yOfMiddleCell);
+        System.out.println(middleCell.getCellName());
         desiredCell.setPiece(initialCell.getPiece());
         initialCell.removePiece();
+        System.out.println("REMOVING MIDDLE PIECE");
         middleCell.removePiece();
+        System.out.println("MIDDLE PIECE REMOVED?");
     }
 
     /**
@@ -199,77 +253,18 @@ public class GameManager {
      * @return The updated board state after the computer has made its BOGO move.
      * Jumps are not incorporated at this point
      */
-    public List<Map> generateNewBoardStateFromComputerMove(Move computerMove) {
-        this.setTheMove(computerMove);
+    public List<Map> generateNewBoardStateFromComputerMove() {
+        theMove = ai.generateMove(theBoard);
+        this.setTheMove(theMove);
+
         if(isMoveValidJumpMove()) {
+            System.out.println("DOING COMPUTER JUMP");
             doJump();
             return BoardState.generateBoardState(theBoard, true);
         } else {
+            System.out.println("DOING NON JUMP COMPUTER");
             doMove();
             return BoardState.generateBoardState(theBoard, true);
-        }
-    }
-
-    Cell pickRandomCellWithBlackPieceInIt() {
-        List<Cell> allTheCellsWithBlackPieces = new ArrayList<>();
-
-        // TODO look only at black cells, this checks all 64 cells.
-        for ( int i = 0; i < 8; i++ ) {
-            for ( int j = 0; j < 8; j++ ) {
-                Cell current = theBoard.getCell(i, j);
-                if ( current.getHasPiece() && current.getPiece().getPieceColor().equals(Color.BLACK) ) {
-                    allTheCellsWithBlackPieces.add(current);
-                }
-            }
-        }
-
-        int randomIndex = (int)(Math.random() * allTheCellsWithBlackPieces.size());
-        Cell randomlyPicked = allTheCellsWithBlackPieces.get(randomIndex);
-        return randomlyPicked;
-    }
-
-    // TODO this is a mess, refactor also add logic for king pieces
-    Cell generateMoveIfAvailable(Cell cellToMovePieceFrom) {
-            // computer is black pieces which are on top of the board
-        if ( cellToMovePieceFrom.getPiece().getKing() ) {
-            // check all four available locations
-            System.out.println("gotta work out logic for king moves");//////////////////////////////////////////////////////////////////////
-            return null;
-        }
-        else {
-          //  Cell downAndLeft = getDownAndLeftCell(cellToMovePieceFrom);
-            int xForDownAndLeft =  cellToMovePieceFrom.getxPosition() - 1; // left
-            int yForDownAndLeft =  cellToMovePieceFrom.getyPosition() - 1; // down
-            Cell downAndLeft = null;
-            if ( cellToMovePieceFrom.getxPosition() > 0 ) {
-                downAndLeft = theBoard.getCell(xForDownAndLeft, yForDownAndLeft);
-            }
-
-            int xforDownAndRight = cellToMovePieceFrom.getxPosition() + 1; // right
-            int yforDownAndRight = cellToMovePieceFrom.getyPosition() - 1; // down
-            Cell downAndRight = null;
-            if ( cellToMovePieceFrom.getxPosition() < 7 ) {
-                 downAndRight = theBoard.getCell(xforDownAndRight, yforDownAndRight);
-            }
-
-            if ( ((downAndLeft != null) && downAndLeft.getHasPiece().equals(false))
-                    && ((downAndRight != null) && downAndRight.getHasPiece().equals(false)) ) {
-                if ( (int)(Math.random() * 10) < 5 ) {
-                    return downAndLeft;
-                }
-                else {
-                    return downAndRight;
-                }
-            }
-            else if ( downAndLeft != null && downAndLeft.getHasPiece().equals(false) ) {
-                return downAndLeft;
-            }
-            else if ( downAndRight != null && downAndRight.getHasPiece().equals(false) ) {
-                return downAndRight;
-            }
-            else {
-                return null;
-            }
         }
     }
 
