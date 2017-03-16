@@ -280,7 +280,6 @@ public class GameManager {
     /**
      * Call this when you get a computer move GET request.
      * @return The updated board state after the computer has made its BOGO move.
-     * Jumps are not incorporated at this point
      */
     public List<Map> generateNewBoardStateFromComputerMove() {
         theMove = ai.generateMove(theBoard);
