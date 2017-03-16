@@ -6,10 +6,9 @@ import java.util.Stack;
  * @author William Mattern
  * @author John A. Squier
  *
- * Date Created: 3/6/17.
- *
  * NOTE THAT J is UP/DOWN/ROW and I is LEFT/RIGHT/COLUMN!!!
  *
+ * Date Created: 3/6/17.
  */
 public class CheckersBoard {
     private Cell[][] theBoard;
@@ -79,6 +78,19 @@ public class CheckersBoard {
                 }
                 //System.out.println("i=" + i + ", j=" + j + " = " +getCell(i,j).getCellName() + " is " + getCell(i,j).getCellColor() + " and hasPiece? " + getCell(i,j).getHasPiece());
             }
+        }
+    }
+
+    /**
+     * Adds a given piece to the appropriate stack after it has been jumped and removed from the board
+     * @param toAddToStack the piece to add to a stack, piece may be red or black.
+     */
+    void addPieceToStack(Piece toAddToStack) {
+        if ( toAddToStack.getPieceColor().equals(Color.RED) ) {
+            redPieces.push(toAddToStack);
+        }
+        else {
+            blackPieces.push(toAddToStack);
         }
     }
 

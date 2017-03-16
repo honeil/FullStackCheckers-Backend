@@ -19,9 +19,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class BoardStateTest {
 
-    Map<String, CellState> expectedCellInfo;
-    Map<String, Boolean> expectedTurnInfo;
-    List<Map> responseToFrontEnd;
+    private Map<String, CellState> expectedCellInfo;
+    private Map<String, Boolean> expectedTurnInfo;
+    private List<Map> responseToFrontEnd;
 
     @Before
     public void setup() {
