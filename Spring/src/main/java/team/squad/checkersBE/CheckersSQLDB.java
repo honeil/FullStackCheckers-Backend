@@ -56,7 +56,8 @@ public class CheckersSQLDB
         }
         try
         {
-            checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/games", "root", "");
+            checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/games", "checkers", "1234");
+            //checkersConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/games", "root", "");
             if (checkersConn != null)
             {
                 log("Connection success!");

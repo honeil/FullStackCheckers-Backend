@@ -2,7 +2,7 @@ package team.squad.Model;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -311,5 +311,16 @@ public class GameManager {
         theBoard = new CheckersBoard();
         System.out.println("generating new board");
         return BoardStateGenerator.generateBoardState(theBoard, true);
+    }
+
+    public boolean generateInitialBoardState(CheckersBoard board) {
+        try {
+            theBoard = board;
+            System.out.println(Arrays.toString(Arrays.asList(board).toArray()));
+            return true;
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

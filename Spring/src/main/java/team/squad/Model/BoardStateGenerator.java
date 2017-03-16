@@ -77,4 +77,6 @@ abstract class BoardStateGenerator {
         List<Map> response = generateBoardState(new CheckersBoard(), true);
         return response;
     }
+
+
 }
