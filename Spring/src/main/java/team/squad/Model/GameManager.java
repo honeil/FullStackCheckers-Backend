@@ -351,4 +351,8 @@ public class GameManager {
         System.out.println("generating new board");
         return BoardStateGenerator.generateBoardState(theBoard, true);
     }
+
+    public List<Map> getCurrentBoardStateForSave() {
+        return BoardStateGenerator.generateBoardState(theBoard, true);
+    }
 }
